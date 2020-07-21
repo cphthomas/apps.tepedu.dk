@@ -5,23 +5,23 @@ import styled from "styled-components";
 
 const Styles = styled.div`
   .navbar {
-    background-color: grey;
+    background-color: lightgrey;
   }
 
   a,
   .navbar-brand,
   .navbar-nav .nav-link {
-    color: white;
+    color: black;
 
     &:hover {
-      color: #bbb;
+      color: grey;
     }
   }
 `;
 
 export const NavigationBar = () => (
   <Styles>
-    <Navbar expand="lg">
+    <Navbar expand="lg" bg="light" variant="light">
       <Navbar.Brand href="/">tepedu apps</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
