@@ -38,6 +38,11 @@ export const NavigationBar = () => (
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
+              <Link to="/annuitet">Annuitet</Link>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>
               <Link to="/about">About</Link>
             </Nav.Link>
           </Nav.Item>

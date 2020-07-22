@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Home } from "./Home";
 import { Fremskrivning } from "./Fremskrivning";
+import { Annuitet } from "./Annuitet";
 import { About } from "./About";
 import { Finans } from "./Finans";
 import { Contact } from "./Contact";
@@ -24,6 +25,7 @@ class App extends Component {
               <Route path="/fremskrivning" component={Fremskrivning} />
               <Route path="/about" component={About} />
               <Route path="/finans" component={Finans} />
+              <Route path="/annuitet" component={Annuitet} />
               <Route path="/contact" component={Contact} />
               <Route path="/*" component={Home} />
               <Route component={NoMatch} />

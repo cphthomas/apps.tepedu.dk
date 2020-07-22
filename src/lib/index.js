@@ -24,3 +24,10 @@ export const numberFormat5 = (value) =>
     minimumFractionDigits: 0,
     maximumFractionDigits: 12,
   }).format(value);
+
+export const numberFormat6 = (value) =>
+  new Intl.NumberFormat("de-DE", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 4,
+    useGrouping: false,
+  }).format(value);
