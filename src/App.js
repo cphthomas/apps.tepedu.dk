@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+// import { browserHistory } from "react-router";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Home } from "./Home";
 import { Fremskrivning } from "./Fremskrivning";
@@ -24,6 +25,7 @@ class App extends Component {
               <Route path="/about" component={About} />
               <Route path="/finans" component={Finans} />
               <Route path="/contact" component={Contact} />
+              <Route path="/*" component={Home} />
               <Route component={NoMatch} />
             </Switch>
           </Layout>
