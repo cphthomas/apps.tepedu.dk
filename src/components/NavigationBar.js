@@ -51,7 +51,39 @@ export const NavigationBar = () => (
               <Link to="/contact">Contact</Link>
             </Nav.Link>
           </Nav.Item>
+          <NavDropdown title="Investering" id="basic-nav-dropdown">
+            <Link href="/about">About</Link>
+            <Nav.Link href="/about">navlink</Nav.Link>
+            <NavDropdown.Item to="/about">About</NavDropdown.Item>
+            <Nav.Link href="/fremskrivning">
+              <small>navlink fremskrivning</small>
+            </Nav.Link>
+            <NavDropdown.Item href="/about">About</NavDropdown.Item>
+            <Link href="/about">link</Link>
+            <NavDropdown.Item href="https://www.tepedu.dk/">
+              tepedu
+            </NavDropdown.Item>
+            <NavDropdown.Item href="/finans">Finans</NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item href="/contact">Contact</NavDropdown.Item>
+          </NavDropdown>
           <NavDropdown title="Finans" id="basic-nav-dropdown">
+            <Link href="/about">About</Link>
+            <Nav.Link href="/about">navlink</Nav.Link>
+            <NavDropdown.Item to="/about">About</NavDropdown.Item>
+            <Nav.Link href="/fremskrivning">
+              <small>navlink fremskrivning</small>
+            </Nav.Link>
+            <NavDropdown.Item href="/about">About</NavDropdown.Item>
+            <Link href="/about">link</Link>
+            <NavDropdown.Item href="https://www.tepedu.dk/">
+              tepedu
+            </NavDropdown.Item>
+            <NavDropdown.Item href="/finans">Finans</NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item href="/contact">Contact</NavDropdown.Item>
+          </NavDropdown>
+          <NavDropdown title="Optimering" id="basic-nav-dropdown">
             <Link href="/about">About</Link>
             <Nav.Link href="/about">navlink</Nav.Link>
             <NavDropdown.Item to="/about">About</NavDropdown.Item>
