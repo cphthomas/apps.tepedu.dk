@@ -2,8 +2,7 @@ import React from "react";
 
 export const Finans = () => (
   <div>
-    <h2>Finans Page</h2>
-    <p>This is mostly about us.</p>
+    <h2>Finans</h2>
     <p>
       Stare at ceiling lay on arms while you're using the keyboard so this human
       feeds me, i should be a god wack the mini furry mouse but all of a sudden
