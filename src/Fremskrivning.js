@@ -28,7 +28,7 @@ import "katex/dist/katex.min.css";
 import { BlockMath } from "react-katex";
 // import { InlineMath } from "react-katex";
 
-export function Users() {
+export function Fremskrivning() {
   const [rente, setrente] = useState(+(1.25).toFixed(2));
   const [hovedstol, sethovedstol] = useState(+(100.0).toFixed(2));
   const [terminer, setterminer] = useState(+(10.0).toFixed(2));

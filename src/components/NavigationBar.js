@@ -33,7 +33,7 @@ export const NavigationBar = () => (
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/users">Users</Link>
+              <Link to="/fremskrivning">Fremskrivning</Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
@@ -52,9 +52,14 @@ export const NavigationBar = () => (
             </Nav.Link>
           </Nav.Item>
           <NavDropdown title="Finans" id="basic-nav-dropdown">
-            <Link to="/about">About</Link>
+            <Link href="/about">About</Link>
+            <Nav.Link href="/about">navlink</Nav.Link>
+            <NavDropdown.Item to="/about">About</NavDropdown.Item>
+            <Nav.Link href="/fremskrivning">
+              <small>navlink fremskrivning</small>
+            </Nav.Link>
             <NavDropdown.Item href="/about">About</NavDropdown.Item>
-            <NavDropdown.Item href="/about">About</NavDropdown.Item>
+            <Link href="/about">link</Link>
             <NavDropdown.Item href="https://www.tepedu.dk/">
               tepedu
             </NavDropdown.Item>
