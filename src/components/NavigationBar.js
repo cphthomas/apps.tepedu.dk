@@ -43,6 +43,16 @@ export const NavigationBar = () => (
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
+              <Link to="/optimering">Optimering</Link>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>
+              <Link to="/optimering2">Optimering2</Link>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>
               <Link to="/about">About</Link>
             </Nav.Link>
           </Nav.Item>
