@@ -1,8 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Nav, Navbar, NavDropdown } from "react-bootstrap";
+import {
+  Nav,
+  Navbar,
+  // NavDropdown,
+  OverlayTrigger,
+  Overlay,
+  Tooltip,
+  // Form,
+  // FormControl,
+  Button,
+} from "react-bootstrap";
 import styled from "styled-components";
-
+import { ReactComponent as Logo } from "./tepedu300.svg";
 const Styles = styled.div`
   .navbar {
     background-color: lightgrey;
@@ -22,51 +32,135 @@ const Styles = styled.div`
 export const NavigationBar = () => (
   <Styles>
     <Navbar expand="lg" bg="light" variant="light">
-      <Navbar.Brand href="/">tepedu apps</Navbar.Brand>
+      <Navbar.Brand href="https://www.tepedu.dk/">
+        <Logo
+          alt=""
+          width="120"
+          height="40"
+          className="d-inline-block align-top"
+        />
+      </Navbar.Brand>
+
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
+        <Nav className="mr-auto">
           <Nav.Item>
             <Nav.Link>
-              <Link to="/">Home</Link>
+              <Link to="/">
+                <OverlayTrigger
+                  overlay={<Tooltip>Tooltip</Tooltip>}
+                  placement="bottom"
+                >
+                  <Button size="sm">Home</Button>
+                </OverlayTrigger>
+              </Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/fremskrivning">Fremskrivning</Link>
+              <Link to="/fremskrivning">
+                {" "}
+                <OverlayTrigger
+                  overlay={
+                    <Tooltip>
+                      Fremskrivning af kapital Hvor meget vokser et indestående
+                      med?
+                    </Tooltip>
+                  }
+                  placement="bottom"
+                >
+                  <Button size="sm">Fremskrivning</Button>
+                </OverlayTrigger>
+              </Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/annuitet">Annuitet</Link>
+              <Link to="/annuitet">
+                <OverlayTrigger
+                  overlay={
+                    <Tooltip>
+                      Annuitet Hvad bliver ydelse, afdrag og renter?
+                    </Tooltip>
+                  }
+                  placement="bottom"
+                >
+                  <Button size="sm">Annuitet</Button>
+                </OverlayTrigger>
+              </Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/optimering">Optimering</Link>
+              <Link to="/optimering">
+                <OverlayTrigger
+                  overlay={
+                    <Tooltip>
+                      Maksimering af dækningsbidrag Bestem den optimale pris og
+                      afsætning
+                    </Tooltip>
+                  }
+                  placement="bottom"
+                >
+                  <Button size="sm">Optimering</Button>
+                </OverlayTrigger>
+              </Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/optimering2">Optimering2</Link>
+              <Link to="/optimering2">
+                <OverlayTrigger
+                  overlay={
+                    <Tooltip>
+                      Maksimering af dækningsbidrag Bestem den optimale pris og
+                      afsætning
+                    </Tooltip>
+                  }
+                  placement="bottom"
+                >
+                  <Button size="sm">Optimering</Button>
+                </OverlayTrigger>
+              </Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/about">About</Link>
+              <Link to="/about">
+                <OverlayTrigger
+                  overlay={<Tooltip>Om</Tooltip>}
+                  placement="bottom"
+                >
+                  <Button size="sm">About</Button>
+                </OverlayTrigger>
+              </Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/finans">Finans</Link>
+              <Link to="/finans">
+                <OverlayTrigger
+                  overlay={<Tooltip>Finans</Tooltip>}
+                  placement="bottom"
+                >
+                  <Button size="sm">Finans</Button>
+                </OverlayTrigger>
+              </Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/contact">Contact</Link>
+              <Link to="/contact">
+                <OverlayTrigger
+                  overlay={<Tooltip>Finans2</Tooltip>}
+                  placement="bottom"
+                >
+                  <Button size="sm">Finans2</Button>
+                </OverlayTrigger>
+              </Link>
             </Nav.Link>
           </Nav.Item>
-          <NavDropdown title="Investering" id="basic-nav-dropdown">
+          {/* <NavDropdown title="Investering" id="basic-nav-dropdown">
             <Link href="/about">About</Link>
             <Nav.Link href="/about">navlink</Nav.Link>
             <NavDropdown.Item to="/about">About</NavDropdown.Item>
@@ -81,40 +175,17 @@ export const NavigationBar = () => (
             <NavDropdown.Item href="/finans">Finans</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item href="/contact">Contact</NavDropdown.Item>
-          </NavDropdown>
-          <NavDropdown title="Finans" id="basic-nav-dropdown">
-            <Link href="/about">About</Link>
-            <Nav.Link href="/about">navlink</Nav.Link>
-            <NavDropdown.Item to="/about">About</NavDropdown.Item>
-            <Nav.Link href="/fremskrivning">
-              <small>navlink fremskrivning</small>
-            </Nav.Link>
-            <NavDropdown.Item href="/about">About</NavDropdown.Item>
-            <Link href="/about">link</Link>
-            <NavDropdown.Item href="https://www.tepedu.dk/">
-              tepedu
-            </NavDropdown.Item>
-            <NavDropdown.Item href="/finans">Finans</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="/contact">Contact</NavDropdown.Item>
-          </NavDropdown>
-          <NavDropdown title="Optimering" id="basic-nav-dropdown">
-            <Link href="/about">About</Link>
-            <Nav.Link href="/about">navlink</Nav.Link>
-            <NavDropdown.Item to="/about">About</NavDropdown.Item>
-            <Nav.Link href="/fremskrivning">
-              <small>navlink fremskrivning</small>
-            </Nav.Link>
-            <NavDropdown.Item href="/about">About</NavDropdown.Item>
-            <Link href="/about">link</Link>
-            <NavDropdown.Item href="https://www.tepedu.dk/">
-              tepedu
-            </NavDropdown.Item>
-            <NavDropdown.Item href="/finans">Finans</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="/contact">Contact</NavDropdown.Item>
-          </NavDropdown>
+          </NavDropdown> */}
         </Nav>
+        {/* <Form inline>
+          <FormControl
+            type="text"
+            id="anythingSearch"
+            placeholder="Search"
+            className="mr-sm-2"
+          />
+          <Button variant="outline-success">Search</Button>
+        </Form> */}
       </Navbar.Collapse>
     </Navbar>
   </Styles>
