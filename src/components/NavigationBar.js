@@ -48,7 +48,7 @@ export const NavigationBar = () => (
             <Nav.Link>
               <Link to="/">
                 <OverlayTrigger
-                  overlay={<Tooltip>Tooltip</Tooltip>}
+                  overlay={<Tooltip>Forside</Tooltip>}
                   placement="bottom"
                 >
                   <Button size="sm">Home</Button>
@@ -63,7 +63,7 @@ export const NavigationBar = () => (
                 <OverlayTrigger
                   overlay={
                     <Tooltip>
-                      Fremskrivning af kapital Hvor meget vokser et indestående
+                      Fremskrivning af kapital. Hvor meget vokser et indestående
                       med?
                     </Tooltip>
                   }
@@ -86,6 +86,20 @@ export const NavigationBar = () => (
                   placement="bottom"
                 >
                   <Button size="sm">Annuitet</Button>
+                </OverlayTrigger>
+              </Link>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>
+              <Link to="/pris">
+                <OverlayTrigger
+                  overlay={
+                    <Tooltip>Ikke færdig Pris- afsætningsfunktionen</Tooltip>
+                  }
+                  placement="bottom"
+                >
+                  <Button size="sm">Pris</Button>
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
@@ -126,36 +140,36 @@ export const NavigationBar = () => (
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/about">
+              <Link to="/f3">
                 <OverlayTrigger
-                  overlay={<Tooltip>Om</Tooltip>}
+                  overlay={<Tooltip>f3</Tooltip>}
                   placement="bottom"
                 >
-                  <Button size="sm">About</Button>
+                  <Button size="sm">f3</Button>
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/finans">
+              <Link to="/f4">
                 <OverlayTrigger
-                  overlay={<Tooltip>Finans</Tooltip>}
+                  overlay={<Tooltip>f4</Tooltip>}
                   placement="bottom"
                 >
-                  <Button size="sm">Finans</Button>
+                  <Button size="sm">f4</Button>
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link>
-              <Link to="/contact">
+              <Link to="/f5">
                 <OverlayTrigger
-                  overlay={<Tooltip>Finans2</Tooltip>}
+                  overlay={<Tooltip>f5</Tooltip>}
                   placement="bottom"
                 >
-                  <Button size="sm">Finans2</Button>
+                  <Button size="sm">f5</Button>
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
