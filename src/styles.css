@@ -1,7 +1,7 @@
 /* .table-striped > tbody > tr:nth-of-type(even) {
 	background-color: #FFF;
   } */
-.btn-primary {
+/* .btn-primary {
   color: #fff;
   background-color: #6c757d;
   border-color: #6c757d;
@@ -10,7 +10,12 @@
   background-color: #000000;
   border-color: #000000;
   color: white;
-}
+} */
+
+/* .btn-primary { */
+/* color: mdb-color !important; */
+/* color: white !important; */
+/* } */
 
 .ht_master tr td {
   background-color: white;

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import Toggle from "./ToggleRenderProps";
 
 // import { FormCheckbox } from "shards-react";
 
-import { Row, Col, FormControl } from "react-bootstrap";
+import { Row, Col, FormControl, Button } from "react-bootstrap";
 
-import { MDBInput, MDBFormInline } from "mdbreact";
+// import { MDBInput, MDBFormInline } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
@@ -57,11 +58,32 @@ export function f3() {
         <div class="p-3 mb-2 bg-secondary text-light">
           <h3>Pris- afsætningsfunktionen</h3>
           <h5>Hvilke afsætninger og priser passer sammen</h5>
+
           {(() => {
             if (p > 70) {
-              return <button>Logout</button>;
+              return <Button size="sm">Logout</Button>;
             }
           })()}
+          <Toggle
+            render={({ on, toggle }) => (
+              <div>
+                {on && <h1>Show me</h1>}
+                <Button size="sm" onClick={toggle}>
+                  showtoggle
+                </Button>
+              </div>
+            )}
+          />
+          <Toggle
+            render={({ on, toggle }) => (
+              <div>
+                <Button size="sm" onClick={toggle}>
+                  testing
+                </Button>
+                {on && <p>Show me 3</p>}
+              </div>
+            )}
+          />
         </div>
       </Container>
 
@@ -166,17 +188,6 @@ export function f3() {
                   </Row>
                 </Form>
               </div>
-              <div>
-                {/* Material inline */}
-                <MDBFormInline>
-                  <MDBInput
-                    label="test if sætning"
-                    type="checkbox"
-                    id="checkbox1"
-                    containerClass="mr-5"
-                  />
-                </MDBFormInline>
-              </div>
             </Container>
           </div>
         </div>
@@ -186,239 +197,453 @@ export function f3() {
         <div class="p-3 mb-2 bg-white text-black">
           <div class="card">
             <div class="card-body">
-              <HighchartsReact
-                // containerProps={{ style: { height: "200%" } }}
-                highcharts={Highcharts}
-                options={{
-                  title: {
-                    text: "Pris- afsætningsfunktionen",
-                  },
-                  exporting: {
-                    buttons: {
-                      contextButton: {
-                        menuItems: [
-                          "viewFullscreen",
-                          "separator",
-                          "downloadPNG",
-                          "downloadPNG",
-                          "downloadSVG",
-                        ],
-                      },
-                    },
-                  },
-                  credits: {
-                    enabled: false,
-                  },
-                  annotations: [
-                    {
-                      labelOptions: {
-                        backgroundColor: "rgba(252, 255, 197, 1)",
-                        verticalAlign: "top",
-                        padding: 2,
-
-                        style: {
-                          fontSize: "0.6em",
-                        },
-                      },
-                      labels: [
-                        {
-                          point: {
-                            xAxis: 0,
-                            yAxis: 0,
-                            x: (-0.5 * b) / a,
-                            y: 2,
+              <Toggle
+                render={({ on, toggle }) => (
+                  <div>
+                    <Button size="sm" onClick={toggle}>
+                      Priselasticitet
+                    </Button>
+                    {on && (
+                      <HighchartsReact
+                        // containerProps={{ style: { height: "200%" } }}
+                        highcharts={Highcharts}
+                        options={{
+                          title: {
+                            text: "Pris- afsætningsfunktionen",
                           },
-                          text:
-                            "GROMS=" +
-                            numberFormat4(2 * a) +
-                            "X+" +
-                            numberFormat4(b),
-                        },
-                        {
-                          point: {
-                            xAxis: 0,
-                            yAxis: 0,
-                            x: -b / a,
-                            y: 2,
+                          exporting: {
+                            Buttons: {
+                              contextButton: {
+                                menuItems: [
+                                  "viewFullscreen",
+                                  "separator",
+                                  "downloadPNG",
+                                  "downloadPNG",
+                                  "downloadSVG",
+                                ],
+                              },
+                            },
                           },
-                          text:
-                            "P=" + numberFormat4(a) + "X+" + numberFormat4(b),
-                        },
-                      ],
-                    },
-                    {
-                      labelOptions: {
-                        shape: "connector",
-                        align: "right",
-                        justify: false,
-                        crop: true,
-                        style: {
-                          fontSize: "0.8em",
-                          textOutline: "0px white",
-                        },
-                      },
-                      labels: [
-                        // {
-                        //   point: {
-                        //     xAxis: 0,
-                        //     yAxis: 0,
-                        //     x: ox,
-                        //     y: 0,
-                        //   },
-                        //   text: "Optimal X<br>" + numberFormat3(ox) + "stk.",
-                        // },
-                        // {
-                        //   point: {
-                        //     xAxis: 0,
-                        //     yAxis: 0,
-                        //     x: 0,
-                        //     y: op,
-                        //   },
-                        //   text: "Optimal P<br>" + numberFormat3(op) + "kr.",
-                        // },
-                      ],
-                    },
-                  ],
-                  xAxis: {
-                    title: {
-                      text: "Afsætning",
-                    },
-                    gridLineWidth: 1,
-                    min: 0,
-                    max: 1.1 * (-b / a),
-                    labels: {
-                      format: "{value} stk.",
-                    },
-                  },
-                  yAxis: {
-                    title: {
-                      text: null,
-                    },
-                    min: 0,
-                    max: b,
-                    labels: {
-                      format: "{value} DKK.",
-                    },
-                  },
-                  series: [
-                    {
-                      name: "TVO",
-                      type: "polygon",
-                      data: [
-                        [0, 0],
-                        [(p - b) / a, 0],
-                        [(p - b) / a, p],
-                        [0, p],
-                      ],
-                      color: "rgb(0,255,0,.5)",
-                    },
-                    {
-                      type: "line",
-                      marker: {
-                        enabled: false,
-                        symbol: "circle",
-                        radius: 2,
-                      },
-                      dashStyle: "ShortDot",
-                      name: "Pris P",
-                      data: [
-                        [0, p],
-                        [(p - b) / a, p],
-                      ],
-                    },
-                    {
-                      type: "line",
-                      color: "red",
-                      marker: {
-                        enabled: false,
-                        symbol: "circle",
-                        radius: 2,
-                      },
-                      dashStyle: "ShortDot",
-                      name: "Mængde X",
-                      data: [
-                        [(p - b) / a, p],
-                        [(p - b) / a, 0],
-                      ],
-                    },
-                    {
-                      type: "line",
-                      color: "black",
-                      marker: {
-                        enabled: false,
-                        symbol: "circle",
-                        radius: 2,
-                      },
-                      dashStyle: "Dot",
-                      name: "Max omsætning",
-                      data: [
-                        [0, b / 2],
-                        [(-0.5 * b) / a, b / 2],
-                        [(-0.5 * b) / a, 0],
-                      ],
-                    },
-                    {
-                      type: "line",
-                      marker: {
-                        enabled: false,
-                        symbol: "circle",
-                        radius: 2,
-                      },
-                      name: "GROMS",
-                      data: [
-                        [0, b],
-                        [(-0.5 * b) / a, 0],
-                      ],
-                    },
+                          credits: {
+                            enabled: false,
+                          },
+                          annotations: [
+                            {
+                              labelOptions: {
+                                backgroundColor: "rgba(252, 255, 197, 1)",
+                                verticalAlign: "top",
+                                padding: 2,
 
-                    {
-                      type: "line",
-                      color: "red",
-                      lineWidth: 4,
-                      marker: {
-                        enabled: false,
-                        symbol: "circle",
-                        radius: 2,
-                      },
-                      name: "Uelastisk efterspørgsel",
-                      data: [
-                        [(-0.5 * b) / a, a * ((-0.5 * b) / a) + b],
-                        [-b / a, 0],
-                      ],
-                    },
-                    {
-                      type: "line",
-                      color: "green",
-                      lineWidth: 4,
-                      marker: {
-                        // color: "blue",
-                        enabled: false,
-                        symbol: "circle",
-                        radius: 2,
-                      },
-                      name: "Elastisk efterspørgsel",
-                      data: [
-                        [0, b],
-                        [(-0.5 * b) / a, a * ((-0.5 * b) / a) + b],
-                      ],
-                    },
-                    {
-                      type: "line",
-                      lineWidth: 0.5,
-                      marker: {
-                        enabled: false,
-                        symbol: "circle",
-                        radius: 2,
-                      },
-                      name: "P",
-                      data: [
-                        [0, b],
-                        [(-0.5 * b) / a, a * ((-0.5 * b) / a) + b],
-                        [-b / a, 0],
-                      ],
-                    },
-                  ],
-                }}
+                                style: {
+                                  fontSize: "0.6em",
+                                },
+                              },
+                              labels: [
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: (-0.5 * b) / a,
+                                    y: 2,
+                                  },
+                                  text:
+                                    "GROMS=" +
+                                    numberFormat4(2 * a) +
+                                    "X+" +
+                                    numberFormat4(b),
+                                },
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: -b / a,
+                                    y: 2,
+                                  },
+                                  text:
+                                    "P=" +
+                                    numberFormat4(a) +
+                                    "X+" +
+                                    numberFormat4(b),
+                                },
+                              ],
+                            },
+                            {
+                              labelOptions: {
+                                shape: "connector",
+                                align: "right",
+                                justify: false,
+                                crop: true,
+                                style: {
+                                  fontSize: "0.8em",
+                                  textOutline: "0px white",
+                                },
+                              },
+                            },
+                          ],
+                          xAxis: {
+                            title: {
+                              text: "Afsætning",
+                            },
+                            gridLineWidth: 1,
+                            min: 0,
+                            max: 1.1 * (-b / a),
+                            labels: {
+                              format: "{value} stk.",
+                            },
+                          },
+                          yAxis: {
+                            title: {
+                              text: null,
+                            },
+                            min: 0,
+                            max: b,
+                            labels: {
+                              format: "{value} DKK.",
+                            },
+                          },
+                          series: [
+                            {
+                              name: "TVO",
+                              type: "polygon",
+                              data: [
+                                [0, 0],
+                                [(p - b) / a, 0],
+                                [(p - b) / a, p],
+                                [0, p],
+                              ],
+                              color: "rgb(0,255,0,.5)",
+                            },
+                            {
+                              type: "line",
+                              marker: {
+                                enabled: false,
+                                symbol: "circle",
+                                radius: 2,
+                              },
+                              dashStyle: "ShortDot",
+                              name: "Pris P",
+                              data: [
+                                [0, p],
+                                [(p - b) / a, p],
+                              ],
+                            },
+                            {
+                              type: "line",
+                              color: "red",
+                              marker: {
+                                enabled: false,
+                                symbol: "circle",
+                                radius: 2,
+                              },
+                              dashStyle: "ShortDot",
+                              name: "Mængde X",
+                              data: [
+                                [(p - b) / a, p],
+                                [(p - b) / a, 0],
+                              ],
+                            },
+                            {
+                              type: "line",
+                              color: "black",
+                              marker: {
+                                enabled: false,
+                                symbol: "circle",
+                                radius: 2,
+                              },
+                              dashStyle: "Dot",
+                              name: "Max omsætning",
+                              data: [
+                                [0, b / 2],
+                                [(-0.5 * b) / a, b / 2],
+                                [(-0.5 * b) / a, 0],
+                              ],
+                            },
+                            {
+                              type: "line",
+                              marker: {
+                                enabled: false,
+                                symbol: "circle",
+                                radius: 2,
+                              },
+                              name: "GROMS",
+                              data: [
+                                [0, b],
+                                [(-0.5 * b) / a, 0],
+                              ],
+                            },
+
+                            {
+                              type: "line",
+                              color: "red",
+                              lineWidth: 4,
+                              marker: {
+                                enabled: false,
+                                symbol: "circle",
+                                radius: 2,
+                              },
+                              name: "Uelastisk efterspørgsel",
+                              data: [
+                                [(-0.5 * b) / a, a * ((-0.5 * b) / a) + b],
+                                [-b / a, 0],
+                              ],
+                            },
+                            {
+                              type: "line",
+                              color: "green",
+                              lineWidth: 4,
+                              marker: {
+                                // color: "blue",
+                                enabled: false,
+                                symbol: "circle",
+                                radius: 2,
+                              },
+                              name: "Elastisk efterspørgsel",
+                              data: [
+                                [0, b],
+                                [(-0.5 * b) / a, a * ((-0.5 * b) / a) + b],
+                              ],
+                            },
+                            {
+                              type: "line",
+                              lineWidth: 0.5,
+                              marker: {
+                                enabled: false,
+                                symbol: "circle",
+                                radius: 2,
+                              },
+                              name: "P",
+                              data: [
+                                [0, b],
+                                [(-0.5 * b) / a, a * ((-0.5 * b) / a) + b],
+                                [-b / a, 0],
+                              ],
+                            },
+                          ],
+                        }}
+                      />
+                    )}
+
+                    {!on && (
+                      <HighchartsReact
+                        // containerProps={{ style: { height: "200%" } }}
+                        highcharts={Highcharts}
+                        options={{
+                          title: {
+                            text: "Pris- afsætningsfunktionen",
+                          },
+                          exporting: {
+                            Buttons: {
+                              contextButton: {
+                                menuItems: [
+                                  "viewFullscreen",
+                                  "separator",
+                                  "downloadPNG",
+                                  "downloadPNG",
+                                  "downloadSVG",
+                                ],
+                              },
+                            },
+                          },
+                          credits: {
+                            enabled: false,
+                          },
+                          annotations: [
+                            {
+                              labelOptions: {
+                                backgroundColor: "rgba(252, 255, 197, 1)",
+                                verticalAlign: "top",
+                                padding: 2,
+
+                                style: {
+                                  fontSize: "0.6em",
+                                },
+                              },
+                              labels: [
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: (-0.5 * b) / a,
+                                    y: 2,
+                                  },
+                                  text:
+                                    "GROMS=" +
+                                    numberFormat4(2 * a) +
+                                    "X+" +
+                                    numberFormat4(b),
+                                },
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: -b / a,
+                                    y: 2,
+                                  },
+                                  text:
+                                    "P=" +
+                                    numberFormat4(a) +
+                                    "X+" +
+                                    numberFormat4(b),
+                                },
+                              ],
+                            },
+                            {
+                              labelOptions: {
+                                shape: "connector",
+                                align: "right",
+                                justify: false,
+                                crop: true,
+                                style: {
+                                  fontSize: "0.8em",
+                                  textOutline: "0px white",
+                                },
+                              },
+                            },
+                          ],
+                          xAxis: {
+                            title: {
+                              text: "Afsætning",
+                            },
+                            gridLineWidth: 1,
+                            min: 0,
+                            max: 1.1 * (-b / a),
+                            labels: {
+                              format: "{value} stk.",
+                            },
+                          },
+                          yAxis: {
+                            title: {
+                              text: null,
+                            },
+                            min: 0,
+                            max: b,
+                            labels: {
+                              format: "{value} DKK.",
+                            },
+                          },
+                          series: [
+                            {
+                              name: "TVO",
+                              type: "polygon",
+                              data: [
+                                [0, 0],
+                                [(p - b) / a, 0],
+                                [(p - b) / a, p],
+                                [0, p],
+                              ],
+                              color: "rgb(0,255,0,.5)",
+                            },
+                            {
+                              type: "line",
+                              marker: {
+                                enabled: false,
+                                symbol: "circle",
+                                radius: 2,
+                              },
+                              dashStyle: "ShortDot",
+                              name: "Pris P",
+                              data: [
+                                [0, p],
+                                [(p - b) / a, p],
+                              ],
+                            },
+                            {
+                              type: "line",
+                              color: "red",
+                              marker: {
+                                enabled: false,
+                                symbol: "circle",
+                                radius: 2,
+                              },
+                              dashStyle: "ShortDot",
+                              name: "Mængde X",
+                              data: [
+                                [(p - b) / a, p],
+                                [(p - b) / a, 0],
+                              ],
+                            },
+                            {
+                              type: "line",
+                              color: "black",
+                              marker: {
+                                enabled: false,
+                                symbol: "circle",
+                                radius: 2,
+                              },
+                              dashStyle: "Dot",
+                              name: "Max omsætning",
+                              data: [
+                                [0, b / 2],
+                                [(-0.5 * b) / a, b / 2],
+                                [(-0.5 * b) / a, 0],
+                              ],
+                            },
+                            {
+                              type: "line",
+                              marker: {
+                                enabled: false,
+                                symbol: "circle",
+                                radius: 2,
+                              },
+                              name: "GROMS",
+                              data: [
+                                [0, b],
+                                [(-0.5 * b) / a, 0],
+                              ],
+                            },
+
+                            // {
+                            //   type: "line",
+                            //   color: "red",
+                            //   lineWidth: 4,
+                            //   marker: {
+                            //     enabled: false,
+                            //     symbol: "circle",
+                            //     radius: 2,
+                            //   },
+                            //   name: "Uelastisk efterspørgsel",
+                            //   data: [
+                            //     [(-0.5 * b) / a, a * ((-0.5 * b) / a) + b],
+                            //     [-b / a, 0],
+                            //   ],
+                            // },
+                            // {
+                            //   type: "line",
+                            //   color: "green",
+                            //   lineWidth: 4,
+                            //   marker: {
+                            //     // color: "blue",
+                            //     enabled: false,
+                            //     symbol: "circle",
+                            //     radius: 2,
+                            //   },
+                            //   name: "Elastisk efterspørgsel",
+                            //   data: [
+                            //     [0, b],
+                            //     [(-0.5 * b) / a, a * ((-0.5 * b) / a) + b],
+                            //   ],
+                            // },
+                            {
+                              type: "line",
+                              lineWidth: 2,
+                              marker: {
+                                enabled: false,
+                                symbol: "circle",
+                                radius: 2,
+                              },
+                              name: "P",
+                              data: [
+                                [0, b],
+                                [(-0.5 * b) / a, a * ((-0.5 * b) / a) + b],
+                                [-b / a, 0],
+                              ],
+                            },
+                          ],
+                        }}
+                      />
+                    )}
+                  </div>
+                )}
               />
             </div>
           </div>
@@ -437,7 +662,7 @@ export function f3() {
                     text: "Omsætning og Pris- afsætningsfunktionen",
                   },
                   exporting: {
-                    buttons: {
+                    Buttons: {
                       contextButton: {
                         menuItems: [
                           "viewFullscreen",
