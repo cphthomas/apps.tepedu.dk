@@ -150,7 +150,7 @@ export const NavigationBar = () => (
               </Link>
             </Nav.Link>
           </Nav.Item>
-          <Nav.Item>
+          {/* <Nav.Item>
             <Nav.Link>
               <Link to="/f4">
                 <OverlayTrigger
@@ -173,7 +173,7 @@ export const NavigationBar = () => (
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
-          </Nav.Item>
+          </Nav.Item> */}
           {/* <NavDropdown title="Investering" id="basic-nav-dropdown">
             <Link href="/about">About</Link>
             <Nav.Link href="/about">navlink</Nav.Link>
