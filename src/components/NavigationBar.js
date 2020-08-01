@@ -104,7 +104,7 @@ export const NavigationBar = () => (
               </Link>
             </Nav.Link>
           </Nav.Item>
-          <Nav.Item>
+          {/* <Nav.Item>
             <Nav.Link>
               <Link to="/optimering">
                 <OverlayTrigger
@@ -120,7 +120,7 @@ export const NavigationBar = () => (
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
-          </Nav.Item>
+          </Nav.Item> */}
           <Nav.Item>
             <Nav.Link>
               <Link to="/optimering2">

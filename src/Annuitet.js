@@ -310,9 +310,9 @@ export function Annuitet() {
     <div>
       <Container>
         <div class="p-3 mb-2 bg-secondary text-white">
-          <h1>Finans</h1>
-          <h3>Annuitet.</h3>
-          <h3>Hvad bliver ydelse, afdrag og renter?</h3>
+          <h3>Finans</h3>
+          <h5>Annuitet.</h5>
+          <h5>Hvad bliver ydelse, afdrag og renter?</h5>
         </div>
       </Container>
       <Container className="p-0">

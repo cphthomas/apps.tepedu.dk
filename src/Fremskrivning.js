@@ -135,9 +135,9 @@ export function Fremskrivning() {
     <div>
       <Container>
         <div class="p-3 mb-2 bg-secondary text-white">
-          <h1>Finans</h1>
-          <h3>Fremskrivning af kapital</h3>
-          <h3>Hvor meget vokser et indestående med?</h3>
+          <h3>Finans</h3>
+          <h5>Fremskrivning af kapital</h5>
+          <h5>Hvor meget vokser et indestående med?</h5>
         </div>
       </Container>
       <Container className="p-0">
