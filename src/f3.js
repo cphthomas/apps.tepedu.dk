@@ -67,10 +67,12 @@ export function f3() {
           <Toggle
             render={({ on, toggle }) => (
               <div>
-                {on && <h1>Show me</h1>}
                 <Button size="sm" onClick={toggle}>
-                  showtoggle
+                  {on && "Tændt"}
+                  {!on && "Slukket"}
                 </Button>
+                {on && <h6>Tændt</h6>}
+                {!on && <h6>Slukket</h6>}
               </div>
             )}
           />
@@ -78,7 +80,7 @@ export function f3() {
             render={({ on, toggle }) => (
               <div>
                 <Button size="sm" onClick={toggle}>
-                  testing
+                  t2
                 </Button>
                 {on && <p>Show me 3</p>}
               </div>
@@ -201,7 +203,8 @@ export function f3() {
                 render={({ on, toggle }) => (
                   <div>
                     <Button size="sm" onClick={toggle}>
-                      Priselasticitet
+                      {on && "Skjul priselasticitet"}
+                      {!on && "Vis priselasticitet"}
                     </Button>
                     {on && (
                       <HighchartsReact
