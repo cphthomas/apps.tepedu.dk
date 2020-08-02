@@ -5,7 +5,7 @@ import Toggle from "./ToggleRenderProps";
 
 import { Row, Col, FormControl, Button } from "react-bootstrap";
 
-// import { MDBInput, MDBFormInline } from "mdbreact";
+// import { MDBInput, MDBFormInline, MDBBtn } from "mdbreact";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
@@ -14,6 +14,10 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
 import "./styles.css";
+
+import "katex/dist/katex.min.css";
+import { BlockMath } from "react-katex";
+
 import {
   // numberFormat1,
   // numberFormat2,
@@ -54,20 +58,23 @@ export function f3() {
 
   return (
     <div>
-      <Container>
-        <div class="p-3 mb-2 bg-secondary text-light">
-          <h3>Pris- afsætningsfunktionen</h3>
-          <h5>Hvilke afsætninger og priser passer sammen</h5>
-
-          {(() => {
+      <Container className="p-0">
+        <div class="p-3 mb-2 mt-0 ">
+          <div class="card">
+            <div class="p-4">
+              <h3>Pris- afsætningsfunktionen</h3>
+              <h5>Hvilke afsætninger og priser passer sammen</h5>
+            </div>
+          </div>
+          {/* {(() => {
             if (p > 70) {
               return <Button size="sm">Logout</Button>;
             }
-          })()}
-          <Toggle
+          })()} */}
+          {/* <Toggle
             render={({ on, toggle }) => (
               <div>
-                <Button size="sm" onClick={toggle}>
+                <Button color="red" size="sm" onClick={toggle}>
                   {on && "Tændt"}
                   {!on && "Slukket"}
                 </Button>
@@ -85,7 +92,7 @@ export function f3() {
                 {on && <p>Show me 3</p>}
               </div>
             )}
-          />
+          /> */}
         </div>
       </Container>
 
@@ -221,7 +228,7 @@ export function f3() {
                                   "viewFullscreen",
                                   "separator",
                                   "downloadPNG",
-                                  "downloadPNG",
+                                  "downloadPDF",
                                   "downloadSVG",
                                 ],
                               },
@@ -233,8 +240,8 @@ export function f3() {
                           annotations: [
                             {
                               labelOptions: {
-                                backgroundColor: "rgba(252, 255, 197, 1)",
-                                verticalAlign: "top",
+                                // backgroundColor: "rgba(252, 255, 197, 1)",
+                                // verticalAlign: "top",
                                 padding: 2,
 
                                 style: {
@@ -246,12 +253,112 @@ export function f3() {
                                   point: {
                                     xAxis: 0,
                                     yAxis: 0,
-                                    x: (-0.5 * b) / a,
-                                    y: 2,
+                                    x: (p - b) / a,
+                                    y: p,
                                   },
+                                  distance: 10,
                                   text:
-                                    "GROMS=" +
-                                    numberFormat4(2 * a) +
+                                    "Elasticiteten ved pris " +
+                                    numberFormat4(p) +
+                                    " DKK. bliver " +
+                                    numberFormat4(-p / (b - p)),
+                                },
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: (-0.5 * b) / a,
+                                    y: (b / 2) * 1.05,
+                                  },
+                                  distance: 5,
+                                  text: "Enhedselasticitet = -1",
+                                },
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: (-0.25 * b) / a,
+                                    y: (a * ((-0.25 * b) / a) + b) * 1.02,
+                                  },
+                                  distance: 5,
+                                  text: "Elastisk efterspørgsel < -1",
+                                },
+                                {
+                                  // align: "right",
+                                  // distance: 2,
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: 0,
+                                    y: p + (b - p) * 0.5,
+                                  },
+                                  x: 10,
+
+                                  // distance: 20,
+                                  // verticalAlign: "right",
+                                  align: "right",
+                                  text: "Øvre=" + numberFormat4(b - p),
+                                },
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: 0,
+                                    y: p * 0.5,
+                                  },
+                                  x: 10,
+                                  // verticalAlign: "right",
+                                  align: "right",
+                                  text: "Nedre=" + numberFormat4(p),
+                                },
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x:
+                                      (-b / a - (p - b) / a) * 0.5 +
+                                      (p - b) / a,
+                                    y: 0,
+                                  },
+                                  distance: 10,
+
+                                  text:
+                                    "Højre=" +
+                                    numberFormat4(-b / a - (p - b) / a),
+                                },
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: ((p - b) / a) * 0.5,
+                                    y: 0,
+                                  },
+                                  distance: 10,
+                                  text: "Venstre=" + numberFormat4((p - b) / a),
+                                },
+
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: (-0.75 * b) / a,
+                                    y: (a * ((-0.75 * b) / a) + b) * 1.1,
+                                  },
+                                  distance: 5,
+                                  text:
+                                    "Uelastisk efterspørgsel mellem -1 og 0",
+                                },
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: -b / a,
+                                    y: 0,
+                                  },
+                                  distance: 10,
+                                  text:
+                                    "P=" +
+                                    numberFormat4(a) +
                                     "X+" +
                                     numberFormat4(b),
                                 },
@@ -259,12 +366,13 @@ export function f3() {
                                   point: {
                                     xAxis: 0,
                                     yAxis: 0,
-                                    x: -b / a,
-                                    y: 2,
+                                    x: (-0.5 * b) / a,
+                                    y: 0,
                                   },
+                                  distance: 10,
                                   text:
-                                    "P=" +
-                                    numberFormat4(a) +
+                                    "GROMS=" +
+                                    numberFormat4(2 * a) +
                                     "X+" +
                                     numberFormat4(b),
                                 },
@@ -305,17 +413,17 @@ export function f3() {
                             },
                           },
                           series: [
-                            {
-                              name: "TVO",
-                              type: "polygon",
-                              data: [
-                                [0, 0],
-                                [(p - b) / a, 0],
-                                [(p - b) / a, p],
-                                [0, p],
-                              ],
-                              color: "rgb(0,255,0,.5)",
-                            },
+                            // {
+                            //   name: "TVO",
+                            //   type: "polygon",
+                            //   data: [
+                            //     [0, 0],
+                            //     [(p - b) / a, 0],
+                            //     [(p - b) / a, p],
+                            //     [0, p],
+                            //   ],
+                            //   color: "rgb(0,255,0,.5)",
+                            // },
                             {
                               type: "line",
                               marker: {
@@ -382,7 +490,7 @@ export function f3() {
                               marker: {
                                 enabled: false,
                                 symbol: "circle",
-                                radius: 2,
+                                radius: 0,
                               },
                               name: "Uelastisk efterspørgsel",
                               data: [
@@ -406,19 +514,79 @@ export function f3() {
                                 [(-0.5 * b) / a, a * ((-0.5 * b) / a) + b],
                               ],
                             },
+                            // {
+                            //   type: "line",
+                            //   lineWidth: 0,
+                            //   marker: {
+                            //     enabled: false,
+                            //     symbol: "circle",
+                            //     radius: 2,
+                            //   },
+                            //   name: "P",
+                            //   data: [
+                            //     [0, b],
+                            //     [(-0.5 * b) / a, a * ((-0.5 * b) / a) + b],
+                            //     [-b / a, 0],
+                            //   ],
+                            // },
                             {
                               type: "line",
-                              lineWidth: 0.5,
+                              color: "yellow",
+                              lineWidth: 8,
                               marker: {
                                 enabled: false,
                                 symbol: "circle",
-                                radius: 2,
+                                radius: 0,
                               },
-                              name: "P",
+                              name: "Nedre",
                               data: [
+                                [0, p],
+                                [0, 0],
+                              ],
+                            },
+                            {
+                              type: "line",
+                              color: "orange",
+                              lineWidth: 8,
+                              marker: {
+                                enabled: false,
+                                symbol: "circle",
+                                radius: 0,
+                              },
+                              name: "Øvre",
+                              data: [
+                                [0, p],
                                 [0, b],
-                                [(-0.5 * b) / a, a * ((-0.5 * b) / a) + b],
+                              ],
+                            },
+                            {
+                              type: "line",
+                              color: "blue",
+                              lineWidth: 8,
+                              marker: {
+                                enabled: false,
+                                // symbol: "circle",
+                                radius: 0,
+                              },
+                              name: "Venstre",
+                              data: [
+                                [0, 0],
+                                [(p - b) / a, 0],
+                              ],
+                            },
+                            {
+                              type: "line",
+                              color: "purple",
+                              lineWidth: 8,
+                              marker: {
+                                enabled: false,
+                                // symbol: "circle",
+                                radius: 0,
+                              },
+                              name: "Højre",
+                              data: [
                                 [-b / a, 0],
+                                [(p - b) / a, 0],
                               ],
                             },
                           ],
@@ -441,7 +609,7 @@ export function f3() {
                                   "viewFullscreen",
                                   "separator",
                                   "downloadPNG",
-                                  "downloadPNG",
+                                  "downloadPDF",
                                   "downloadSVG",
                                 ],
                               },
@@ -671,7 +839,7 @@ export function f3() {
                           "viewFullscreen",
                           "separator",
                           "downloadPNG",
-                          "downloadPNG",
+                          "downloadPDF",
                           "downloadSVG",
                         ],
                       },
@@ -855,354 +1023,451 @@ export function f3() {
         </div>
       </Container>
 
-      <Container className="p-0">
-        <div class="p-3 mb-2 bg-white text-black">
-          <div class="card">
-            <div class="card-body">
-              <HighchartsReact
-                //containerProps={{ style: { height: "200%" } }}
-                highcharts={Highcharts}
-              />
-            </div>
-          </div>
-        </div>
-      </Container>
+      <Container>
+        {/* <div class="container"> */}
+        <div>
+          {/* <div class="card"> */}
 
-      <Container className="p-0">
-        <div class="container">
           <table class="table table-bordered table-responsive table-white table-hover table-striped ">
-            <small>
-              <thead>
-                <span class="align-middle">
-                  <tr>
-                    <br />
+            <thead>
+              <span class="align-middle">
+                <tr>
+                  <br />
 
-                    <h3>&nbsp;&nbsp;&nbsp;Forklaring på variable</h3>
+                  <h3>&nbsp;&nbsp;&nbsp;Forklaring på variable </h3>
+                  <Toggle
+                    render={({ on, toggle }) => (
+                      <div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <Button color="red" size="sm" onClick={toggle}>
+                          {on && "Skjul priselasticitet"}
+                          {!on && "Vis priselasticitet"}
+                        </Button>
+                        <br />
+                        <br />
+                        {on && (
+                          <small>
+                            <tbody>
+                              <span class="align-top">
+                                <tr>
+                                  <th>DK navn</th>
+                                  <th>US navn</th>
+                                  <th>Værdi</th>
+                                  <th>Forklaring</th>
+                                </tr>
 
-                    <br />
-                  </tr>
-                </span>
-              </thead>
-              <tbody>
-                <span class="align-top">
-                  <tr>
-                    <th>DK navn</th>
-                    <th>US navn</th>
-                    <th>Værdi</th>
-                    <th>Forklaring</th>
-                  </tr>
+                                <tr>
+                                  <td>P</td>
+                                  <td>P</td>
+                                  <td>{numberFormat4(a).concat("X+", b)}</td>
 
-                  <tr>
-                    <td>P</td>
-                    <td>P</td>
-                    <td>{numberFormat4(a).concat("X+", b)}</td>
+                                  <td>
+                                    P er Pris- afsætningsfunktionen. P angiver
+                                    hvilken pris P, man skal sætte for at
+                                    afsætte mængden X stk.
+                                  </td>
+                                </tr>
 
-                    <td>
-                      P er Pris- afsætningsfunktionen. P angiver hvilken pris P,
-                      man skal sætte for at afsætte mængden X stk.
-                    </td>
-                  </tr>
+                                <tr>
+                                  <td>Pris</td>
+                                  <td>Price</td>
+                                  <td>{numberFormat4(p).concat(" DKK.")}</td>
 
-                  <tr>
-                    <td>GROMS</td>
-                    <td>MR</td>
-                    <td>{numberFormat4(2 * a).concat("X+", b)}</td>
+                                  <td>
+                                    Prisen p er her fastsat eksternt, dette vil
+                                    ofte være ud fra en bidragskalkulation, hvor
+                                    man kalkulerer salgsprisen ud fra et ønsket
+                                    dækningsbidrag.
+                                  </td>
+                                </tr>
 
-                    <td>
-                      GROMS er grænseomsætningen. GROMS angiver hvor meget
-                      omsætningen vokser ved en given afsætning X, når der
-                      afsættes et stk. mere. GROMS der omsætningen
-                      differentieret.
-                      <br />
-                      Når P er lineær, kan vi hurtigt finde GROMS som P med den
-                      dobbelte hældning:
-                      <br />
-                      GROMS = 2 &middot; {numberFormat4(a).concat(
-                        "X+",
-                        b
-                      )} = {numberFormat4(2 * a).concat("X+", b)}
-                    </td>
-                  </tr>
+                                <tr>
+                                  <td>X eller M</td>
+                                  <td>X eller Q</td>
+                                  <td>
+                                    {numberFormat4((p - b) / a).concat(" stk.")}
+                                  </td>
 
-                  {/* <tr>
-                    <td>GROMK</td>
-                    <td>MC</td>
-                    <td>{gromkligning}</td>
+                                  <td>
+                                    Afsætningen bestemmes ud fra pris-
+                                    afsætningsfunktionen, når vi kender prisen,
+                                    hældningskoefficienten a og skæringen med
+                                    y-aksen b, kan vi løse følgende ligning:
+                                    <BlockMath>
+                                      P=aX+b \Leftrightarrow
+                                    </BlockMath>
+                                    <BlockMath>
+                                      {String.raw`\textstyle ${numberFormat4(
+                                        p
+                                      )}=${numberFormat4(a)}X+${numberFormat4(
+                                        b
+                                      )}\Leftrightarrow`}
+                                    </BlockMath>
+                                    <BlockMath>
+                                      {String.raw`\textstyle ${numberFormat4(
+                                        p
+                                      )}-${numberFormat4(b)}=${numberFormat4(
+                                        a
+                                      )}X\Leftrightarrow`}
+                                    </BlockMath>
+                                    <BlockMath>
+                                      {String.raw`\textstyle ${numberFormat4(
+                                        p - b
+                                      )}=${numberFormat4(a)}X\Leftrightarrow`}
+                                    </BlockMath>
+                                    <BlockMath>
+                                      {String.raw`\textstyle \frac{${numberFormat4(
+                                        p - b
+                                      )}}{${numberFormat4(
+                                        a
+                                      )}}=X \Leftrightarrow`}
+                                    </BlockMath>
+                                    <BlockMath>
+                                      {String.raw`\textstyle ${numberFormat4(
+                                        (p - b) / a
+                                      )}=X`}
+                                    </BlockMath>
+                                  </td>
+                                </tr>
 
-                    <td>
-                      GROMK er grænseomkostningerne. GROMK angiver hvor meget
-                      omkostningerne vokser ved en given afsætning X, når der
-                      afsættes et stk mere. GROMK kan findes ved af
-                      differentiere de totale variable omkostninger TVO eller de
-                      totale omkostninger TO. <br />
-                      Er VE lineær og kendt kan vi hurtigt finde GROMK som VE
-                      med den dobbelte hældning.
-                      <br />
-                      GROMK = 2 &middot;{" "}
-                      {numberFormat4(ag * 0.5).concat("X+", b)} ={" "}
-                      {numberFormat4(ag).concat("X+", b)}
-                      {gromkligning2}
-                    </td>
-                  </tr> */}
+                                <tr>
+                                  <td>GROMS</td>
+                                  <td>MR</td>
+                                  <td>
+                                    {numberFormat4(2 * a).concat("X+", b)}
+                                  </td>
 
-                  {/* <tr>
-                    <td>VE</td>
-                    <td>AVC</td>
-                    <td>{avcligning}</td>
+                                  <td>
+                                    GROMS er grænseomsætningen. GROMS angiver
+                                    hvor meget omsætningen vokser ved en given
+                                    afsætning X, når der afsættes et stk. mere.
+                                    GROMS der omsætningen differentieret.
+                                    <br />
+                                    Når P er lineær, kan vi hurtigt finde GROMS
+                                    som P med den dobbelte hældning:
+                                    <br />
+                                    GROMS = 2 &middot;{" "}
+                                    {numberFormat4(a).concat("X+", b)} ={" "}
+                                    {numberFormat4(2 * a).concat("X+", b)}
+                                  </td>
+                                </tr>
 
-                    <td>
-                      VE er de variable enhedsomkostninger (AVC er average
-                      variable costs). VE angiver de gennemsnitlige variable
-                      omkostninger pr. stk. Kender man GROMK, og er GROMK en
-                      lineær funktion, kan VE hurtigt findes som GROMK med den
-                      halve hældning:
-                      <br />
-                      VE = 0,5 &middot; {numberFormat4(ag).concat(
-                        "X+",
-                        bg
-                      )} = {numberFormat4(0.5 * ag).concat("X+", bg)}
-                      {avcligning2}
-                    </td>
-                  </tr> */}
+                                <tr>
+                                  <td>Omsætning</td>
+                                  <td>TR</td>
+                                  <td>
+                                    {numberFormat4(a)}X<sup>2</sup>+
+                                    {numberFormat4(b)}X
+                                  </td>
 
-                  <tr>
-                    <td>Omsætning</td>
-                    <td>TR</td>
-                    <td>
-                      {numberFormat4(a)}X<sup>2</sup>+{numberFormat4(b)}X
-                    </td>
+                                  <td>
+                                    Omsætning bestemmes som pris gange
+                                    afsætning, når prisafsætningsfunktionen er
+                                    lineær bliver omsætningsfunktionen et
+                                    andetgradspolynomium. Funktionen for
+                                    omsætningen bliver:
+                                    <br />
+                                    Omsætning = P · X = (aX + b) · X = (
+                                    {numberFormat4(a).concat(
+                                      "X + ",
+                                      numberFormat4(b)
+                                    )}
+                                    )·X ={" "}
+                                    {numberFormat4(a).concat(
+                                      "X·X + ",
+                                      numberFormat4(b),
+                                      "X"
+                                    )}{" "}
+                                    = {numberFormat4(a)}X<sup>2</sup> +{" "}
+                                    {numberFormat4(b)}X
+                                    <br />
+                                    Når vi kender afsætningen X ={" "}
+                                    {numberFormat4((p - b) / a)} stk. kan vi
+                                    indsætte afsætningen i omsætningsfunktionen.
+                                    Men her er det nemmere at gange pris P og
+                                    afsætning X <br />
+                                    Omsætning = {numberFormat4(p)} ·{" "}
+                                    {numberFormat4((p - b) / a)} ={" "}
+                                    {numberFormat4(((p - b) / a) * p)} DKK.
+                                    Omsætningen svarer til det grønne areal i
+                                    figuren ovenfor.
+                                    <br />
+                                    <br />
+                                    Når P er lineær en lineær, kan man altid
+                                    finde prisen der giver den maksimale
+                                    omsætning som b/2 = {numberFormat4(b)}/2 =
+                                    {numberFormat4(b / 2)}.<br />
+                                    Afsætningen der maksimerer omsætningen, kan
+                                    så findes ved at indsætte P ={" "}
+                                    {numberFormat4(b / 2)} i pris-
+                                    afsætningsfunktionen og løse ligningen på
+                                    samme måde, som vi fandt afsætningen
+                                    ovenfor.
+                                    <br />X = ({numberFormat4(b / 2)} -{" "}
+                                    {numberFormat4(b)})/{numberFormat4(a)} ={" "}
+                                    {numberFormat4((b / 2 - b) / a)}
+                                    <br />
+                                    Den maksimale omsætning bliver så:
+                                    <br />P · X = {numberFormat4(b / 2)} ·{" "}
+                                    {numberFormat4((b / 2 - b) / a)} ={" "}
+                                    {numberFormat4((b / 2) * ((b / 2 - b) / a))}
+                                    <br />
+                                    Hvilket svarer til toppunktet i den grønne
+                                    parabel for omsætningen ovenfor. Afsætningen
+                                    og prisen der maksimerer omsætningen fremgår
+                                    af de stiplede sorte linjer ovenfor.
+                                  </td>
+                                </tr>
 
-                    <td>
-                      Omsætning bestemmes som pris gange afsætning, når
-                      prisafsætningsfunktionen er lineær bliver
-                      omsætningsfunktionen et andetgradspolynomium. Funktionen
-                      for omsætningen bliver:
-                      <br />
-                      Omsætning = P · X = (aX + b) · X = (
-                      {numberFormat4(a).concat("X + ", numberFormat4(b))})·X ={" "}
-                      {numberFormat4(a).concat("X·X + ", numberFormat4(b), "X")}{" "}
-                      = {numberFormat4(a)}X<sup>2</sup> + {numberFormat4(b)}X
-                    </td>
-                  </tr>
+                                <tr>
+                                  <td>
+                                    e<sub>p</sub>
+                                  </td>
+                                  <td>
+                                    e<sub>p</sub>
+                                  </td>
+                                  <td>{numberFormat4(-p / (b - p))} </td>
+                                  <td>
+                                    Priselasticiteten angiver hvor meget
+                                    afsætningen falder/stiger i procent, når
+                                    prisen øges/sænkes med 1 procent. En
+                                    priselasticitet på{" "}
+                                    {numberFormat4(-p / (b - p))}, betyder altså
+                                    at hvis man sænker prisen med 1% øges
+                                    afsætningen med {numberFormat4(p / (b - p))}
+                                    %.
+                                    <br />
+                                    Man kan beregne priselasticiteten på flere
+                                    måder, de gule og orange længder på figuren
+                                    for priselasticitet er en hurtig måde at
+                                    beregne e<sub>p</sub>:
+                                    <br />e<sub>p</sub> = -nedre/øvre = -p/(b-p)
+                                    = -gul/orange = {numberFormat4(-p)}/
+                                    {numberFormat4(b - p)} =
+                                    {numberFormat4(-p / (b - p))}
+                                    <br />
+                                    <br />
+                                    Man kan alternativt benytte de blå og lilla
+                                    længder på figuren for priselasticitet.
+                                    <br />e<sub>p</sub> = -højre/venstre =
+                                    -lilla/blå ={" "}
+                                    {numberFormat4(-(-b / a - (p - b) / a))}/
+                                    {numberFormat4((p - b) / a)} =
+                                    {numberFormat4(-p / (b - p))}
+                                    <br />
+                                    Priselasticiteten antager næsten altid
+                                    negative værdier, ofte undlades minus i
+                                    lærebøger. Når omsætningen er maksimal (Ved
+                                    P = {numberFormat4(b / 2)}), er
+                                    priselasticiteten -1, vi siger der er
+                                    enhedselasticitet eller unielasticitet.
+                                    <br />
+                                    Er prisen højere end {numberFormat4(
+                                      b / 2
+                                    )}{" "}
+                                    er elasticiteten mindre end -1, vi siger så
+                                    at priselasticiteten er elastisk, dette kan
+                                    ses af det grønne linjestykke.
+                                    <br />
+                                    Er prisen lavere end {numberFormat4(
+                                      b / 2
+                                    )}{" "}
+                                    er elasticiteten mellem -1 og 0, vi siger så
+                                    at priselasticiteten er uelastisk, dette kan
+                                    ses af det røde linjestykke.
+                                  </td>
+                                </tr>
+                              </span>
+                            </tbody>
+                          </small>
+                        )}
+                        {!on && (
+                          <small>
+                            <tbody>
+                              <span class="align-top">
+                                <tr>
+                                  <th>DK navn</th>
+                                  <th>US navn</th>
+                                  <th>Værdi</th>
+                                  <th>Forklaring</th>
+                                </tr>
 
-                  {/* <tr>
-                    <td>TVO</td>
-                    <td>TVC</td>
-                    <td>
-                      {numberFormat4(0.5 * ag)}X<sup>2</sup> +
-                      {numberFormat4(bg)}X
-                    </td>
+                                <tr>
+                                  <td>P</td>
+                                  <td>P</td>
+                                  <td>{numberFormat4(a).concat("X+", b)}</td>
 
-                    <td>
-                      TVO Totale variable omkostninger kan bestemmes som VE
-                      gange afsætning, når VE er lineær bliver TVO et
-                      andetgradspolynomium. Funktionen for TVO bliver:
-                      <br />
-                      TVO = VE · X = (aX + b) · X = (
-                      {numberFormat4(0.5 * ag).concat(
-                        "X + ",
-                        numberFormat4(bg)
-                      )}
-                      )·X ={" "}
-                      {numberFormat4(0.5 * ag).concat(
-                        "X·X + ",
-                        numberFormat4(bg),
-                        "X"
-                      )}{" "}
-                      = {numberFormat4(0.5 * ag)}X<sup>2</sup> +{" "}
-                      {numberFormat4(bg)}X{tvoligning2}
-                    </td>
-                  </tr> */}
+                                  <td>
+                                    P er Pris- afsætningsfunktionen. P angiver
+                                    hvilken pris P, man skal sætte for at
+                                    afsætte mængden X stk.
+                                  </td>
+                                </tr>
 
-                  <tr>
-                    {/* <td>
-                      X<sup>opt</sup>
-                      <br />
-                      eller
-                      <br />M<sup>opt</sup>
-                    </td>
-                    <td>
-                      X<sup>opt</sup>
-                      <br />
-                      eller
-                      <br />Q<sup>opt</sup>
-                    </td>
-                    <td>{numberFormat4(optimalx)} stk.</td> */}
+                                <tr>
+                                  <td>Pris</td>
+                                  <td>Price</td>
+                                  <td>{numberFormat4(p).concat(" DKK.")}</td>
 
-                    {/* <td>
-                      <b>{xneg}</b>
-                      Afsætningen angiver det totale salg af varen i stk.
-                      Optimal afsætning X<sup>opt</sup> ={" "}
-                      {numberFormat4(optimalx)} stk. er den afsætning, der
-                      maksimerer dækningsbidraget DB (det er forudsat at DB er
-                      positivt). Vi kan finde den optimale afsætning ved at
-                      sætte GROMS lig med GROMK:
-                      <BlockMath>GROMS=GROMK \Leftrightarrow</BlockMath>
-                      <BlockMath>
-                        {String.raw`\textstyle ${numberFormat4(
-                          2 * a
-                        )}X+${numberFormat4(b)} =${numberFormat4(
-                          ag
-                        )}X+${numberFormat4(bg)}\Leftrightarrow`}
-                      </BlockMath>
-                      <BlockMath>
-                        {String.raw`\textstyle ${numberFormat4(
-                          b
-                        )}-${numberFormat4(bg)} =${numberFormat4(
-                          ag
-                        )}X+${numberFormat4(-2 * a)}X\Leftrightarrow`}
-                      </BlockMath>
-                      <BlockMath>
-                        {String.raw`\textstyle ${numberFormat4(
-                          b - bg
-                        )} =${numberFormat4(ag - 2 * a)}X\Leftrightarrow`}
-                      </BlockMath>
-                      <BlockMath>
-                        {String.raw`\textstyle \frac{${numberFormat4(
-                          b - bg
-                        )}}{${numberFormat4(ag - 2 * a)}} = X\Leftrightarrow`}
-                      </BlockMath>
-                      <BlockMath>
-                        {String.raw`\textstyle ${numberFormat4(
-                          (b - bg) / (ag - 2 * a)
-                        )} = X`}
-                      </BlockMath>
-                    </td>
-                  </tr>
+                                  <td>
+                                    Prisen p er her fastsat eksternt, dette vil
+                                    ofte være ud fra en bidragskalkulation, hvor
+                                    man kalkulerer salgsprisen ud fra et ønsket
+                                    dækningsbidrag.
+                                  </td>
+                                </tr>
 
-                  <tr>
-                    <td>
-                      P<sup>opt</sup>
-                    </td>
-                    <td>
-                      P<sup>opt</sup>
-                    </td>
-                    <td>{numberFormat1(optimalp)}</td>
+                                <tr>
+                                  <td>X eller M</td>
+                                  <td>X eller Q</td>
+                                  <td>
+                                    {numberFormat4((p - b) / a).concat(" stk.")}
+                                  </td>
 
-                    <td>
-                      <b>{xneg}</b>
-                      Vi kender nu den optimale afsætning X<sup>opt</sup> og kan
-                      ved at indsætte afsætningen i pris- afsætningsfunktionen,
-                      bestemme hvilken pris vi skal tage for netop at afsætte
-                      den optimale mængde X<sup>opt</sup>:
-                      <br />P<sup>opt</sup> ={" "}
-                      {numberFormat4(a).concat(
-                        " · ",
-                        numberFormat4(optimalx),
-                        " + ",
-                        b
-                      )}{" "}
-                      = {numberFormat1(optimalp)}
-                    </td>
-                  </tr>
+                                  <td>
+                                    Afsætningen bestemmes ud fra pris-
+                                    afsætningsfunktionen, når vi kender prisen,
+                                    hældningskoefficienten a og skæringen med
+                                    y-aksen b, kan vi løse følgende ligning:
+                                    <BlockMath>
+                                      P=aX+b \Leftrightarrow
+                                    </BlockMath>
+                                    <BlockMath>
+                                      {String.raw`\textstyle ${numberFormat4(
+                                        p
+                                      )}=${numberFormat4(a)}X+${numberFormat4(
+                                        b
+                                      )}\Leftrightarrow`}
+                                    </BlockMath>
+                                    <BlockMath>
+                                      {String.raw`\textstyle ${numberFormat4(
+                                        p
+                                      )}-${numberFormat4(b)}=${numberFormat4(
+                                        a
+                                      )}X\Leftrightarrow`}
+                                    </BlockMath>
+                                    <BlockMath>
+                                      {String.raw`\textstyle ${numberFormat4(
+                                        p - b
+                                      )}=${numberFormat4(a)}X\Leftrightarrow`}
+                                    </BlockMath>
+                                    <BlockMath>
+                                      {String.raw`\textstyle \frac{${numberFormat4(
+                                        p - b
+                                      )}}{${numberFormat4(
+                                        a
+                                      )}}=X \Leftrightarrow`}
+                                    </BlockMath>
+                                    <BlockMath>
+                                      {String.raw`\textstyle ${numberFormat4(
+                                        (p - b) / a
+                                      )}=X`}
+                                    </BlockMath>
+                                  </td>
+                                </tr>
 
-                  <tr>
-                    <td>
-                      VE<sup>opt</sup>
-                    </td>
-                    <td>
-                      AVC<sup>opt</sup>
-                    </td>
-                    <td>{numberFormat1(0.5 * ag * optimalx + bg)}</td>
+                                <tr>
+                                  <td>GROMS</td>
+                                  <td>MR</td>
+                                  <td>
+                                    {numberFormat4(2 * a).concat("X+", b)}
+                                  </td>
 
-                    <td>
-                      <b>{xneg}</b>
-                      Vi kan indsætte den optimale afsætning X<sup>opt</sup> i
-                      funktionen for VE, og bestemme de gennemsnitlige variable
-                      omkostninger:
-                      <br />
-                      VE<sup>opt</sup> ={" "}
-                      {numberFormat4(0.5 * ag).concat(
-                        " · ",
-                        numberFormat4(optimalx),
-                        " + ",
-                        bg
-                      )}{" "}
-                      = {numberFormat1(0.5 * ag * optimalx + bg)}
-                    </td>
-                  </tr>
+                                  <td>
+                                    GROMS er grænseomsætningen. GROMS angiver
+                                    hvor meget omsætningen vokser ved en given
+                                    afsætning X, når der afsættes et stk. mere.
+                                    GROMS der omsætningen differentieret.
+                                    <br />
+                                    Når P er lineær, kan vi hurtigt finde GROMS
+                                    som P med den dobbelte hældning:
+                                    <br />
+                                    GROMS = 2 &middot;{" "}
+                                    {numberFormat4(a).concat("X+", b)} ={" "}
+                                    {numberFormat4(2 * a).concat("X+", b)}
+                                  </td>
+                                </tr>
 
-                  <tr>
-                    <td>
-                      Omsætning<sup>opt</sup>
-                    </td>
-                    <td>
-                      TR<sup>opt</sup>
-                    </td>
-                    <td>{numberFormat1(optimalp * optimalx)}</td>
+                                <tr>
+                                  <td>Omsætning</td>
+                                  <td>TR</td>
+                                  <td>
+                                    {numberFormat4(a)}X<sup>2</sup>+
+                                    {numberFormat4(b)}X
+                                  </td>
 
-                    <td>
-                      <b>{xneg}</b>
-                      <b>{omsneg}</b>
-                      Omsætningen angiver det totale salg af varen i kroner. Man
-                      kan indsætte den optimale afsætning i funktionen for
-                      omsætning ovenfor, eller man kan gange optimal pris P
-                      <sup>opt</sup>
-                      og afsætning X<sup>opt</sup>:
-                      <br />
-                      Omsætning<sup>opt</sup> = P<sup>opt</sup> · X
-                      <sup>opt</sup> = {numberFormat4(optimalp)} ·{" "}
-                      {numberFormat4(optimalx)} ={" "}
-                      {numberFormat1(optimalp * optimalx)}
-                      <br />
-                      Optimal omsætning fremgår af figuren ovenfor som summen af
-                      det grønne DB og det TVO røde areal.
-                    </td>
-                  </tr>
+                                  <td>
+                                    Omsætning bestemmes som pris gange
+                                    afsætning, når prisafsætningsfunktionen er
+                                    lineær bliver omsætningsfunktionen et
+                                    andetgradspolynomium. Funktionen for
+                                    omsætningen bliver:
+                                    <br />
+                                    Omsætning = P · X = (aX + b) · X = (
+                                    {numberFormat4(a).concat(
+                                      "X + ",
+                                      numberFormat4(b)
+                                    )}
+                                    )·X ={" "}
+                                    {numberFormat4(a).concat(
+                                      "X·X + ",
+                                      numberFormat4(b),
+                                      "X"
+                                    )}{" "}
+                                    = {numberFormat4(a)}X<sup>2</sup> +{" "}
+                                    {numberFormat4(b)}X
+                                    <br />
+                                    Når vi kender afsætningen X ={" "}
+                                    {numberFormat4((p - b) / a)} stk. kan vi
+                                    indsætte afsætningen i omsætningsfunktionen.
+                                    Men her er det nemmere at gange pris P og
+                                    afsætning X <br />
+                                    Omsætning = {numberFormat4(p)} ·{" "}
+                                    {numberFormat4((p - b) / a)} ={" "}
+                                    {numberFormat4(((p - b) / a) * p)} DKK.
+                                    Omsætningen svarer til det grønne areal i
+                                    figuren ovenfor.
+                                    <br />
+                                    <br />
+                                    Når P er lineær en lineær, kan man altid
+                                    finde prisen der giver den maksimale
+                                    omsætning som b/2 = {numberFormat4(b)}/2 =
+                                    {numberFormat4(b / 2)}.<br />
+                                    Afsætningen der maksimerer omsætningen, kan
+                                    så findes ved at indsætte P ={" "}
+                                    {numberFormat4(b / 2)} i pris-
+                                    afsætningsfunktionen og løse ligningen på
+                                    samme måde, som vi fandt afsætningen
+                                    ovenfor.
+                                    <br />X = ({numberFormat4(b / 2)} -{" "}
+                                    {numberFormat4(b)})/{numberFormat4(a)} ={" "}
+                                    {numberFormat4((b / 2 - b) / a)}
+                                    <br />
+                                    Den maksimale omsætning bliver så:
+                                    <br />P · X = {numberFormat4(b / 2)} ·{" "}
+                                    {numberFormat4((b / 2 - b) / a)} ={" "}
+                                    {numberFormat4((b / 2) * ((b / 2 - b) / a))}
+                                    <br />
+                                    Hvilket svarer til toppunktet i den grønne
+                                    parabel for omsætningen ovenfor. Afsætningen
+                                    og prisen der maksimerer omsætningen fremgår
+                                    af de stiplede sorte linjer ovenfor.
+                                  </td>
+                                </tr>
+                              </span>
+                            </tbody>
+                          </small>
+                        )}
+                      </div>
+                    )}
+                  />
 
-                  <tr>
-                    <td>
-                      TVO<sup>opt</sup>
-                    </td>
-                    <td>
-                      TVC<sup>opt</sup>
-                    </td>
-                    <td>{numberFormat1(ove * ox)}</td>
-
-                    <td>
-                      <b>{xneg}</b>
-                      TVO angiver de totale variable omkostninger i kroner. Man
-                      kan indsætte den optimale afsætning i funktionen for TVO
-                      ovenfor, eller man kan gange optimal VE og afsætning:
-                      <br />
-                      TVO<sup>opt</sup> = VE<sup>opt</sup> · X<sup>opt</sup> ={" "}
-                      {numberFormat4(ove)} · {numberFormat4(ox)} ={" "}
-                      {numberFormat1(ove * ox)}
-                      <br />
-                      TVO<sup>opt</sup> fremgår af figuren ovenfor som det røde
-                      areal.
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      DB<sup>opt</sup>
-                    </td>
-                    <td>
-                      Gross Profit<sup>opt</sup>
-                    </td>
-                    <td>{numberFormat1(op * ox - ove * ox)}</td>
-
-                    <td>
-                      <b>{dbneg}</b>
-                      <b>{xneg}</b>
-                      Dækningsbidraget er omsætningen minus de totale variable
-                      omkostninger. Dækningsbidraget benyttes til at dække faste
-                      omkostninger og profit.
-                      <br />
-                      DB<sup>opt</sup> = Omsætning<sup>opt</sup> - TVO
-                      <sup>opt</sup> = {numberFormat4(op * ox)} -{" "}
-                      {numberFormat4(ove * ox)} ={" "}
-                      {numberFormat1(op * ox - ove * ox)}
-                      <br />
-                      DB<sup>opt</sup> fremgår af figuren ovenfor som det grønne
-                      areal.
-                    </td> */}
-                  </tr>
-                </span>
-              </tbody>
-            </small>
+                  <br />
+                </tr>
+              </span>
+            </thead>
           </table>
+          {/* </div> */}
         </div>
       </Container>
     </div>
