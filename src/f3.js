@@ -1658,65 +1658,17 @@ export function f3() {
       </Container>
 
       <Container>
-        <div class="p-3 mb-2 bg-secondary text-white">
-          {/* <div class="card">
-            <div class="p-4"> */}
-          <h3>Hvordan fungerer denne app?</h3>
-          <div className="embed-responsive embed-responsive-16by9">
-            <iframe
-              title="embedsPage"
-              className="embed-responsive-item"
-              src="https://vimeo.com/226381328"
-              allowfullscreen
-            ></iframe>
-          </div>
-        </div>
-      </Container>
-
-      <Container>
-        <div class="p-3 mb-2 bg-secondary text-white">
-          {/* <div class="card">
-            <div class="p-4"> */}
-          <h3>Hvordan fungerer denne app?</h3>
-          <div className="embed-responsive embed-responsive-16by9">
-            <iframe
-              title="embedsPage"
-              className="embed-responsive-item"
-              src="https://vimeo.com/showcase/6533920/embed"
-              allowfullscreen
-            ></iframe>
-          </div>
-        </div>
-      </Container>
-
-      <Container>
-        <div class="p-3 mb-2 bg-secondary text-white">
-          {/* <div class="card">
-            <div class="p-4"> */}
-          <h3>Hvordan fungerer denne app?</h3>
-          <div className="embed-responsive embed-responsive-16by9">
-            <iframe
-              title="embedsPage"
-              className="embed-responsive-item"
-              src="https://vimeo.com/showcase/6533920"
-              allowfullscreen
-            ></iframe>
-          </div>
-        </div>
-      </Container>
-
-      <Container>
-        {/* <div class="p-3 mb-2 bg-secondary text-white"> */}
         <div className="embed-responsive embed-responsive-16by9">
           <iframe
             title="embedsPage"
             className="embed-responsive-item"
-            src="https://vimeo.com/showcase/6533920/embed"
+            src="https://vimeo.com/showcase/7079949/embed"
             allowfullscreen
           ></iframe>
         </div>
-        {/* </div> */}
       </Container>
+      <br />
+      <br />
     </div>
   );
 }
