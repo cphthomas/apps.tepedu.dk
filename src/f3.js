@@ -58,14 +58,13 @@ export function f3() {
 
   return (
     <div>
-      <Container className="p-0">
-        <div class="p-3 mb-2 mt-0 ">
-          <div class="card">
-            <div class="p-4">
-              <h3>Pris- afsætningsfunktionen</h3>
-              <h5>Hvilke afsætninger og priser passer sammen</h5>
-            </div>
-          </div>
+      <Container>
+        <div class="p-3 mb-2 bg-secondary text-white">
+          {/* <div class="card">
+            <div class="p-4"> */}
+          <h3>Pris- afsætningsfunktionen</h3>
+          <h5>Hvilke afsætninger og priser passer sammen</h5>
+
           {/* {(() => {
             if (p > 70) {
               return <Button size="sm">Logout</Button>;
