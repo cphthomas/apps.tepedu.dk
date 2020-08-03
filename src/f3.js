@@ -55,7 +55,7 @@ export function f3() {
   // }
   var xomsmax = (-0.5 * b) / a;
   var omsmax = a * xomsmax ** 2 + b * xomsmax;
-
+  var afsmax = b / -a;
   return (
     <div>
       <Container>
@@ -220,8 +220,11 @@ export function f3() {
                           title: {
                             text: "Pris- afsætningsfunktionen",
                           },
+                          tooltip: {
+                            enabled: true,
+                          },
                           exporting: {
-                            Buttons: {
+                            buttons: {
                               contextButton: {
                                 menuItems: [
                                   "viewFullscreen",
@@ -255,7 +258,7 @@ export function f3() {
                                     x: (p - b) / a,
                                     y: p,
                                   },
-                                  distance: 10,
+                                  distance: 7,
                                   text:
                                     "Elasticiteten ved pris " +
                                     numberFormat4(p) +
@@ -267,9 +270,9 @@ export function f3() {
                                     xAxis: 0,
                                     yAxis: 0,
                                     x: (-0.5 * b) / a,
-                                    y: (b / 2) * 1.05,
+                                    y: b / 2,
                                   },
-                                  distance: 5,
+                                  distance: 7,
                                   text: "Enhedselasticitet = -1",
                                 },
                                 {
@@ -277,10 +280,13 @@ export function f3() {
                                     xAxis: 0,
                                     yAxis: 0,
                                     x: (-0.25 * b) / a,
-                                    y: (a * ((-0.25 * b) / a) + b) * 1.02,
+                                    y: a * ((-0.25 * b) / a) + b,
                                   },
-                                  distance: 5,
+                                  distance: 7,
                                   text: "Elastisk efterspørgsel < -1",
+                                  borderWidth: 0,
+                                  backgroundColor: "green",
+                                  style: { color: "white" },
                                 },
                                 {
                                   // align: "right",
@@ -291,12 +297,13 @@ export function f3() {
                                     x: 0,
                                     y: p + (b - p) * 0.5,
                                   },
-                                  x: 10,
+                                  // x: 10,
 
-                                  // distance: 20,
-                                  // verticalAlign: "right",
                                   align: "right",
                                   text: "Øvre=" + numberFormat4(b - p),
+                                  borderWidth: 0,
+                                  backgroundColor: "orange",
+                                  style: { color: "white" },
                                 },
                                 {
                                   point: {
@@ -305,10 +312,15 @@ export function f3() {
                                     x: 0,
                                     y: p * 0.5,
                                   },
-                                  x: 10,
-                                  // verticalAlign: "right",
-                                  align: "right",
+                                  // x: 3,
+
                                   text: "Nedre=" + numberFormat4(p),
+                                  borderWidth: 0,
+                                  backgroundColor: "yellow",
+                                  style: { color: "black" },
+                                  // format: {
+                                  //   overflow: "justify",
+                                  // },
                                 },
                                 {
                                   point: {
@@ -324,6 +336,9 @@ export function f3() {
                                   text:
                                     "Højre=" +
                                     numberFormat4(-b / a - (p - b) / a),
+                                  borderWidth: 0,
+                                  backgroundColor: "purple",
+                                  style: { color: "white" },
                                 },
                                 {
                                   point: {
@@ -333,6 +348,9 @@ export function f3() {
                                     y: 0,
                                   },
                                   distance: 10,
+                                  borderWidth: 0,
+                                  backgroundColor: "blue",
+                                  style: { color: "white" },
                                   text: "Venstre=" + numberFormat4((p - b) / a),
                                 },
 
@@ -341,11 +359,14 @@ export function f3() {
                                     xAxis: 0,
                                     yAxis: 0,
                                     x: (-0.75 * b) / a,
-                                    y: (a * ((-0.75 * b) / a) + b) * 1.1,
+                                    y: a * ((-0.75 * b) / a) + b,
                                   },
-                                  distance: 5,
+                                  distance: 7,
                                   text:
                                     "Uelastisk efterspørgsel mellem -1 og 0",
+                                  borderWidth: 0,
+                                  backgroundColor: "red",
+                                  style: { color: "white" },
                                 },
                                 {
                                   point: {
@@ -354,7 +375,7 @@ export function f3() {
                                     x: -b / a,
                                     y: 0,
                                   },
-                                  distance: 10,
+                                  distance: 7,
                                   text:
                                     "P=" +
                                     numberFormat4(a) +
@@ -602,7 +623,7 @@ export function f3() {
                             text: "Pris- afsætningsfunktionen",
                           },
                           exporting: {
-                            Buttons: {
+                            buttons: {
                               contextButton: {
                                 menuItems: [
                                   "viewFullscreen",
@@ -620,7 +641,7 @@ export function f3() {
                           annotations: [
                             {
                               labelOptions: {
-                                backgroundColor: "rgba(252, 255, 197, 1)",
+                                // backgroundColor: "rgba(252, 255, 197, 1)",
                                 verticalAlign: "top",
                                 padding: 2,
 
@@ -633,9 +654,10 @@ export function f3() {
                                   point: {
                                     xAxis: 0,
                                     yAxis: 0,
-                                    x: (-0.5 * b) / a,
-                                    y: 2,
+                                    x: (-0.48 * b) / a,
+                                    y: 2 * a * ((-0.48 * b) / a) + b,
                                   },
+                                  distance: 7,
                                   text:
                                     "GROMS=" +
                                     numberFormat4(2 * a) +
@@ -646,14 +668,93 @@ export function f3() {
                                   point: {
                                     xAxis: 0,
                                     yAxis: 0,
-                                    x: -b / a,
-                                    y: 2,
+                                    x: (-0.85 * b) / a,
+                                    y: a * ((-0.85 * b) / a) + b,
                                   },
+                                  distance: 7,
                                   text:
                                     "P=" +
                                     numberFormat4(a) +
                                     "X+" +
                                     numberFormat4(b),
+                                  borderWidth: 0,
+                                  // backgroundColor: "orange",
+                                  // style: { color: "blue" },
+                                },
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: (p - b) / a,
+                                    y: p,
+                                  },
+                                  distance: 7,
+                                  text:
+                                    "Pris P = " +
+                                    +numberFormat4(p) +
+                                    " DKK.<br />Afsætning X = " +
+                                    numberFormat4((p - b) / a) +
+                                    " stk.",
+                                },
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: 0,
+                                    y: b,
+                                  },
+                                  x: -4,
+                                  // distance: -10,
+                                  // align: "left",
+                                  text:
+                                    "Skæring med <br />y-aksen b = " +
+                                    +numberFormat4(b) +
+                                    "<br />Max pris/betalingsvillighed",
+                                },
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: -b / a,
+                                    y: 0,
+                                  },
+                                  // x: -4,
+                                  distance: 7,
+                                  // align: "left",
+                                  text:
+                                    "Skæring med <br />x-aksen -b/a = " +
+                                    numberFormat4(afsmax) +
+                                    "<br />Max afsætning<br />markedsmætning",
+                                },
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: 0,
+                                    y: b,
+                                  },
+                                  x: -4,
+                                  // distance: -10,
+                                  // align: "left",
+                                  text:
+                                    "Skæring med <br />y-aksen b = " +
+                                    +numberFormat4(b) +
+                                    "<br />Max pris/betalingsvillighed",
+                                },
+                                {
+                                  point: {
+                                    xAxis: 0,
+                                    yAxis: 0,
+                                    x: (b / 2 - b) / a,
+                                    y: b / 2,
+                                  },
+                                  distance: -40,
+                                  text:
+                                    "Max omsætning ved<br />Pris P = " +
+                                    +numberFormat4(b / 2) +
+                                    " DKK.<br />Afsætning X = " +
+                                    numberFormat4((b / 2 - b) / a) +
+                                    " stk.",
                                 },
                               ],
                             },
@@ -693,7 +794,7 @@ export function f3() {
                           },
                           series: [
                             {
-                              name: "TVO",
+                              name: "Omsætning",
                               type: "polygon",
                               data: [
                                 [0, 0],
@@ -832,7 +933,7 @@ export function f3() {
                     text: "Omsætning og Pris- afsætningsfunktionen",
                   },
                   exporting: {
-                    Buttons: {
+                    buttons: {
                       contextButton: {
                         menuItems: [
                           "viewFullscreen",
@@ -850,7 +951,7 @@ export function f3() {
                   annotations: [
                     {
                       labelOptions: {
-                        backgroundColor: "rgba(252, 255, 197, 1)",
+                        // backgroundColor: "rgba(252, 255, 197, 1)",
                         verticalAlign: "top",
                         padding: 2,
 
@@ -863,9 +964,49 @@ export function f3() {
                           point: {
                             xAxis: 0,
                             yAxis: 0,
-                            x: (-0.5 * b) / a,
-                            y: 2,
+                            x: (p - b) / a,
+                            y: p * ((p - b) / a),
                           },
+                          y: -1,
+                          align: "right",
+                          // distance: -28,
+                          text:
+                            "Omsætning<br />P · X =<br />" +
+                            +numberFormat4(p) +
+                            " · " +
+                            numberFormat4((p - b) / a) +
+                            " = <br />" +
+                            numberFormat4((p * (p - b)) / a) +
+                            " DKK.",
+                        },
+                        {
+                          point: {
+                            xAxis: 0,
+                            yAxis: 0,
+                            x: (b / 2 - b) / a,
+                            y: (((b / 2 - b) / a) * b) / 2,
+                          },
+                          y: -1,
+                          align: "left",
+                          // distance: -28,
+                          text:
+                            "Max omsætning<br /> " +
+                            +numberFormat4(b / 2) +
+                            " · " +
+                            numberFormat4((b / 2 - b) / a) +
+                            " =<br />" +
+                            numberFormat4(omsmax) +
+                            " DKK.",
+                        },
+
+                        {
+                          point: {
+                            xAxis: 0,
+                            yAxis: 0,
+                            x: (-0.5 * b) / a,
+                            y: 0,
+                          },
+                          distance: 10,
                           text:
                             "GROMS=" +
                             numberFormat4(2 * a) +
@@ -877,8 +1018,9 @@ export function f3() {
                             xAxis: 0,
                             yAxis: 0,
                             x: -b / a,
-                            y: 2,
+                            y: 0,
                           },
+                          distance: 10,
                           text:
                             "P=" + numberFormat4(a) + "X+" + numberFormat4(b),
                         },
@@ -940,6 +1082,7 @@ export function f3() {
                   },
                   series: [
                     {
+                      showInLegend: false,
                       type: "line",
                       color: "black",
                       marker: {
@@ -959,6 +1102,48 @@ export function f3() {
                       ],
                     },
                     {
+                      showInLegend: false,
+                      type: "line",
+                      color: "black",
+                      marker: {
+                        enabled: false,
+                        symbol: "circle",
+                        radius: 2,
+                      },
+                      dashStyle: "Dot",
+                      // name: "Omsætning ved pris ".concat(
+                      //   p,
+                      //   " DKK. og afsætning ",
+                      //   numberFormat4((p - b) / a)
+                      // ),
+                      data: [
+                        [(p - b) / a, (p * (p - b)) / a],
+                        [(p - b) / a, 0],
+                      ],
+                    },
+                    {
+                      showInLegend: false,
+                      type: "line",
+                      color: "black",
+                      marker: {
+                        enabled: false,
+                        symbol: "circle",
+                        radius: 2,
+                      },
+                      dashStyle: "Dot",
+                      name: "Omsætning ved pris ".concat(
+                        p,
+                        " DKK. og afsætning ",
+                        numberFormat4((p - b) / a)
+                      ),
+
+                      data: [
+                        [0, (p * (p - b)) / a],
+                        [(p - b) / a, (p * (p - b)) / a],
+                      ],
+                    },
+                    {
+                      showInLegend: true,
                       type: "line",
                       marker: {
                         enabled: false,
@@ -974,6 +1159,7 @@ export function f3() {
                     },
 
                     {
+                      showInLegend: true,
                       type: "line",
                       marker: {
                         enabled: false,
@@ -989,13 +1175,14 @@ export function f3() {
                     },
 
                     {
+                      showInLegend: true,
                       type: "spline",
                       marker: {
                         enabled: true,
                         symbol: "circle",
                         radius: 1,
                       },
-                      name: "OMS1",
+                      name: "Omsætning",
                       data: [
                         [0, 0],
 

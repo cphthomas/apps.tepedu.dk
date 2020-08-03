@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Home } from "./Home";
 import { Fremskrivning } from "./Fremskrivning";
 import { Annuitet } from "./Annuitet";
-import { Pris } from "./Pris";
+// import { Pris } from "./Pris";
 import { Optimering } from "./Optimering";
 import { Optimering2 } from "./Optimering2";
 
@@ -30,7 +30,7 @@ class App extends Component {
               <Route path="/fremskrivning" component={Fremskrivning} />
               <Route path="/annuitet" component={Annuitet} />
               <Route path="/finans" component={Finans} />
-              <Route path="/pris" component={Pris} />
+              <Route path="/pris" component={f3} />
               <Route path="/optimering" component={Optimering} />
               <Route path="/optimering2" component={Optimering2} />
               <Route path="/f3" component={f3} />

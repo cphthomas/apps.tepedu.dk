@@ -24,7 +24,6 @@ import "katex/dist/katex.min.css";
 import { BlockMath } from "react-katex";
 require("highcharts/modules/exporting")(Highcharts);
 require("highcharts/modules/annotations")(Highcharts);
-
 require("highcharts/highcharts-more")(Highcharts);
 
 export function Optimering2() {
@@ -270,7 +269,7 @@ export function Optimering2() {
                           "viewFullscreen",
                           "separator",
                           "downloadPNG",
-                          "downloadPNG",
+                          "downloadPDF",
                           "downloadSVG",
                         ],
                       },
@@ -283,7 +282,7 @@ export function Optimering2() {
                     {
                       labelOptions: {
                         // backgroundColor: "rgba(255,255,255,1)",
-                        backgroundColor: "rgba(252, 255, 197, 1)",
+                        // backgroundColor: "rgba(252, 255, 197, 1)",
                         verticalAlign: "top",
                         padding: 2,
 
