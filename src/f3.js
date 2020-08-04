@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Toggle from "./ToggleRenderProps";
-
+// import ReactPlayer from "react-player";
 // import { FormCheckbox } from "shards-react";
+// import { MDBContainer } from "mdbreact";
 
 import { Row, Col, FormControl, Button } from "react-bootstrap";
 
@@ -1656,19 +1657,31 @@ export function f3() {
           {/* </div> */}
         </div>
       </Container>
+      <br />
 
-      <Container>
-        <div className="embed-responsive embed-responsive-16by9">
-          <iframe
-            title="embedsPage"
-            className="embed-responsive-item"
-            src="https://vimeo.com/showcase/7079949/embed"
-            allowfullscreen
-          ></iframe>
+      <br />
+
+      <Container fluid className="p-0">
+        <div class="p-3 mb-0 bg-white text-black">
+          <div class="card">
+            <div class="card-body">
+              {/* <div class="p-3 mb-2 bg-white text-black"> */}
+
+              <div className="embed-responsive embed-responsive-16by9">
+                <iframe
+                  title="demo"
+                  className="embed-responsive-item"
+                  src="https://player.vimeo.com/video/389002644"
+                  frameborder="0"
+                  allow="autoplay; fullscreen"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+          </div>
+          {/* </div> */}
         </div>
       </Container>
-      <br />
-      <br />
     </div>
   );
 }
