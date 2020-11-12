@@ -731,7 +731,7 @@ export function annuitet() {
                     <td></td>
                     <td>
                       Restgælden kan beregnes ud fra formlen er beløbet man låner på papiret på tidspunkt:<br></br>
-                      Restgæld ultimo termin 1 =<br></br>Hovedstol*(1 + terminsrente)^termin1 - (ydelse (1 + terminsrente)^termin1 -1 )/terminsrente =<br></br> 
+                      Restgæld ultimo termin 1 =<br></br>NV*(1 + RENTE)^termin1 - (PMT (1 + terminsrente)^termin1 -1 )/terminsrente =<br></br> 
                       {hovedstol}*(1+{rentedecimal})^1- {ydelse}*(1+{rentedecimal})^1-1)/{rentedecimal} =<br></br>
                        {numberFormat1(restgæld[1])}<br></br>
                        Restgæld ultimo termin 2 =<br></br>Hovedstol*(1 + terminsrente)^termin2 - (ydelse (1 + terminsrente)^termin2 -1 )/terminsrente =<br></br> 
