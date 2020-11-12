@@ -365,29 +365,7 @@ export function ann() {
 
           <h4>Annuitet.</h4>
           <h5>Hvad bliver ydelse, afdrag og rente?</h5>
-          anntype {anntype}
-          <br></br>
-          ydelse = {ydelse}
-          <br></br>
-          ydelseinput = {ydelseinput}
-          <br></br>
-          bs = {bs}
-          <br></br>
-          bsss = {bsss}
-          <br></br>
-          rente = {rente}
-          <br></br>
-          ydelse = {ydelse}
-          <br></br>
-          setrente = {setrente}
-          <br></br>
-          skatss = {skatss}
-          <br></br>
-          renterss={renterss}
-          <br></br>
-          bssss = {bssss}
-          <br></br>
-          renteeffektivskat = {renteeffektivskat}
+          
         </div>
 
       </Container>
@@ -694,7 +672,7 @@ export function ann() {
                     <th>Forklaring</th>
                   </tr>
                   <tr>
-                    <th scope="row">Ydelse</th>
+                    <th scope="row">Ydelse i DKK</th>
                     <td>{numberFormat1(ydelse)}</td>
                     <td>YDELSE</td>
                     <td>PMT</td>
@@ -713,30 +691,114 @@ export function ann() {
                         "\nMan kan udregne ydelsen " + numberFormat1(- ydelse) +
                         " i Excel ved følgende formel:\n=YDELSE("
                         + numberFormat2(rente) + "%;" + terminer + ";" + hovedstol + ";0)\nYdelsen kan på en lommeregner udregnes som:\n"
-                        + "(" + numberFormat6(hovedstol) + "*" +
-                        numberFormat6(rentedecimal) +
-                        ") / (1 - (1 + " + numberFormat6(rentedecimal) + ")^(-" + terminer + "))"
+                        + "(" + numberFormat5(hovedstol) + "*" +
+                        numberFormat5(rentedecimal) +
+                        ") / (1 - (1 + " + numberFormat5(rentedecimal) + ")^(-" + terminer + "))"
                       }
+                    </td>
+                  </tr>
+
+                  
+
+                  <tr>
+                    <th scope="row">
+                      Restgæld i DKK
+                      
+                      
+                    </th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      Restgælden kan beregnes ud fra formlen er beløbet man låner på papiret på tidspunkt:<br></br>
+                      Restgæld ultimo termin 1 =NV*(1 + RENTE)^1 - (PMT (1 + RENTE)^1 -1 )/RENTE =<br></br> 
+                      {numberFormat5(hovedstol)}*(1+{numberFormat5(rentedecimal)})^1- {numberFormat5(ydelse)}*(1+{numberFormat5(rentedecimal)})^1-1)/{numberFormat5(rentedecimal)} =<br></br>
+                       {numberFormat1(restgæld[1])}
+                       {<hr />}
+                       Restgæld ultimo termin 2 =NV*(1 + RENTE)^2 - (PMT (1 + RENTE)^2 -1 )/RENTE =<br></br> 
+                      {numberFormat5(hovedstol)}*(1+{numberFormat5(rentedecimal)})^2- {numberFormat5(ydelse)}*(1+{numberFormat5(rentedecimal)})^2-1)/{numberFormat5(rentedecimal)} =<br></br>
+                       {numberFormat1(restgæld[2])}
+                       {<hr />}
+                       Restgæld ultimo termin 3 =NV*(1 + RENTE)^3 - (PMT (1 + RENTE)^3 -1 )/RENTE =<br></br> 
+                      {numberFormat5(hovedstol)}*(1+{numberFormat5(rentedecimal)})^3- {numberFormat5(ydelse)}*(1+{numberFormat5(rentedecimal)})^3-1)/{numberFormat5(rentedecimal)} =<br></br>
+                       {numberFormat1(restgæld[3])}
+                       <br></br> 
+                       ...
+                      
                     </td>
                   </tr>
 
                   <tr>
                     <th scope="row">
-                      Restgæld
+                    Rente i DKK
                       
                       
                     </th>
-                    <td>{numberFormat1(hovedstol)}</td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td>
-                      Restgælden kan beregnes ud fra formlen er beløbet man låner på papiret på tidspunkt:<br></br>
-                      Restgæld ultimo termin 1 =<br></br>NV*(1 + RENTE)^termin1 - (PMT (1 + terminsrente)^termin1 -1 )/terminsrente =<br></br> 
-                      {hovedstol}*(1+{rentedecimal})^1- {ydelse}*(1+{rentedecimal})^1-1)/{rentedecimal} =<br></br>
-                       {numberFormat1(restgæld[1])}<br></br>
-                       Restgæld ultimo termin 2 =<br></br>Hovedstol*(1 + terminsrente)^termin2 - (ydelse (1 + terminsrente)^termin2 -1 )/terminsrente =<br></br> 
-                      {hovedstol}*(1+{rentedecimal})^2- {ydelse}*(1+{rentedecimal})^2-1)/{rentedecimal} =<br></br>
-                       {numberFormat1(restgæld[2])}
+                      Renten i DKK er forskellig for hver termin, denne beregnes som renten af restgælden :<br></br>
+                      Rente termin 1 = Restgæld primo termin 1 * RENTE =<br></br> 
+                      {numberFormat5(restgæld[0])}*{numberFormat5(rentedecimal)} = {numberFormat1(restgæld[0]*rentedecimal)}
+                      {<hr />}
+                      Rente termin 2 = Restgæld primo termin 2 * RENTE =<br></br> 
+                      {numberFormat5(restgæld[1])}*{numberFormat5(rentedecimal)} = {numberFormat1(restgæld[1]*rentedecimal)}
+                       {<hr />}
+                       Rente termin 3  = Restgæld primo termin 3 * RENTE =<br></br> 
+                       {numberFormat5(restgæld[2])}*{numberFormat5(rentedecimal)} = {numberFormat1(restgæld[2]*rentedecimal)}
+                       <br></br> 
+                       ...
+                      
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                    Skat i DKK
+                      
+                      
+                    </th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      Skat af renteudgifter refunderes af skattemyndighederne, skatten beregnes som rente gange skatteprocenten:<br></br>
+                      Skattebesparelse termin 1 = RENTE termin 1 * skatteprocent =<br></br> 
+                      {numberFormat5(restgæld[0]*rentedecimal)}*{numberFormat5(skat)}% = {numberFormat1(restgæld[0]*rentedecimal*skat/100)}
+                      {<hr />}
+                      Skattebesparelse termin 1 = RENTE termin 1 * skatteprocent =<br></br> 
+                      {numberFormat5(restgæld[1]*rentedecimal)}*{numberFormat5(skat)}% = {numberFormat1(restgæld[1]*rentedecimal*skat/100)}
+                       {<hr />}
+                       Skattebesparelse termin 1 = RENTE termin 1 * skatteprocent =<br></br> 
+                      {numberFormat5(restgæld[2]*rentedecimal)}*{numberFormat5(skat)}% = {numberFormat1(restgæld[2]*rentedecimal*skat/100)}
+                       <br></br> 
+                       ...
+                      
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                    Afdrag i DKK
+                      
+                      
+                    </th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      Afdraget bestemmes som Ydelse minus renter:<br></br>
+                      Afdrag termin 1 = Ydelse - RENTE<br></br> 
+                      {numberFormat5(ydelse)} - {numberFormat5(restgæld[0]*rentedecimal)}% = {numberFormat1(ydelse-restgæld[0]*rentedecimal)}
+                      {<hr />}
+                      Afdrag termin 2 = Ydelse - RENTE<br></br> 
+                      {numberFormat5(ydelse)} - {numberFormat5(restgæld[1]*rentedecimal)}% = {numberFormat1(ydelse-restgæld[1]*rentedecimal)}
+                       {<hr />}
+                       Afdrag termin 3 = Ydelse - RENTE<br></br> 
+                      {numberFormat5(ydelse)} - {numberFormat5(restgæld[2]*rentedecimal)}% = {numberFormat1(ydelse-restgæld[2]*rentedecimal)}
+                       <br></br> 
+                       ...
                       
                     </td>
                   </tr>

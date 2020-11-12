@@ -7,7 +7,6 @@ import { staaende } from "./staaende";
 // import { Pris } from "./Pris";
 import { Optimering } from "./Optimering";
 import { fin2020 } from "./fin2020";
-
 import { Finans } from "./Finans";
 import { ann } from "./ann";
 import { f4 } from "./f4";

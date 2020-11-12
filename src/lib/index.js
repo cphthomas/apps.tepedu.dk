@@ -22,7 +22,7 @@ export const numberFormat4 = (value) =>
 export const numberFormat5 = (value) =>
   new Intl.NumberFormat("de-DE", {
     minimumFractionDigits: 0,
-    maximumFractionDigits: 12,
+    maximumFractionDigits: 6,
   }).format(value);
 
 export const numberFormat6 = (value) =>
