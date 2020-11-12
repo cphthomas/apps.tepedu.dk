@@ -19,7 +19,8 @@ import {
 } from "./lib"; //ændrer til komma og pct + DKK
 import Container from "react-bootstrap/Container";
 // import ReactHtmlParser from "react-html-parser";
-import { Doughnut, Bar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+// import { Doughnut } from "react-chartjs-2";
 import DropdownButton from "react-bootstrap/DropdownButton";
 
 import Dropdown from "react-bootstrap/Dropdown";
@@ -34,36 +35,14 @@ import Handsontable from "handsontable";
 // import { BlockMath } from "react-katex";
 // import { InlineMath } from "react-katex";
 
-export function annuitet() {
-
-
-  // const numInputs = document.querySelectorAll("input[type=number]");
-
-  // numInputs.forEach(function (input) {
-  //   input.addEventListener("change", function (e) {
-  //     if (e.target.value === "") {
-  //       e.target.value = 1;
-  //     }
-  //   });
-  // });
-
-
+export function staaende() {
   const [hovedstol, sethovedstol] = useState(+(20000.0).toFixed(2));
   var [rente, setrente] = useState(+(1.25).toFixed(2));
-  var [ydelseinput, setydelseinput] = useState(+(2200).toFixed(2));
   var rentedecimal = rente / 100;
   const [terminer, setterminer] = useState(+(10.0).toFixed(2));
-  const [skat, setskat] = useState(+(22.0).toFixed(2));
-
   const [stiftelse, setstiftelse] = useState(+(0.0).toFixed(2));
   const [kurs, setkurs] = useState(+(100.0).toFixed(2));
-
-  const [anntype, setanntype] = useState("Kendt rente");
-  const annSelect = (e) => {
-    console.log(e);
-    setanntype(e);
-  };
-
+  const [skat, setskat] = useState(+(22.0).toFixed(2));
   const [prår, setprår] = useState("1 helårlig termin");
   const handleSelect = (e) => {
     console.log(e);
@@ -71,7 +50,6 @@ export function annuitet() {
   };
   var terminerår = prår.slice(0, 2);
   var fv = hovedstol * (1 + rente / 100) ** terminer;
-
   const cf = [...Array(terminer + 1).keys()];
   const cfnamed = cf.map((n) => "Tid: " + n);
 
@@ -81,16 +59,12 @@ export function annuitet() {
   const fvbarchart = Array.apply(null, Array(terminer + 1)).map((_) => "0");
   fvbarchart.splice(terminer, 0, fv.toFixed(2));
 
-  const rentecf = cf.map(
-    (cf) =>
-      -1 *
-      (
-        hovedstol * (1 + rente / 100) ** cf -
-        hovedstol -
-        (hovedstol * (1 + rente / 100) ** (cf - 1) - hovedstol)
-      ).toFixed(2)
+  var restgæld = cf.map((cf) =>
+    Math.abs(
+      hovedstol
+    )
   );
-  rentecf.splice(0, 1, 0);
+  restgæld.splice(terminer, 1, 0);
   var rentespreadsheet = cf.map(
     (cf) =>
       -1 *
@@ -103,48 +77,58 @@ export function annuitet() {
 
   var ydelse, bsss, bs;
 
-  if (anntype === "Kendt rente") {
-    ydelse =
-      (hovedstol * rentedecimal) / (1 - Math.pow(1 + rentedecimal, -terminer));
-    bs = new Array(terminer).fill(null).map(() => ydelse);
-    bs.splice(0, 0, -provenue);
-  }
 
-  // ###################################################################################################################
+  ydelse =
+    hovedstol * rentedecimal;
 
-  if (anntype === "Kendt ydelse") {
-    ydelse = ydelseinput;
-    bs = new Array(terminer).fill(null).map(() => ydelse);
-    bs.splice(0, 0, -provenue);
+  bs = restgæld.map((restgæld) =>
+    +ydelse);
+  bs.splice(0, 0, -provenue);
+  bs.splice(terminer, 1, +hovedstol + ydelse);
+  bs.pop();
 
-    rente = IRR(bs)
-    rentedecimal = rente / 100;
-  };
+  var bss = restgæld.map((restgæld) =>
+  +ydelse  * (1 - skat / 100));
+  bss.splice(0, 0, -provenue);
+  bss.splice(terminer, 1, +hovedstol + ydelse*(1 - skat / 100));
+  bss.pop();
+  
 
   bsss = bs.map((bs) => numberFormat3(-bs));
+
+
+
+  
   var ydelse1 = bs.map((bs) => bs);
   ydelse1.splice(0, 1, 0);
 
-  const restgæld = cf.map((cf) =>
-    Math.abs(
-      hovedstol * Math.pow(1 + rentedecimal, cf) -
-      (ydelse * (Math.pow(1 + rentedecimal, cf) - 1)) / rentedecimal
-    )
-  );
+
 
   const restgældss = restgæld.map((restgæld) => numberFormat3(restgæld));
   const restgældbc = restgæld.map((restgæld) => restgæld.toFixed(2));
 
   var renterss = restgæld.map((restgæld) => restgæld * rentedecimal);
-
   renterss.pop();
   renterss.splice(0, 0, 0);
 
-  var skatss = restgæld.map((restgæld) => restgæld * rentedecimal * (skat / 100));
-  skatss.pop();
-  skatss.splice(0, 0, 0);
+  var rentersss = restgæld.map((restgæld) => numberFormat3(restgæld * rentedecimal * (1 - skat / 100)));
+  rentersss.pop();
+  rentersss.splice(0, 0, 0);
 
 
+  var sss = restgæld.map((restgæld) => numberFormat3(-restgæld * rentedecimal * (skat / 100)));
+  sss.pop();
+  sss.splice(0, 0, 0);
+
+
+  var bssss = restgæld.map((restgæld) =>
+    restgæld * rentedecimal * (1 - skat / 100)
+  )
+  // bs = new Array(terminer).fill(null).map(() => 1999);
+  bssss.splice(0, 0, -provenue);
+  bssss.splice(terminer, 1, hovedstol + ydelse * (1 - skat / 100));
+  bssss.pop();
+  bssss = bssss.map((bssss) => numberFormat3(-1 * bssss));
   //const afdragss = ydelsess + renterss;
   //ydelseparsefloat =parseFloatydelsess.splice(0, 1, numberFormat3(0));
   //var afdragss = afdragss.map((ydelsess, renterss) => ydelsess - renterss); 
@@ -153,6 +137,7 @@ export function annuitet() {
   var afdragss = ydelse1.map((e, i) => e - renterss[i]);
   var ydelsess = ydelse1.map((ydelse1) => numberFormat3(ydelse1));
   renterss = renterss.map((renterss) => numberFormat3(renterss));
+
   afdragss = afdragss.map((afdragss) => numberFormat3(afdragss));
   // variable til bc barchart
   var renterbc = restgæld.map((restgæld) =>
@@ -160,6 +145,13 @@ export function annuitet() {
   );
   renterbc.pop();
   renterbc.splice(0, 0, Number(0));
+
+  // var renterbcs = restgæld.map((restgæld) =>
+  //   (-restgæld * rentedecimal * (1 - skat / 100)).toFixed(2)
+  // );
+  // renterbcs.pop();
+  // renterbcs.splice(0, 0, Number(0));
+
   var ydelsebc = ydelse1.map((ydelse1) => -ydelse1);
   var afdragbc = ydelsebc.map((e, i) =>
     parseFloat(e * 1 - renterbc[i]).toFixed(2)
@@ -167,49 +159,27 @@ export function annuitet() {
   let provenuebc = new Array(terminer).fill(null).map(() => 0);
   provenuebc.splice(0, 0, provenue);
 
-
-
-  const sumfunktion = (arr) => arr.reduce((a, b) => a + b, 0);
-  var sumrestgæld = (sumfunktion(restgæld) * rentedecimal).toFixed(2);
-
-  var formatskatss = skatss.map((skatss) => numberFormat3(skatss));
-  // var bssss = bs.map((bs, skatss) => numberFormat3(bs - skatss));
-  // var bssss = new Array(restgæld).fill(null).map(() => restgæld);
-  var bssss = restgæld.map((restgæld) => (restgæld * rentedecimal * (skat / 100) - ydelse));
-  // restgæld * rentedecimal * (skat / 100)
-  bssss.splice(0, 0, provenue);
-  bssss.pop();
-  var renteeffektivskat = IRR(bssss);
-  var formatbssss = bssss.map((bssss) => numberFormat3(bssss));
-
-
-  var data1 = [cf, ydelsess, renterss, formatskatss, afdragss, restgældss, bsss, formatbssss];
+  // const sumfunktion = (arr) => arr.reduce((a, b) => a + b, 0);
+  // var sumrestgæld = (sumfunktion(restgæld) * rentedecimal).toFixed(2);
+  var data1 = [cf, afdragss, renterss, sss, rentersss, ydelsess, restgældss, bsss, bssss];
   var colhead = [
     "Tid",
+    "Afdrag\n DKK",
+    "Renter\n DKK",
+    "Skat\n DKK",
+    "Renter\n - skat DKK",
+    "Ydelse\n DKK",
+    "Restgæld\n DKK",
+    "Betalingsstrømme\n DKK",
+    "Betalingsstrømme\n - skat DKK",
 
-    "Ydelse\nDKK",
-    "Renter\nDKK",
-    "Skat\nDKK",
-    "Afdrag\nDKK",
-    "Restgæld\nDKK",
-    "Betalingsstrømme\nDKK",
-    "Betalingsstrømme\nefter skat i DKK",
+
+
+
+
   ];
 
-  const datadoug = {
-    labels: [
-      "Provenue ".concat(numberFormat1(provenue.toFixed(2))),
-      "Rente ".concat(numberFormat1(sumrestgæld)),
-    ],
-    datasets: [
-      {
-        label: "Provenue og renter",
-        backgroundColor: ["orange", "green"],
-        hoverBackgroundColor: ["darkorange", "darkgreen"],
-        data: [+provenue.toFixed(2), sumrestgæld],
-      },
-    ],
-  };
+  
 
   const databar = {
     labels: cfnamed,
@@ -324,6 +294,8 @@ export function annuitet() {
     return resultRate * 100;
   }
   var renteeffektiv = IRR(bs);
+  var renteeffektivskat = IRR(bss);
+
   var åop = (Math.pow(1 + renteeffektiv / 100, terminerår) - 1) * 100;
 
   if (terminerår < 2) {
@@ -363,31 +335,9 @@ export function annuitet() {
       <Container>
         <div class="p-3 mb-2 bg-secondary text-white">
 
-          <h4>Annuitet.</h4>
+          <h4>Stående lån.</h4>
           <h5>Hvad bliver ydelse, afdrag og rente?</h5>
-          anntype {anntype}
-          <br></br>
-          ydelse = {ydelse}
-          <br></br>
-          ydelseinput = {ydelseinput}
-          <br></br>
-          bs = {bs}
-          <br></br>
-          bsss = {bsss}
-          <br></br>
-          rente = {rente}
-          <br></br>
-          ydelse = {ydelse}
-          <br></br>
-          setrente = {setrente}
-          <br></br>
-          skatss = {skatss}
-          <br></br>
-          renterss={renterss}
-          <br></br>
-          bssss = {bssss}
-          <br></br>
-          renteeffektivskat = {renteeffektivskat}
+          
         </div>
 
       </Container>
@@ -401,43 +351,27 @@ export function annuitet() {
               <div class="card-body">
                 <Container className="p-3">
                   <div class="p-3 mb-2 bg-white">
-
+                  
                     <Form.Group>
-                      {anntype === "Kendt ydelse" &&
-                        <InputGroup>
-                          <Form.Control
-                            // size="sm"
-                            type="number"
-                            value={ydelseinput}
-                            onChange={(e) => setydelseinput(+e.target.value)}
-                            aria-describedby="inputGroupAppend"
-                            placeholder="0"
-                          />
-                          <InputGroup.Append>
-                            <InputGroup.Text id="inputGroupAppend">
-                              Ydelse pr. termin i DKK.
-                      </InputGroup.Text>
-                          </InputGroup.Append>
-                        </InputGroup>
 
-                      }
-                      {anntype === "Kendt rente" &&
-                        <InputGroup>
-                          <Form.Control
-                            // size="sm"
-                            type="number"
-                            value={rente}
-                            onChange={(e) => setrente(+e.target.value)}
-                            aria-describedby="inputGroupAppend"
-                            placeholder="0"
-                          />
-                          <InputGroup.Append>
-                            <InputGroup.Text id="inputGroupAppend">
-                              Rente pr. termin i %
+
+
+                      <InputGroup>
+                        <Form.Control
+                          // size="sm"
+                          type="number"
+                          value={rente}
+                          onChange={(e) => setrente(+e.target.value)}
+                          aria-describedby="inputGroupAppend"
+                          placeholder="0"
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text id="inputGroupAppend">
+                            Rente nominel pr. termin i %
                       </InputGroup.Text>
-                          </InputGroup.Append>
-                        </InputGroup>
-                      }
+                        </InputGroup.Append>
+                      </InputGroup>
+
                       <InputGroup input-group-sm>
                         <Form.Control
                           type="number"
@@ -493,7 +427,7 @@ export function annuitet() {
                         <Form.Control
                           type="number"
                           min="1"
-                          max="100"
+                          // max="100"
                           step={1}
                           precision={0}
                           mobile={true}
@@ -526,7 +460,7 @@ export function annuitet() {
                       </InputGroup>
 
                       <br />
-                      <Form.Group>
+                      
                         <DropdownButton
                           // size="sm"
                           alignleft
@@ -550,30 +484,8 @@ export function annuitet() {
                             Vælg 12 månedlige terminer
                           </Dropdown.Item>
                         </DropdownButton>
-                      </Form.Group>
+                  </Form.Group>
 
-
-
-
-                    </Form.Group>
-                    <Form.Group>
-                      <DropdownButton
-                        alignleft
-                        variant="warning"
-                        title={anntype}
-                        id="anntype"
-                        // id="dropdown-split-basic"
-                        onSelect={annSelect}
-                      >
-                        <Dropdown.Item eventKey="Kendt rente">
-                          Vælg kendt rente
-                          </Dropdown.Item>
-                        <Dropdown.Item eventKey="Kendt ydelse">
-                          Vælg kendt ydelse
-                          </Dropdown.Item>
-
-                      </DropdownButton>
-                    </Form.Group>
 
 
 
@@ -598,8 +510,8 @@ export function annuitet() {
         <div class="p-3 mb-2 bg-white text-black">
           <div class="card">
             <div class="card-body">
-              {anntype === "Kendt rente" && <h3>Ydelsen er {numberFormat1(ydelse)} over de {terminer} terminer</h3>}
-              {anntype === "Kendt ydelse" && <h3>Terminsrenten er {numberFormat3(rente)}%, med {prår} bliver ÅOP {numberFormat3(åop)}%</h3>}
+              <h3>Afdraget er {numberFormat1(0)} over de {terminer} terminer</h3>
+
               <div>
                 <Bar
                   data={databar}
@@ -636,7 +548,7 @@ export function annuitet() {
         <div class="p-3 mb-2 bg-white text-black">
           <div class="card">
             <div class="card-body">
-              <h3>Restgælden over de {terminer} terminer</h3>
+              <h3>Restgælden ultimo over de {terminer} terminer</h3>
               <div>
                 <Bar
                   data={databar2}
@@ -689,71 +601,78 @@ export function annuitet() {
                   <tr>
                     <th>Variabel</th>
                     <th>Værdi</th>
-                    <th>DK Excel kode</th>
-                    <th>US Excel kode</th>
                     <th>Forklaring</th>
                   </tr>
+
                   <tr>
-                    <th scope="row">Ydelse</th>
-                    <td>{numberFormat1(ydelse)}</td>
-                    <td>YDELSE</td>
-                    <td>PMT</td>
+                    <th scope="row">Afdrag</th>
+                    <td>{numberFormat1(0)}</td>
                     <td>
-                      Den faste ydelse {numberFormat1(ydelse)}, der skal betales
-                      ved hver af de {terminer} terminer, består af renter og
-                      afdrag. Rentedelen beregnes af restgælden og er derfor
-                      faldende, afdragsdelen er voksende.<br />
-                      {anntype === "Kendt rente" &&
-                        "Nedenfor ses formlen og udregningen for ydelsen:\n" +
-                        "Ydelse = (NV*Rente)/(1-(1+Rente)^NPER) =\n" +
-                        "(" + numberFormat6(hovedstol) + "*" +
-                        numberFormat6(rentedecimal) +
-                        ") / (1 - (1 + " + numberFormat6(rentedecimal) + ")^(-" + terminer + ")) =\n" + numberFormat3(
-                          ydelse) +
-                        "\nMan kan udregne ydelsen " + numberFormat1(- ydelse) +
-                        " i Excel ved følgende formel:\n=YDELSE("
-                        + numberFormat2(rente) + "%;" + terminer + ";" + hovedstol + ";0)\nYdelsen kan på en lommeregner udregnes som:\n"
-                        + "(" + numberFormat6(hovedstol) + "*" +
-                        numberFormat6(rentedecimal) +
-                        ") / (1 - (1 + " + numberFormat6(rentedecimal) + ")^(-" + terminer + "))"
-                      }
+                      Ved et stående lån afdrages ikke gennem lånets løbetid så er afdragene lig med 0 DKK.
+                      Først ved lånets udløb efter de {terminer} terminer, tilbagebetales hele hovedstolen på {numberFormat1(hovedstol)}
                     </td>
                   </tr>
 
                   <tr>
-                    <th scope="row">
-                      Restgæld
-                      
-                      
-                    </th>
+                    <th scope="row">Restgæld</th>
                     <td>{numberFormat1(hovedstol)}</td>
-                    <td></td>
-                    <td></td>
                     <td>
-                      Restgælden kan beregnes ud fra formlen er beløbet man låner på papiret på tidspunkt:<br></br>
-                      Restgæld ultimo termin 1 =<br></br>Hovedstol*(1 + terminsrente)^termin1 - (ydelse (1 + terminsrente)^termin1 -1 )/terminsrente =<br></br> 
-                      {hovedstol}*(1+{rentedecimal})^1- {ydelse}*(1+{rentedecimal})^1-1)/{rentedecimal} =<br></br>
-                       {numberFormat1(restgæld[1])}<br></br>
-                       Restgæld ultimo termin 2 =<br></br>Hovedstol*(1 + terminsrente)^termin2 - (ydelse (1 + terminsrente)^termin2 -1 )/terminsrente =<br></br> 
-                      {hovedstol}*(1+{rentedecimal})^2- {ydelse}*(1+{rentedecimal})^2-1)/{rentedecimal} =<br></br>
-                       {numberFormat1(restgæld[2])}
-                      
+                      Ved et stående lån afdrages ikke gennem lånets løbetid så restgæld primo er {numberFormat1(hovedstol)} ved alle terminer.
+                    Restgæld ultimo tid {terminer} bliver så {numberFormat1(0)}, når sidste ydelse er betalt.
+
                     </td>
                   </tr>
+
+
+
+
+
+                  <tr>
+                    <th scope="row">Rente DKK</th>
+                    <td>{numberFormat1(hovedstol * rentedecimal)}</td>
+                    <td>
+                      Ved stående lån kan renten ved alle terminer, beregnes som hovedstolen gange den nominelle terminsrente::
+                      <br />
+                      Rente = hovedstol * terminsrente nominel = {numberFormat3(hovedstol)} * {numberFormat5(rentedecimal)}  = {numberFormat1(hovedstol * rentedecimal)}
+
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <th scope="row">Skat DKK</th>
+                    <td>{numberFormat1(hovedstol * rentedecimal * skat / 100)}</td>
+                    <td>
+                      Ved stående lån kan skattebesparelsen i DKK beregnes som renten i DKK gange skatteprocenten, da renteudgifter kan fratrækkes i skat:
+                      <br />
+                      Skat  = Rente  * skatteprocenten = {numberFormat3(hovedstol * rentedecimal)} * {numberFormat3(skat / 100)} = {numberFormat1(hovedstol * rentedecimal * skat / 100)}
+
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">Ydelse</th>
+                    <td>{numberFormat1(hovedstol * rentedecimal)}</td>
+                    <td>
+                      Ved stående lån består ydelsen kun af renter de første n-1 terminer.
+                      Her er ydelsen de første {terminer - 1} terminer {numberFormat1(hovedstol * rentedecimal)}.<br></br>
+                      Den sidste termin, her termin nummer {terminer} består ydelsen af rente og hele hovedstolen, så ydelsen bliver {numberFormat1(hovedstol * rentedecimal + hovedstol)}
+                    </td>
+                  </tr>
+
 
 
 
                   <tr>
                     <th scope="row">
                       Hovedstol
-                      <br />
-                      Nutidsværdi
+                     
+               
                     </th>
                     <td>{numberFormat1(hovedstol)}</td>
-                    <td>NV</td>
-                    <td>PV</td>
+
                     <td>
-                      Nutidsværdien er beløbet man låner på papiret på tidspunkt
+                      hovedstolen er beløbet man låner på papiret på tidspunkt
                       0 (dvs. nu)
                     </td>
                   </tr>
@@ -762,11 +681,8 @@ export function annuitet() {
                   <tr>
                     <th scope="row">Rente pr. termin nominel</th>
                     <td>{numberFormat3(rente)}%</td>
-                    <td>RENTE</td>
-                    <td>RATE</td>
+
                     <td>
-
-
                       Nominel pålydende, rente, her angivet i procent. Hvis den
                       nominelle rente er angivet pr år (pro anno), kan den
                       nominelle terminsrente findes ved at dividere pro anno
@@ -777,16 +693,14 @@ export function annuitet() {
                   <tr>
                     <th scope="row">Terminer pr. år</th>
                     <td>{terminerår}</td>
-                    <td></td>
-                    <td></td>
+
                     <td>{prårtekst}</td>
                   </tr>
 
                   <tr>
                     <th scope="row">Terminer</th>
                     <td>{terminer}</td>
-                    <td>NPER</td>
-                    <td>NPER</td>
+
                     <td>
                       Det totale antal af perioder (her {terminer}), hvor der
                       tilskrives rente kaldes for antallet af terminer.
@@ -796,16 +710,15 @@ export function annuitet() {
                   <tr>
                     <th scope="row">Stiftelse</th>
                     <td>{numberFormat1(stiftelse)}</td>
-                    <td></td>
-                    <td></td>
+
+
                     <td>{stiftelsetekst}</td>
                   </tr>
 
                   <tr>
                     <th scope="row">Kurs</th>
                     <td>{kurs}</td>
-                    <td></td>
-                    <td></td>
+
                     <td>
                       Kursen angiver hvor meget lånet er værd, er kursen under
                       100 vil der være et kurstab. Er der kurstab, betyder dette
@@ -820,8 +733,7 @@ export function annuitet() {
                   <tr>
                     <th scope="row">Provenue</th>
                     <td>{numberFormat1(provenue)}</td>
-                    <td></td>
-                    <td></td>
+
                     <td>
                       Provenuet er det beløb man får udbetalt, dvs. hovedstolen
                       efter kurstab og stiftelsesomkostninger. Provenuet kan
@@ -838,25 +750,22 @@ export function annuitet() {
                   <tr>
                     <th scope="row">Rente pr. termin effektiv</th>
                     <td>{numberFormat3(renteeffektiv)}%</td>
-                    <td>RENTE</td>
-                    <td>RATE</td>
+
                     <td>
                       Renten pr. termin korrigeret for eventuelt kurstab og
                       stiftelsesomkostninger. Renten kan ikke udregnes eksplicit
-                      for et annuitetslån, så man skal bruge en finansfunktion
+                      for et serielån, så man skal bruge en finansfunktion
                       på sin computer eller i fx. Excel hvor formlen er:
                       <br></br>
-                      =RENTE({terminer};{numberFormat6(-ydelse)};{" "}
-                      {numberFormat6(provenue)})
+                      =IA(betalingsstrømme)
                       <br />
                     </td>
                   </tr>
 
-
                   <tr>
                     <th scope="row">Rente pr. termin effektiv efter skat</th>
                     <td>{numberFormat3(renteeffektivskat)}%</td>
-                    <td></td><td></td>
+
                     <td>
                       Renten pr. termin korrigeret for eventuelt kurstab og
                       stiftelsesomkostninger samt skat. Renten kan ikke udregnes eksplicit
@@ -869,12 +778,10 @@ export function annuitet() {
                     </td>
                   </tr>
 
-
                   <tr>
                     <th scope="row">ÅOP</th>
                     <td>{numberFormat3(åop)}%</td>
-                    <td></td>
-                    <td></td>
+
                     <td>
                       Renten pr. år korrigeret for eventuelt kurstab,
                       stiftelsesomkostninger og antal rentetilskrivninger pr.
@@ -897,13 +804,10 @@ export function annuitet() {
                     </td>
                   </tr>
 
-
-
-
                   <tr>
                     <th scope="row">ÅOP efter skat</th>
                     <td>{numberFormat3((((1 + renteeffektivskat / 100) ** terminerår - 1)) * 100)}%</td>
-                    <td></td><td></td>
+
                     <td>
 
                       Renten pr. år korrigeret for skat, kurstab,
@@ -926,10 +830,6 @@ export function annuitet() {
                       </i>
                     </td>
                   </tr>
-
-
-
-
                 </span>
               </tbody>
             </small>
@@ -953,15 +853,13 @@ export function annuitet() {
           preventOverflow="hidden"
           // fixedRowsTop="1"
           manualColumnResize="100"
-          height="320"
+          height="800"
           // overflow="hidden"
           licenseKey="non-commercial-and-evaluation"
         />
       </Container>
-      <Container className="p-0">
+      {/* <Container className="p-0">
         <div class="row p-3">
-
-
           <div class="col-md-3 p-3 container-fluid">
             <div class="card h-100">
               <div class="card-body bg-white">
@@ -974,11 +872,11 @@ export function annuitet() {
                   />
                 </div>
                 {/* </ResponsiveContainer> */}
-              </div>
+      {/* </div>
             </div>
           </div>
-        </div>
-      </Container >
+        </div> */}
+      {/* </Container > * /} */}
     </div >
   );
 }

@@ -3,15 +3,15 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Home } from "./Home";
 import { Fremskrivning } from "./Fremskrivning";
-import { Annuitet } from "./Annuitet";
+import { staaende } from "./staaende";
 // import { Pris } from "./Pris";
 import { Optimering } from "./Optimering";
 import { fin2020 } from "./fin2020";
 
 import { Finans } from "./Finans";
-import { f3 } from "./f3";
+import { annuitet } from "./annuitet";
 import { f4 } from "./f4";
-import { f5 } from "./f5";
+import { serie } from "./serie";
 import { NoMatch } from "./NoMatch";
 import { Layout } from "./components/Layout";
 import { NavigationBar } from "./components/NavigationBar";
@@ -28,14 +28,14 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/fremskrivning" component={Fremskrivning} />
-              <Route path="/annuitet" component={Annuitet} />
+              <Route path="/staaende" component={staaende} />
               <Route path="/finans" component={Finans} />
-              <Route path="/pris" component={f3} />
+              <Route path="/pris" component={annuitet} />
               <Route path="/optimering" component={Optimering} />
               <Route path="/fin2020" component={fin2020} />
-              <Route path="/f3" component={f3} />
+              <Route path="/annuitet" component={annuitet} />
               <Route path="/f4" component={f4} />
-              <Route path="/f5" component={f5} />
+              <Route path="/serie" component={serie} />
               <Route path="/*" component={Home} />
               <Route component={NoMatch} />
             </Switch>

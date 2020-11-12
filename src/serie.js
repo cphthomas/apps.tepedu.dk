@@ -19,7 +19,8 @@ import {
 } from "./lib"; //ændrer til komma og pct + DKK
 import Container from "react-bootstrap/Container";
 // import ReactHtmlParser from "react-html-parser";
-import { Doughnut, Bar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+// import { Doughnut } from "react-chartjs-2";
 import DropdownButton from "react-bootstrap/DropdownButton";
 
 import Dropdown from "react-bootstrap/Dropdown";
@@ -30,11 +31,11 @@ import "handsontable/dist/handsontable.full.css";
 import { HotTable } from "@handsontable/react";
 import Handsontable from "handsontable";
 
-import "katex/dist/katex.min.css";
-import { BlockMath } from "react-katex";
+// import "katex/dist/katex.min.css";
+// import { BlockMath } from "react-katex";
 // import { InlineMath } from "react-katex";
 
-export function f3() {
+export function serie() {
 
 
   // const numInputs = document.querySelectorAll("input[type=number]");
@@ -49,18 +50,16 @@ export function f3() {
 
 
   const [hovedstol, sethovedstol] = useState(+(20000.0).toFixed(2));
-  const [rente, setrente] = useState(+(1.25).toFixed(2));
+  var [rente, setrente] = useState(+(1.25).toFixed(2));
+
   var rentedecimal = rente / 100;
   const [terminer, setterminer] = useState(+(10.0).toFixed(2));
 
   const [stiftelse, setstiftelse] = useState(+(0.0).toFixed(2));
   const [kurs, setkurs] = useState(+(100.0).toFixed(2));
+  const [skat, setskat] = useState(+(22.0).toFixed(2));
 
-  const [anntype, setanntype] = useState("Kendt rente");
-  const annSelect = (e) => {
-    console.log(e);
-    setanntype(e);
-  };
+
 
   const [prår, setprår] = useState("1 helårlig termin");
   const handleSelect = (e) => {
@@ -74,21 +73,17 @@ export function f3() {
   const cfnamed = cf.map((n) => "Tid: " + n);
 
   var cf2 = Array.apply(null, Array(terminer)).map((_) => "0");
-  cf2.splice(0, 0, hovedstol); //?
+  cf2.splice(0, 0, hovedstol);
 
   const fvbarchart = Array.apply(null, Array(terminer + 1)).map((_) => "0");
-  fvbarchart.splice(terminer, 0, fv.toFixed(2)); //?
+  fvbarchart.splice(terminer, 0, fv.toFixed(2));
 
-  const rentecf = cf.map(
-    (cf) =>
-      -1 *
-      (
-        hovedstol * (1 + rente / 100) ** cf -
-        hovedstol -
-        (hovedstol * (1 + rente / 100) ** (cf - 1) - hovedstol)
-      ).toFixed(2)
+  const restgæld = cf.map((cf) =>
+    Math.abs(
+      hovedstol - cf * (hovedstol / terminer)
+
+    )
   );
-  rentecf.splice(0, 1, 0);
   var rentespreadsheet = cf.map(
     (cf) =>
       -1 *
@@ -99,77 +94,121 @@ export function f3() {
   rentespreadsheet.splice(0, 1, 0);
   var provenue = (hovedstol * kurs) / 100 - stiftelse;
 
-  var ydelse =
-    (hovedstol * rentedecimal) / (1 - Math.pow(1 + rentedecimal, -terminer)); //?
-  let bs = new Array(terminer).fill(null).map(() => ydelse); //?
-  bs.splice(0, 0, -provenue); //?
+  var bsss, bs;
 
-  const bsss = bs.map((bs) => numberFormat3(-bs)); //?
-  var ydelse1 = bs.map((bs) => bs); //?
+
+
+  bs = restgæld.map((restgæld) =>
+    +restgæld * rentedecimal + hovedstol / terminer
+  )
+  // bs = new Array(terminer).fill(null).map(() => 1999);
+  bs.splice(0, 0, -provenue);
+  bs.pop();
+
+  var bss = restgæld.map((restgæld) =>
+    +restgæld * rentedecimal * (1 - skat / 100) + hovedstol / terminer
+  )
+  // bs = new Array(terminer).fill(null).map(() => 1999);
+  bss.splice(0, 0, -provenue);
+  bss.pop();
+
+
+  // ###################################################################################################################
+
+  bsss = bs.map((bs) => numberFormat3(-bs));
+  var ydelse1 = bs.map((bs) => bs);
   ydelse1.splice(0, 1, 0);
 
-  const restgæld = cf.map((cf) =>
-    Math.abs(
-      hovedstol * Math.pow(1 + rentedecimal, cf) -
-      (ydelse * (Math.pow(1 + rentedecimal, cf) - 1)) / rentedecimal
-    )
-  ); //?
 
-  const restgældss = restgæld.map((restgæld) => numberFormat3(restgæld)); //?
-  const restgældbc = restgæld.map((restgæld) => restgæld.toFixed(2)); //?
 
-  var renterss = restgæld.map((restgæld) => restgæld * rentedecimal); //?
+  const restgældss = restgæld.map((restgæld) => numberFormat3(restgæld));
+  const restgældbc = restgæld.map((restgæld) => restgæld.toFixed(2));
 
-  renterss.pop(); //?
-  renterss.splice(0, 0, 0); //?
+  var renterss = restgæld.map((restgæld) => restgæld * rentedecimal);
+  renterss.pop();
+  renterss.splice(0, 0, 0);
+
+  var rentersss = restgæld.map((restgæld) => numberFormat3(restgæld * rentedecimal * (1 - skat / 100)));
+  rentersss.pop();
+  rentersss.splice(0, 0, 0);
+
+
+  var sss = restgæld.map((restgæld) => numberFormat3(-restgæld * rentedecimal * (skat / 100)));
+  sss.pop();
+  sss.splice(0, 0, 0);
+
+
+  var bssss = restgæld.map((restgæld) =>
+    restgæld * rentedecimal * (1 - skat / 100) + hovedstol / terminer
+  )
+  // bs = new Array(terminer).fill(null).map(() => 1999);
+  bssss.splice(0, 0, -provenue);
+  bssss.pop();
+  bssss = bssss.map((bssss) => numberFormat3(-1 * bssss));
   //const afdragss = ydelsess + renterss;
   //ydelseparsefloat =parseFloatydelsess.splice(0, 1, numberFormat3(0));
-  //var afdragss = afdragss.map((ydelsess, renterss) => ydelsess - renterss); //?
+  //var afdragss = afdragss.map((ydelsess, renterss) => ydelsess - renterss); 
 
   //varable til ss spreadsheet
   var afdragss = ydelse1.map((e, i) => e - renterss[i]);
   var ydelsess = ydelse1.map((ydelse1) => numberFormat3(ydelse1));
   renterss = renterss.map((renterss) => numberFormat3(renterss));
+
   afdragss = afdragss.map((afdragss) => numberFormat3(afdragss));
   // variable til bc barchart
   var renterbc = restgæld.map((restgæld) =>
     (-restgæld * rentedecimal).toFixed(2)
-  ); //?
-  renterbc.pop(); //?
+  );
+  renterbc.pop();
   renterbc.splice(0, 0, Number(0));
-  var ydelsebc = ydelse1.map((ydelse1) => -ydelse1); //?
+
+  // var renterbcs = restgæld.map((restgæld) =>
+  //   (-restgæld * rentedecimal * (1 - skat / 100)).toFixed(2)
+  // );
+  // renterbcs.pop();
+  // renterbcs.splice(0, 0, Number(0));
+
+  var ydelsebc = ydelse1.map((ydelse1) => -ydelse1);
   var afdragbc = ydelsebc.map((e, i) =>
     parseFloat(e * 1 - renterbc[i]).toFixed(2)
-  ); //?
-  let provenuebc = new Array(terminer).fill(null).map(() => 0); //?
-  provenuebc.splice(0, 0, provenue); //?
+  );
+  let provenuebc = new Array(terminer).fill(null).map(() => 0);
+  provenuebc.splice(0, 0, provenue);
 
-  const sumfunktion = (arr) => arr.reduce((a, b) => a + b, 0); //?
-  var sumrestgæld = (sumfunktion(restgæld) * rentedecimal).toFixed(2); //?
-  var data1 = [cf, bsss, ydelsess, renterss, afdragss, restgældss];
+  // const sumfunktion = (arr) => arr.reduce((a, b) => a + b, 0);
+  // var sumrestgæld = (sumfunktion(restgæld) * rentedecimal).toFixed(2);
+  var data1 = [cf, afdragss, renterss, sss, rentersss, ydelsess, restgældss, bsss, bssss];
   var colhead = [
     "Tid",
-    "Betalingsstrømme DKK",
-    "Ydelse DKK",
-    "Renter DKK",
-    "Afdrag DKK",
-    "Restgæld DKK",
+    "Afdrag\n DKK",
+    "Renter\n DKK",
+    "Skat\n DKK",
+    "Renter\n - skat DKK",
+    "Ydelse\n DKK",
+    "Restgæld\n DKK",
+    "Betalingsstrømme\n DKK",
+    "Betalingsstrømme\n - skat DKK",
+
+
+
+
+
   ];
 
-  const datadoug = {
-    labels: [
-      "Provenue ".concat(numberFormat1(provenue.toFixed(2))),
-      "Rente ".concat(numberFormat1(sumrestgæld)),
-    ],
-    datasets: [
-      {
-        label: "Provenue og renter",
-        backgroundColor: ["orange", "green"],
-        hoverBackgroundColor: ["darkorange", "darkgreen"],
-        data: [+provenue.toFixed(2), sumrestgæld],
-      },
-    ],
-  };
+  // const datadoug = {
+  //   labels: [
+  //     "Provenue ".concat(numberFormat1(provenue.toFixed(2))),
+  //     "Rente ".concat(numberFormat1(sumrestgæld)),
+  //   ],
+  //   datasets: [
+  //     {
+  //       label: "Provenue og renter",
+  //       backgroundColor: ["orange", "green"],
+  //       hoverBackgroundColor: ["darkorange", "darkgreen"],
+  //       data: [+provenue.toFixed(2), sumrestgæld],
+  //     },
+  //   ],
+  // };
 
   const databar = {
     labels: cfnamed,
@@ -284,15 +323,17 @@ export function f3() {
     return resultRate * 100;
   }
   var renteeffektiv = IRR(bs);
+  var renteeffektivskat = IRR(bss);
+
   var åop = (Math.pow(1 + renteeffektiv / 100, terminerår) - 1) * 100;
 
   if (terminerår < 2) {
     var prårtekst = "Der er ".concat(
       prår,
       ", den nominelle rente pr. termin er ",
-      rente,
+      numberFormat3(rente),
       "%. Helårlig rentetilskrivning betyder den nominelle rente pr. år (nominel rente pr. termin gange 1) bliver det samme altså: ",
-      rente,
+      numberFormat3(rente),
       "% p.a."
     );
   } else {
@@ -322,134 +363,45 @@ export function f3() {
     <div>
       <Container>
         <div class="p-3 mb-2 bg-secondary text-white">
-          <h3>Finans</h3>
-          <h5>Annuitet.</h5>
+
+          <h4>Serielån.</h4>
           <h5>Hvad bliver ydelse, afdrag og rente?</h5>
-          anntype {anntype}
+
         </div>
 
       </Container>
+
+
+
       <Container className="p-0">
         <div class="row p-3">
-          <div class="col-md-6 p-3 ">
+          <div class="col-md-12 p-3 ">
             <div class="card h-100">
               <div class="card-body">
                 <Container className="p-3">
                   <div class="p-3 mb-2 bg-white">
+
                     <Form.Group>
-                      <DropdownButton
-                        alignleft
-                        variant="warning"
-                        title={anntype}
-                        id="anntype"
-                        // id="dropdown-split-basic"
-                        onSelect={annSelect}
-                      >
-                        <Dropdown.Item eventKey="Kendt rente">
-                          Vælg kendt rente
-                          </Dropdown.Item>
-                        <Dropdown.Item eventKey="Kendt ydelse">
-                          Vælg kendt ydelse
-                          </Dropdown.Item>
 
-                      </DropdownButton>
-                    </Form.Group>
-                    <Form.Group>
-                      {anntype === "Kendt ydelse" &&
-                        <InputGroup>
-                          <Form.Control
-                            // size="sm"
-                            type="number"
-                            value={rente}
-                            onChange={(e) => setrente(+e.target.value)}
-                            aria-describedby="inputGroupAppend"
-                            placeholder="0"
-                          />
-                          <InputGroup.Append>
-                            <InputGroup.Text id="inputGroupAppend">
-                              Ydelse pr. termin i DKK.
+
+
+                      <InputGroup>
+                        <Form.Control
+                          // size="sm"
+                          type="number"
+                          value={rente}
+                          onChange={(e) => setrente(+e.target.value)}
+                          aria-describedby="inputGroupAppend"
+                          placeholder="0"
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text id="inputGroupAppend">
+                            Rente nominel pr. termin i %
                       </InputGroup.Text>
-                          </InputGroup.Append>
-                        </InputGroup>
+                        </InputGroup.Append>
+                      </InputGroup>
 
-                      }
-                      {anntype === "Kendt rente" &&
-                        <InputGroup>
-                          <Form.Control
-                            // size="sm"
-                            type="number"
-                            value={rente}
-                            onChange={(e) => setrente(+e.target.value)}
-                            aria-describedby="inputGroupAppend"
-                            placeholder="0"
-                          />
-                          <InputGroup.Append>
-                            <InputGroup.Text id="inputGroupAppend">
-                              Rente pr. termin i %
-                      </InputGroup.Text>
-                          </InputGroup.Append>
-                        </InputGroup>
-                      }
-                      {/* <Toggle
-                        render={({ on, toggle }) => (
-                          <div>
-                            <Button
-                              variant="secondary"
-                              // size="sm"
-                              onClick={toggle}>
-                              {on && "Vælg kendt rente"}
-                              {!on && "Vælg kendt ydelse"}
-                            </Button>
-                            {!on && <br></br> &&
-
-                              <InputGroup>
-                                <Form.Control
-                                  // size="sm"
-                                  type="number"
-                                  value={rente}
-                                  onChange={(e) => setrente(+e.target.value)}
-                                  aria-describedby="inputGroupAppend"
-                                  placeholder="0"
-                                />
-                                <InputGroup.Append>
-                                  <InputGroup.Text id="inputGroupAppend">
-                                    Rente pr. termin i %
-                               </InputGroup.Text>
-                                </InputGroup.Append>
-                              </InputGroup>
-
-                            }
-
-                            {on && <br></br> &&
-                              <InputGroup>
-
-
-                                <Form.Control
-                                  // size="sm"
-                                  type="number"
-                                  value={rente}
-                                  onChange={(e) => setrente(+e.target.value)}
-                                  aria-describedby="inputGroupAppend"
-                                  placeholder="0"
-                                />
-                                <InputGroup.Append>
-                                  <InputGroup.Text size="sm" id="inputGroup-sizing-sm">
-                                    Ydelse i DKK.
-                             </InputGroup.Text>
-                                </InputGroup.Append>
-                              </InputGroup>
-                            }
-                          </div>
-                        )
-                        }
-                      ></Toggle> */}
-
-
-
-
-                      <br />
                       <InputGroup input-group-sm>
-
                         <Form.Control
                           type="number"
                           min="1"
@@ -466,9 +418,79 @@ export function f3() {
                           </InputGroup.Text>
                         </InputGroup.Append>
                       </InputGroup>
+
+                      <InputGroup>
+                        <Form.Control
+                          type="number"
+                          value={hovedstol}
+                          onChange={(e) => sethovedstol(+e.target.value)}
+                          aria-describedby="inputGroupAppend"
+                          placeholder="0"
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text id="inputGroupAppend">
+                            Hovedstol DKK.
+                          </InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+
+                      <InputGroup>
+                        <Form.Control
+                          type="number"
+                          value={+stiftelse}
+                          onChange={(e) => setstiftelse(+e.target.value)}
+                          aria-describedby="inputGroupAppend"
+                          placeholder="0"
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text id="inputGroupAppend">
+                            Stiftelsesomkostninger i DKK.
+                          </InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+
+
+
+
+                      <InputGroup>
+                        <Form.Control
+                          type="number"
+                          min="1"
+                          // max="100"
+                          step={1}
+                          precision={0}
+                          mobile={true}
+                          value={kurs}
+                          onChange={(e) =>
+                            setkurs(+e.target.value.replace(/\D/, ""))
+                          }
+                          aria-describedby="inputGroupAppend"
+                          placeholder="0"
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text id="inputGroupAppend">
+                            Kurs på lånet
+                          </InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+
+
+                      <InputGroup>
+                        <Form.Control
+                          type="number"
+                          value={+skat}
+                          onChange={(e) => setskat(+e.target.value)}
+                          aria-describedby="inputGroupAppend"
+                          placeholder="0"
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text id="inputGroupAppend">
+                            Skat i %
+                          </InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+
                       <br />
-
-
                       <Form.Group>
                         <DropdownButton
                           // size="sm"
@@ -498,77 +520,8 @@ export function f3() {
 
 
 
-
-
-
-
-
-
-                      <InputGroup>
-                        <Form.Control
-                          type="number"
-                          value={hovedstol}
-                          onChange={(e) => sethovedstol(+e.target.value)}
-                          aria-describedby="inputGroupAppend"
-                          placeholder="0"
-                        />
-                        <InputGroup.Append>
-                          <InputGroup.Text id="inputGroupAppend">
-                            Hovedstol DKK.
-                          </InputGroup.Text>
-                        </InputGroup.Append>
-                      </InputGroup>
-
-                      <br />
-
-
-                      <InputGroup>
-                        <Form.Control
-                          type="number"
-                          value={+stiftelse}
-                          onChange={(e) => setstiftelse(+e.target.value)}
-                          aria-describedby="inputGroupAppend"
-                          placeholder="0"
-                        />
-                        <InputGroup.Append>
-                          <InputGroup.Text id="inputGroupAppend">
-                            Stiftelsesomkostninger i DKK.
-                          </InputGroup.Text>
-                        </InputGroup.Append>
-                      </InputGroup>
-
-                      <br />
-
-
-                      <InputGroup>
-                        <Form.Control
-                          type="number"
-                          min="1"
-                          max="100"
-                          step={1}
-                          precision={0}
-                          mobile={true}
-                          value={kurs}
-                          onChange={(e) =>
-                            setkurs(+e.target.value.replace(/\D/, ""))
-                          }
-                          aria-describedby="inputGroupAppend"
-                          placeholder="0"
-                        />
-                        <InputGroup.Append>
-                          <InputGroup.Text id="inputGroupAppend">
-                            Kurs på lånet
-                          </InputGroup.Text>
-                        </InputGroup.Append>
-                      </InputGroup>
-
-
-
-
-
-
-
                     </Form.Group>
+
 
 
 
@@ -577,29 +530,24 @@ export function f3() {
               </div>
             </div>
           </div>
-          <div class="col-md-6 p-3 container-fluid">
-            <div class="card h-100">
-              <div class="card-body bg-white">
-                <h3>Provenue og renter</h3>
-                <div>
-                  <Doughnut
-                    data={datadoug}
-                    height={400}
-                    options={{ maintainAspectRatio: false }}
-                  />
-                </div>
-                {/* </ResponsiveContainer> */}
-              </div>
-            </div>
-          </div>
+
         </div>
       </Container >
+
+
+
+
+
+
+
+
 
       <Container className="p-0">
         <div class="p-3 mb-2 bg-white text-black">
           <div class="card">
             <div class="card-body">
-              <h3>Betalingsstrømmene over de {terminer} terminer</h3>
+              <h3>Afdraget er {numberFormat1(hovedstol / terminer)} over de {terminer} terminer</h3>
+
               <div>
                 <Bar
                   data={databar}
@@ -636,7 +584,7 @@ export function f3() {
         <div class="p-3 mb-2 bg-white text-black">
           <div class="card">
             <div class="card-body">
-              <h3>Restgælden over de {terminer} terminer</h3>
+              <h3>Restgælden ultimo over de {terminer} terminer</h3>
               <div>
                 <Bar
                   data={databar2}
@@ -689,72 +637,115 @@ export function f3() {
                   <tr>
                     <th>Variabel</th>
                     <th>Værdi</th>
-                    <th>DK Excel kode</th>
-                    <th>US Excel kode</th>
                     <th>Forklaring</th>
                   </tr>
+
                   <tr>
-                    <th scope="row">Ydelse</th>
-                    <td>{numberFormat1(ydelse)}</td>
-                    <td>YDELSE</td>
-                    <td>PMT</td>
+                    <th scope="row">Afdrag</th>
+                    <td>{numberFormat1(hovedstol / terminer)}</td>
                     <td>
-                      Den faste ydelse {numberFormat1(ydelse)}, der skal betales
-                      ved hver af de {terminer} terminer, består af renter og
-                      afdrag. Rentedelen beregnes af restgælden og er derfor
-                      faldende, afdragsdelen er voksende. Nedenfor er ses
-                      formlen og udregningen for ydelsen:{" "}
-                      <BlockMath>
-                        {String.raw`\textstyle YDELSE= \frac{NV \cdot RENTE}{1-(1+RENTE)^{-NPER}} =`}
-                      </BlockMath>
-                      <BlockMath>
-                        {String.raw`\textstyle \frac{${numberFormat5(
-                          hovedstol
-                        )} \cdot ${numberFormat5(
-                          rentedecimal
-                        )}}{1-(1+${numberFormat5(
-                          rentedecimal
-                        )})^{-${numberFormat5(terminer)}}} =${numberFormat3(
-                          ydelse
-                        )}`}
-                      </BlockMath>
-                      Man kan udregne ydelsen {numberFormat1(-ydelse)} i Excel
-                      ved følgende formel:<br></br>
-                      =YDELSE({numberFormat2(rente)}%;{terminer}; {hovedstol};0)
-                      <br />
-                      Ydelsen kan på en lommeregner udregnes som:
-                      <br />
-                      <i>
-                        ({numberFormat6(hovedstol)}*
-                        {numberFormat6(rentedecimal)}
-                        )/(1-(1+
-                        {numberFormat6(rentedecimal)})^({-terminer}))
-                      </i>
+                      Ved Serielån er afdragene lig med hovedstolen divideret med antallet af terminer, det betyder at i
+                      modsætning til annuitetslånet er afdragene konstante ved et serielån. Vi kan finde afdraget som:<br />
+                      Afdrag = hovedstol/terminer = {numberFormat3(hovedstol)}/{terminer} = {numberFormat1(hovedstol / terminer)}
                     </td>
                   </tr>
 
                   <tr>
+                    <th scope="row">Restgæld</th>
+                    <td></td>
+                    <td>
+                      Ved Serielån er beregnes restgæld ved termin n som hovedstolen minus afdraget gange termin n.
+                      <br />
+                      Restgæld ultimo termin 1 = hovedstol - afdrag * 1 = {numberFormat3(hovedstol)} - {numberFormat3(hovedstol / terminer)} * 1 =
+                      {numberFormat3(hovedstol - hovedstol / terminer)}<br />
+                      Restgæld ultimo termin 2 = hovedstol - afdrag * 2 = {numberFormat3(hovedstol)} - {numberFormat3(hovedstol / terminer)} * 2 =
+                      {numberFormat3(hovedstol - 2 * hovedstol / terminer)}<br />
+                      Restgæld ultimo termin 3 = hovedstol - afdrag * 3 = {numberFormat3(hovedstol)} - {numberFormat3(hovedstol / terminer)} * 3 =
+                      {numberFormat3(hovedstol - 3 * hovedstol / terminer)}<br />
+                      ...
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <th scope="row">Ydelse</th>
+                    <td></td>
+                    <td>
+                      Ved serielån kan ydelserne beregnes som restgæld primo*rente + afdrag.
+                      <br />
+                      Ydelse termin 1 = restgæld 1. termin primo*rente + afdrag = {numberFormat3(restgæld[0])}*{numberFormat3(rente)}% + {numberFormat3(hovedstol / terminer)} = {numberFormat1(restgæld[0] * rentedecimal + hovedstol / terminer)}
+
+                      <br />
+                      Ydelse termin 2 = restgæld 2. termin primo*rente + afdrag = {numberFormat3(restgæld[1])}*{numberFormat3(rente)}% + {numberFormat3(hovedstol / terminer)} = {numberFormat1(restgæld[1] * rentedecimal + hovedstol / terminer)}
+                      <br />
+                      Ydelse termin 3 = restgæld 3. termin primo*rente + afdrag = {numberFormat3(restgæld[2])}*{numberFormat3(rente)}% + {numberFormat3(hovedstol / terminer)} = {numberFormat1(restgæld[2] * rentedecimal + hovedstol / terminer)}
+                      <br />
+                      ...
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <th scope="row">Rente DKK</th>
+                    <td></td>
+                    <td>
+                      Ved serielån kan renterne i DKK beregnes som restgælden gange den nominelle terminsrente:
+                      <br />
+                      Rente termin 1 = Restgæld primo termin 1 * terminsrente nominel = {numberFormat3(restgæld[0])} * {numberFormat1(rentedecimal)}  = {numberFormat3(restgæld[0] * rentedecimal)}
+
+                      <br />
+                      Rente termin 2 = Restgæld primo termin 1 * terminsrente nominel = {numberFormat3(restgæld[0])} * {numberFormat1(rentedecimal)}  = {numberFormat3(restgæld[1] * rentedecimal)}
+                      <br />
+                      Rente termin 3 = Restgæld primo termin 1 * terminsrente nominel = {numberFormat3(restgæld[0])} * {numberFormat1(rentedecimal)}  = {numberFormat3(restgæld[2] * rentedecimal)}
+                      <br />
+                      ...
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <th scope="row">Skat DKK</th>
+                    <td></td>
+                    <td>
+                      Ved serielån kan skattebesparelsen i DKK beregnes som renten i DKK gange skatteprocenten, da renteudgifter kan fratrækkes i skat:
+                      <br />
+                      Skat termin 1 = Rente termin 1 * skat = {numberFormat3(restgæld[0] * rentedecimal)} * {numberFormat3(skat / 100)} = {numberFormat1(restgæld[0] * rentedecimal * skat / 100)}
+                      <br />
+                      Skat termin 2 = Rente termin 1 * skat = {numberFormat3(restgæld[1] * rentedecimal)} * {numberFormat3(skat / 100)} = {numberFormat1(restgæld[1] * rentedecimal * skat / 100)}
+                      <br />
+                      Skat termin 3 = Rente termin 1 * skat = {numberFormat3(restgæld[2] * rentedecimal)} * {numberFormat3(skat / 100)} = {numberFormat1(restgæld[2] * rentedecimal * skat / 100)}
+                      <br />
+                      ...
+                    </td>
+                  </tr>
+
+
+
+
+
+
+                  <tr>
                     <th scope="row">
                       Hovedstol
-                      <br />
-                      Nutidsværdi
+                     
                     </th>
                     <td>{numberFormat1(hovedstol)}</td>
-                    <td>NV</td>
-                    <td>PV</td>
+
                     <td>
                       Nutidsværdien er beløbet man låner på papiret på tidspunkt
                       0 (dvs. nu)
                     </td>
                   </tr>
 
+
                   <tr>
                     <th scope="row">Rente pr. termin nominel</th>
-                    <td>{rente}%</td>
-                    <td>RENTE</td>
-                    <td>RATE</td>
+                    <td>{numberFormat3(rente)}%</td>
+
                     <td>
-                      Nominel pålydende rente, her angivet i procent. Hvis den
+
+
+                      Nominel pålydende, rente, her angivet i procent. Hvis den
                       nominelle rente er angivet pr år (pro anno), kan den
                       nominelle terminsrente findes ved at dividere pro anno
                       renten med antal terminer pr. år.
@@ -764,16 +755,14 @@ export function f3() {
                   <tr>
                     <th scope="row">Terminer pr. år</th>
                     <td>{terminerår}</td>
-                    <td></td>
-                    <td></td>
+
                     <td>{prårtekst}</td>
                   </tr>
 
                   <tr>
                     <th scope="row">Terminer</th>
                     <td>{terminer}</td>
-                    <td>NPER</td>
-                    <td>NPER</td>
+
                     <td>
                       Det totale antal af perioder (her {terminer}), hvor der
                       tilskrives rente kaldes for antallet af terminer.
@@ -783,16 +772,15 @@ export function f3() {
                   <tr>
                     <th scope="row">Stiftelse</th>
                     <td>{numberFormat1(stiftelse)}</td>
-                    <td></td>
-                    <td></td>
+
+
                     <td>{stiftelsetekst}</td>
                   </tr>
 
                   <tr>
                     <th scope="row">Kurs</th>
                     <td>{kurs}</td>
-                    <td></td>
-                    <td></td>
+
                     <td>
                       Kursen angiver hvor meget lånet er værd, er kursen under
                       100 vil der være et kurstab. Er der kurstab, betyder dette
@@ -807,39 +795,47 @@ export function f3() {
                   <tr>
                     <th scope="row">Provenue</th>
                     <td>{numberFormat1(provenue)}</td>
-                    <td></td>
-                    <td></td>
+
                     <td>
-                      Provenuet er det beløb, man får udbetalt af hovedstolen
+                      Provenuet er det beløb man får udbetalt, dvs. hovedstolen
                       efter kurstab og stiftelsesomkostninger. Provenuet kan
                       findes som:
-                      <BlockMath>
-                        {String.raw`\textstyle Provenue= \frac{PV*Kurs}{100}-Stiftelsesomkostninger =
-                        `}
-                      </BlockMath>
-                      <BlockMath>
-                        {String.raw`\textstyle \frac{${numberFormat3(
-                          hovedstol
-                        )}*${numberFormat2(kurs)}}{100}-${numberFormat3(
+
+                      {"\nProvenue = PV*Kurs/100-Stiftelsesomkostninger =\n" +
+                        numberFormat3(hovedstol) + "*" + numberFormat2(kurs) + "/100 - " + numberFormat3(
                           stiftelse
-                        )} =${numberFormat3(provenue)}`}
-                      </BlockMath>
+                        ) + " = " + numberFormat3(provenue)
+                      }
                     </td>
                   </tr>
 
                   <tr>
                     <th scope="row">Rente pr. termin effektiv</th>
                     <td>{numberFormat3(renteeffektiv)}%</td>
-                    <td>RENTE</td>
-                    <td>RATE</td>
+
                     <td>
                       Renten pr. termin korrigeret for eventuelt kurstab og
                       stiftelsesomkostninger. Renten kan ikke udregnes eksplicit
-                      for et annuitetslån, så man skal bruge en finansfunktion
+                      for et serielån, så man skal bruge en finansfunktion
                       på sin computer eller i fx. Excel hvor formlen er:
                       <br></br>
-                      =RENTE({terminer};{numberFormat6(-ydelse)};{" "}
-                      {numberFormat6(provenue)})
+                      =IA(betalingsstrømme)
+                      <br />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">Rente pr. termin effektiv efter skat</th>
+                    <td>{numberFormat3(renteeffektivskat)}%</td>
+
+                    <td>
+                      Renten pr. termin korrigeret for eventuelt kurstab og
+                      stiftelsesomkostninger samt skat. Renten kan ikke udregnes eksplicit
+                      for et serielån, så man skal bruge en finansfunktion
+                      på sin computer eller i fx. Excel hvor formlen er:
+                      <br></br>
+                      =IA(betalingsstrømme minus skat)
+
                       <br />
                     </td>
                   </tr>
@@ -847,31 +843,51 @@ export function f3() {
                   <tr>
                     <th scope="row">ÅOP</th>
                     <td>{numberFormat3(åop)}%</td>
-                    <td></td>
-                    <td></td>
+
                     <td>
                       Renten pr. år korrigeret for eventuelt kurstab,
                       stiftelsesomkostninger og antal rentetilskrivninger pr.
                       år. ÅOP bestemmes ud fra den effektive rente pr. termin,
                       korrigeret for renters rente, ud fra antallet af
                       rentetilskrivninger pr. år. Formlen er:
-                      <BlockMath>
-                        {String.raw`\textstyle ÅOP= ((1+RENTE)^{Terminer\ pr. år}-1)100=`}
-                      </BlockMath>
-                      <BlockMath>
-                        {String.raw`\textstyle  ((1+${numberFormat5(
-                          renteeffektiv / 100
-                        )})^{${numberFormat5(
-                          terminerår
-                        )}}-1)100=${numberFormat5(åop)}\%
-                        `}
-                      </BlockMath>
-                      <br />
-                      ÅOP kan på en lommeregner udregnes som:
+                      {"\nÅOP = ((1 + RENTE)^Terminer pr år - 1)*100 = \n" +
+                        "((1 + " + numberFormat5(renteeffektiv / 100) + ")^" +
+                        numberFormat5(terminerår) + " - 1)*100 = " + numberFormat5(åop) + "%"
+                      }
+
+
+                      <br></br>ÅOP kan derfor på en lommeregner udregnes som:
                       <br />
                       <i>
                         ((1+
                         {numberFormat5(renteeffektiv / 100)})^
+                        {numberFormat6(terminerår)}-1)*100
+                      </i>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">ÅOP efter skat</th>
+                    <td>{numberFormat3((((1 + renteeffektivskat / 100) ** terminerår - 1)) * 100)}%</td>
+
+                    <td>
+
+                      Renten pr. år korrigeret for skat, kurstab,
+                      stiftelsesomkostninger og antal rentetilskrivninger pr.
+                      år. ÅOP minus skat bestemmes ud fra den effektive rente minus skat pr. termin,
+                      korrigeret for renters rente, ud fra antallet af
+                      rentetilskrivninger pr. år. Formlen er:
+                      {"\nÅOP = ((1 + RENTE-skat)^Terminer pr år - 1)*100 = \n" +
+                        "((1 + " + numberFormat5(renteeffektivskat / 100) + ")^" +
+                        numberFormat5(terminerår) + " - 1)*100 = " + numberFormat3((((1 + renteeffektivskat / 100) ** terminerår - 1)) * 100) + "%"
+                      }
+
+
+                      <br></br>ÅOP kan derfor på en lommeregner udregnes som:
+                      <br />
+                      <i>
+                        ((1+
+                        {numberFormat5(renteeffektivskat / 100)})^
                         {numberFormat6(terminerår)}-1)*100
                       </i>
                     </td>
@@ -899,11 +915,30 @@ export function f3() {
           preventOverflow="hidden"
           // fixedRowsTop="1"
           manualColumnResize="100"
-          height="320"
+          height="800"
           // overflow="hidden"
           licenseKey="non-commercial-and-evaluation"
         />
       </Container>
+      {/* <Container className="p-0">
+        <div class="row p-3">
+          <div class="col-md-3 p-3 container-fluid">
+            <div class="card h-100">
+              <div class="card-body bg-white">
+                <h3>Provenue og renter</h3>
+                <div>
+                  <Doughnut
+                    data={datadoug}
+                    height={400}
+                    options={{ maintainAspectRatio: false }}
+                  />
+                </div>
+                {/* </ResponsiveContainer> */}
+      {/* </div>
+            </div>
+          </div>
+        </div> */}
+      {/* </Container > * /} */}
     </div >
   );
 }
