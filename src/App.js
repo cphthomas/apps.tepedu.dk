@@ -30,7 +30,7 @@ class App extends Component {
               <Route path="/fremskrivning" component={Fremskrivning} />
               <Route path="/staaende" component={staaende} />
               <Route path="/finans" component={Finans} />
-              <Route path="/pris" component={annuitet} />
+              {/* <Route path="/pris" component={annuitet} /> */}
               <Route path="/optimering" component={Optimering} />
               <Route path="/fin2020" component={fin2020} />
               <Route path="/annuitet" component={annuitet} />
