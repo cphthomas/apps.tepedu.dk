@@ -9,7 +9,7 @@ import { Optimering } from "./Optimering";
 import { fin2020 } from "./fin2020";
 
 import { Finans } from "./Finans";
-import { annuitet } from "./annuitet";
+import { ann } from "./ann";
 import { f4 } from "./f4";
 import { serie } from "./serie";
 import { NoMatch } from "./NoMatch";
@@ -30,10 +30,10 @@ class App extends Component {
               <Route path="/fremskrivning" component={Fremskrivning} />
               <Route path="/staaende" component={staaende} />
               <Route path="/finans" component={Finans} />
-              {/* <Route path="/pris" component={annuitet} /> */}
+              <Route path="/pris" component={ann} />
               <Route path="/optimering" component={Optimering} />
               <Route path="/fin2020" component={fin2020} />
-              <Route path="/annuitet" component={annuitet} />
+              <Route path="/ann" component={ann} />
               <Route path="/f4" component={f4} />
               <Route path="/serie" component={serie} />
               <Route path="/*" component={Home} />

@@ -80,7 +80,7 @@ export const NavigationBar = () => (
 
           <Nav.Item>
             <Nav.Link>
-              <Link to="/annuitet">
+              <Link to="/ann">
                 <OverlayTrigger
                   overlay={
                     <Tooltip>
