@@ -35,7 +35,7 @@ import Handsontable from "handsontable";
 // import { BlockMath } from "react-katex";
 // import { InlineMath } from "react-katex";
 
-export function ann() {
+export function invest() {
 
 
   // const numInputs = document.querySelectorAll("input[type=number]");

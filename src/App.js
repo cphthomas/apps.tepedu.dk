@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Home } from "./Home";
 import { Fremskrivning } from "./Fremskrivning";
 import { staaende } from "./staaende";
-// import { Pris } from "./Pris";
+import { invest } from "./invest";
 import { Optimering } from "./Optimering";
 import { fin2020 } from "./fin2020";
 import { Finans } from "./Finans";
@@ -29,7 +29,7 @@ class App extends Component {
               <Route path="/fremskrivning" component={Fremskrivning} />
               <Route path="/staaende" component={staaende} />
               <Route path="/finans" component={Finans} />
-              <Route path="/pris" component={ann} />
+              <Route path="/invest" component={invest} />
               <Route path="/optimering" component={Optimering} />
               <Route path="/fin2020" component={fin2020} />
               <Route path="/ann" component={ann} />

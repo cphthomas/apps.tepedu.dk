@@ -131,16 +131,16 @@ export const NavigationBar = () => (
 
           <Nav.Item>
             <Nav.Link>
-              <Link to="/pris">
+              <Link to="/invest">
                 <OverlayTrigger
                   overlay={
                     <Tooltip>
-                      Pris- afsætningsfunktionen, omsætning og elasticitet
+                      Investering.
                     </Tooltip>
                   }
                   placement="bottom"
                 >
-                  <Button size="sm">Pris</Button>
+                  <Button size="sm">Investering</Button>
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
@@ -200,7 +200,7 @@ export const NavigationBar = () => (
             <Nav.Link>
               <Link to="/f4">
                 <OverlayTrigger
-                  overlay={<Tooltip>Investering endnu ikke færdig</Tooltip>}
+                  overlay={<Tooltip>Investering</Tooltip>}
                   placement="bottom"
                 >
                   <Button size="sm">f4</Button>
