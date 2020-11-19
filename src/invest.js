@@ -42,7 +42,7 @@ export function invest() {
 
   var [investering, setinvestering] = useState(+(20000.0).toFixed(2));
   var [rente, setrente] = useState(+(8.25).toFixed(2));
-  var [nettobetalinger, setnettobetalinger] = useState(+(2200).toFixed(2));
+  var [nettobetalinger, setnettobetalinger] = useState(+(5000).toFixed(2));
   var [netto1, setnetto1] = useState(+(5000).toFixed(2));
   var [netto2, setnetto2] = useState(+(4000).toFixed(2));
   var [netto3, setnetto3] = useState(+(3000).toFixed(2));
@@ -53,10 +53,27 @@ export function invest() {
   var [netto8, setnetto8] = useState(+(3000).toFixed(2));
   var [netto9, setnetto9] = useState(+(6000).toFixed(2));
   var [netto10, setnetto10] = useState(+(3000).toFixed(2));
+  var [netto11, setnetto11] = useState(+(5000).toFixed(2));
+  var [netto12, setnetto12] = useState(+(4000).toFixed(2));
+  var [netto13, setnetto13] = useState(+(3000).toFixed(2));
+  var [netto14, setnetto14] = useState(+(6000).toFixed(2));
+  var [netto15, setnetto15] = useState(+(3000).toFixed(2));
+  var [netto16, setnetto16] = useState(+(5000).toFixed(2));
+  var [netto17, setnetto17] = useState(+(4000).toFixed(2));
+  var [netto18, setnetto18] = useState(+(3000).toFixed(2));
+  var [netto19, setnetto19] = useState(+(6000).toFixed(2));
+  var [netto20, setnetto20] = useState(+(3000).toFixed(2));
   var rentedecimal = rente / 100;
-  var [år, setår] = useState(+(10.0).toFixed(2));
+  var [år, setår] = useState(+(6));
   var [scrap, setscrap] = useState(+(500.0).toFixed(2));
   var [nettotype, setnettotype] = useState("Konstante nettobetalinger");
+
+  // var år, setår
+  // if (nettotype === "Konstante nettobetalinger") {
+  //   [år, setår] = useState(+(10));
+  // } else {
+  //   [år, setår] = useState(+(6));
+  // }
 
   var annSelect = (e) => {
     console.log(e);
@@ -104,22 +121,72 @@ export function invest() {
 
 
   // ###################################################################################################################
-  var varnetto = [0, netto1, netto2, netto3, netto4, netto5, netto6, netto7, netto8, netto9, netto10];
-  varnetto = varnetto.slice(0, år)
-  var renterbc = cf.map((cf) =>
-    (nettobetalinger - nettobetalinger * (1 + rentedecimal) ** (-cf)).toFixed(2));
 
+  var renterbc, nettobc, nettobet, formatbs, bs, diskonteredebs, varnetto
+  if (nettotype === "Konstante nettobetalinger") {
+    renterbc = cf.map((cf) =>
+      (nettobetalinger - nettobetalinger * (1 + rentedecimal) ** (-cf)).toFixed(2));
+
+    nettobc = cf.map((cf) =>
+      ((nettobetalinger * (1 + rentedecimal) ** -cf)).toFixed(2));
+    nettobc.splice(0, 1, 0);
+    nettobc.splice(år, 1, ((nettobetalinger + scrap) * (1 + rentedecimal) ** -cf[år]).toFixed(2))
+
+    nettobet = new Array(år).fill(null).map(() => numberFormat3(nettobetalinger))
+    nettobet.splice(0, 0, numberFormat3(0));
+
+    formatbs = cf.map((cf) =>
+      numberFormat3(nettobetalinger));
+    formatbs.splice(0, 1, numberFormat3(-investering));
+    formatbs.splice(år, 1, numberFormat3(nettobetalinger + scrap))
+
+    bs = cf.map((cf) =>
+      (nettobetalinger));
+    bs.splice(0, 1, (-investering));
+    bs.splice(år, 1, (nettobetalinger + scrap))
+
+    diskonteredebs = cf.map((cf) =>
+      ((nettobetalinger * (1 + rentedecimal) ** -cf)));
+    diskonteredebs.splice(0, 1, -investering);
+    diskonteredebs.splice(år, 1, (nettobetalinger + scrap) * (1 + rentedecimal) ** -år)
+    varnetto = [nettobetalinger, nettobetalinger, nettobetalinger, nettobetalinger,];
+
+  } else {
+    varnetto = [0, netto1, netto2, netto3, netto4, netto5, netto6, netto7, netto8, netto9, netto10, netto11, netto12, netto13, netto14, netto15, netto16, netto17, netto18, netto19, netto20];
+    varnetto = varnetto.slice(0, år + 1)
+    renterbc = cf.map((cf) =>
+      (varnetto[cf] - varnetto[cf] * (1 + rentedecimal) ** (-cf)).toFixed(2));
+
+    nettobc = cf.map((cf) =>
+      ((varnetto[cf] * (1 + rentedecimal) ** -cf)).toFixed(2));
+    nettobc.splice(0, 1, 0);
+    nettobc.splice(år, 1, ((varnetto[år] + scrap) * (1 + rentedecimal) ** -cf[år]).toFixed(2))
+
+    nettobet = cf.map((cf) =>
+      (varnetto[cf]));
+
+    formatbs = cf.map((cf) =>
+      numberFormat3(varnetto[cf]));
+    formatbs.splice(0, 1, numberFormat3(-investering));
+    formatbs.splice(år, 1, numberFormat3(varnetto[år] + scrap))
+
+    bs = cf.map((cf) =>
+      (varnetto[cf]));
+    bs.splice(0, 1, (-investering));
+    bs.splice(år, 1, (varnetto[år] + scrap))
+
+    diskonteredebs = cf.map((cf) =>
+      ((varnetto[cf] * (1 + rentedecimal) ** -cf)));
+    diskonteredebs.splice(0, 1, -investering);
+    diskonteredebs.splice(år, 1, (varnetto[år] + scrap) * (1 + rentedecimal) ** -år)
+
+  }
   var faktor = cf.map((cf) =>
     numberFormat7((1 + rentedecimal) ** -cf));
 
 
-  var nettobc = cf.map((cf) =>
-    ((nettobetalinger * (1 + rentedecimal) ** -cf)).toFixed(2));
-  nettobc.splice(0, 1, 0);
-  nettobc.splice(år, 1, ((nettobetalinger + scrap) * (1 + rentedecimal) ** -cf[år]).toFixed(2))
 
-  var nettobet = new Array(år).fill(null).map(() => numberFormat3(nettobetalinger))
-  nettobet.splice(0, 0, numberFormat3(0));
+
 
 
   var investbc = new Array(år).fill(null).map(() => (0));
@@ -131,26 +198,19 @@ export function invest() {
   formatinvestbc.splice(år, 1, numberFormat3(scrap));
 
 
-  var bs = cf.map((cf) =>
-    (nettobetalinger));
-  bs.splice(0, 1, (-investering));
-  bs.splice(år, 1, (nettobetalinger + scrap))
 
-  var formatbs = cf.map((cf) =>
-    numberFormat3(nettobetalinger));
-  formatbs.splice(0, 1, numberFormat3(-investering));
-  formatbs.splice(år, 1, numberFormat3(nettobetalinger + scrap))
 
-  var diskonteredebs = cf.map((cf) =>
-    ((nettobetalinger * (1 + rentedecimal) ** -cf)));
-  diskonteredebs.splice(0, 1, -investering);
-  diskonteredebs.splice(år, 1, (nettobetalinger + scrap) * (1 + rentedecimal) ** -år)
+
+
+
 
   var formatdiskonteredebs = diskonteredebs.map((diskonteredebs) =>
     numberFormat3(diskonteredebs));
 
   var akkbs = [];
   bs.reduce(function (a, b, i) { return akkbs[i] = a + b; }, 0);
+  var indeks = akkbs.indexOf(5000);
+
   var formatakkbs = akkbs.map((akkbs) =>
     numberFormat3(akkbs));
 
@@ -316,7 +376,7 @@ export function invest() {
   var internrente = IRR(bs);
   var kapitaltjenesten = ((investering - scrap * (1 + rentedecimal) ** -år) * rentedecimal) / (1 - (1 + rentedecimal) ** -år)
   var tilbagebetalingstiden = ((-Math.log(1 - (investering * rentedecimal) / nettobetalinger)) / Math.log(1 + rentedecimal)).toFixed(2)
-  var tilbagebetalingstidenukorr = (investering / nettobetalinger).toFixed(2)
+  // var tilbagebetalingstidenukorr = (investering / nettobetalinger).toFixed(2)
   var kritiskscrap = (scrap - kapitalværdi * (1 + rentedecimal) ** år).toFixed(2);
 
 
@@ -326,30 +386,12 @@ export function invest() {
       <Container>
         <div class="p-3 mb-2 bg-secondary text-white">
           <h4>Investering.</h4>
-          {/* <h5>Investering.</h5> */}
+
+          kapitalværdi={numberFormat1(kapitalværdi)}
           <br></br>
-          kapitalværdi={kapitalværdi}
-          {/* <br></br>
-          
-          diskonteredebs ={diskonteredebs} */}
-          <br></br>
-          varnetto = {varnetto}
-          <br></br>
-          rentedecimal = {rentedecimal}
-          <br></br>
-          kapitaltjenesten = {kapitaltjenesten}
-          <br></br>
-          tilbagebetalingstiden = {tilbagebetalingstiden}
-          <br></br>
-          tilbagebetalingstidenukorr = {tilbagebetalingstidenukorr}
-          <br></br>
-          kritiskscrap = {kritiskscrap}
-          <br></br>
-          faktor = {faktor}
-          <br></br>
-          akkdiskonteredebs = {akkdiskonteredebs}
-          <br></br>
-          formatakkdiskonteredebs = {formatakkdiskonteredebs}
+          indeks = {indeks}
+
+
         </div>
       </Container>
 
@@ -581,6 +623,183 @@ export function invest() {
                         </InputGroup>
                       }
 
+                      {nettotype === "Variable nettobetalinger" && år > 10 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto11}
+                            onChange={(e) => setnetto11(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 11
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+                      {nettotype === "Variable nettobetalinger" && år > 11 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto12}
+                            onChange={(e) => setnetto12(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 12
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 12 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto13}
+                            onChange={(e) => setnetto13(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 13
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+                      {nettotype === "Variable nettobetalinger" && år > 13 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto14}
+                            onChange={(e) => setnetto14(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 14
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 14 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto15}
+                            onChange={(e) => setnetto15(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 15
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 15 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto16}
+                            onChange={(e) => setnetto16(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 16
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+                      {nettotype === "Variable nettobetalinger" && år > 16 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto17}
+                            onChange={(e) => setnetto17(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 17
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 17 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto18}
+                            onChange={(e) => setnetto18(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 18
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 18 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto19}
+                            onChange={(e) => setnetto19(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 19
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 19 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto20}
+                            onChange={(e) => setnetto20(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 20
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
                       <InputGroup>
                         <Form.Control
                           // size="sm"
@@ -618,6 +837,7 @@ export function invest() {
                         <Form.Control
                           type="number"
                           min="1"
+                          max={nettotype === "Variable nettobetalinger" ? "20" : "1000"}
                           value={år}
                           onChange={(e) =>
                             setår(+e.target.value.replace(/\D/, ""))
@@ -664,6 +884,7 @@ export function invest() {
                           Vælg variable nettobetalinger
                           </Dropdown.Item>
                       </DropdownButton>
+
                     </Form.Group>
                   </div>
                 </Container>
@@ -850,9 +1071,10 @@ export function invest() {
                       <hr></hr>
 
                       Betalingsstrøm tid 0 er ubetalingen til investeringen = {numberFormat1(-investering)}<br></br>
-                      Betalingsstrøm tid 1 er nettobetalingen = {numberFormat1(nettobetalinger)}<br></br>
-                      {år > 1 && "Betalingsstrøm tid 2 er nettobetalingen = " + numberFormat1(nettobetalinger)}<br></br>
-                      {år > 2 && "..."}
+                      Betalingsstrøm tid 1 er nettobetalingen = {numberFormat1(bs[1])}<br></br>
+                      {år > 1 && "Betalingsstrøm tid 2 er nettobetalingen = " + numberFormat1(bs[2])}<br></br>
+                      {år > 2 && "Betalingsstrøm tid 3 er nettobetalingen = " + numberFormat1(bs[3])}<br></br>
+                      {år > 3 && "..."}
                     </td>
                   </tr>
 
@@ -867,7 +1089,7 @@ export function invest() {
                       <hr></hr>
                       Man kan finde diskonteringsfaktoren fx på tidspunkt n ved formlen (1+r)^-n, vi får følgende diskonteringsfaktorer:<br></br>
                       Diskonteringsfaktoren tid 0 = (1+{numberFormat5(rentedecimal)})^-0 = {(faktor[0])}<br></br>
-                      Diskonteringsfaktoren tid 1 = (1+{numberFormat5(rentedecimal)})^-1 = {(faktor[1])}<br></br>
+                      Diskonteringsfaktoren tid 1 = (1+{numberFormat5(rentedecimal)})^(-1) = {(faktor[1])}<br></br>
                       {år > 1 && "Diskonteringsfaktoren tid 2 = (1 + " + numberFormat5(rentedecimal) + ")^(-2) = " + faktor[2]}<br></br>
                       {år > 2 && "Diskonteringsfaktoren tid 3 = (1 + " + numberFormat5(rentedecimal) + ")^(-3) = " + faktor[3]}<br></br>
                       {år > 3 && "..."}
@@ -885,9 +1107,10 @@ export function invest() {
                       De tilbagediskonterede betalingsstrømme angiver nutidsværdien af de fremtidige betalingsstrømme, man bestemmer disse ved at gange betalingsstrømmene med diskonteringsfaktoren.
                       <hr></hr>
                       Tilbagediskonteret betalingsstrøm tid 0 = {numberFormat2(-investering)}*1 = {formatdiskonteredebs[0]} DKK<br></br>
-                      Tilbagediskonteret betalingsstrøm tid 1 = {numberFormat2(nettobetalinger)}*{faktor[1]} = {formatdiskonteredebs[1]} DKK<br></br>
-                      {år > 1 && "Tilbagediskonteret betalingsstrøm tid 2 = " + numberFormat2(nettobetalinger) + "*" + faktor[2] + " = " + formatdiskonteredebs[2] + " DKK"}<br></br>
-                      {år > 2 && "..."}
+                      Tilbagediskonteret betalingsstrøm tid 1 = {numberFormat2(bs[1])}*{faktor[1]} = {formatdiskonteredebs[1]} DKK<br></br>
+                      {år > 1 && "Tilbagediskonteret betalingsstrøm tid 2 = " + numberFormat2(bs[2]) + "*" + faktor[2] + " = " + formatdiskonteredebs[2] + " DKK"}<br></br>
+                      {år > 2 && "Tilbagediskonteret betalingsstrøm tid 3 = " + numberFormat2(bs[3]) + "*" + faktor[3] + " = " + formatdiskonteredebs[3] + " DKK"}<br></br>
+                      {år > 3 && "..."}
                     </td>
                   </tr>
 
@@ -925,7 +1148,7 @@ export function invest() {
                       {år > 3 && "... + " + nettobet[år] + "*(1+r)^-" + år}<br></br>
                       Vi kan ikke ved hjælp af algebra løse ligningen explicit når investeringen løber længere end 1 år.
                       Den interne rente kan findes med algoritmer i computerprogrammer, der prøver sig frem med forskellige værdier af den interne rente til de er tæt på den korrekte værdi.
-                      I Excel bruge =IA(betalingsstrømme) formlen, der ligeledes er en algoritme.<hr></hr>
+                      I Excel bruges =IA(betalingsstrømme) formlen, der ligeledes er en algoritme.<hr></hr>
                       Vi benytter den interne rentefods metode, når vi sammenligner den interne rente {numberFormat3(internrente)}% med kalkulationsrenten {numberFormat3(rente)}%.
                       Her er den interne rente {numberFormat3(internrente)}%{internrente > rente && " større "}{internrente < rente && " mindre "}end kalkulationsrenten {numberFormat3(rente)}%,
                       derfor er investeringen {internrente < rente && "ikke "}lønsom.
