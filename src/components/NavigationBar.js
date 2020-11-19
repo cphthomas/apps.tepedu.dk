@@ -158,7 +158,7 @@ export const NavigationBar = () => (
               </Link>
             </Nav.Link>
           </Nav.Item> */}
-          <Nav.Item>
+          {/* <Nav.Item>
             <Nav.Link>
               <Link to="/fin2020">
                 <OverlayTrigger
@@ -173,7 +173,7 @@ export const NavigationBar = () => (
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
-          </Nav.Item>
+          </Nav.Item> */}
           {/* <Nav.Item>
             <Nav.Link>
               <Link to="/f3">
@@ -186,7 +186,7 @@ export const NavigationBar = () => (
               </Link>
             </Nav.Link>
           </Nav.Item> */}
-          <Nav.Item>
+          {/* <Nav.Item>
             <Nav.Link>
               <Link to="/f4">
                 <OverlayTrigger
@@ -197,7 +197,7 @@ export const NavigationBar = () => (
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
-          </Nav.Item>
+          </Nav.Item> */}
 
           {/* <NavDropdown title="Investering" id="basic-nav-dropdown">
             <Link href="/about">About</Link>
