@@ -15,7 +15,8 @@ import {
   numberFormat3,
   // numberFormat4,
   numberFormat5,
-  numberFormat6,
+  // numberFormat6,
+  numberFormat7,
 } from "./lib"; //ændrer til komma og pct + DKK
 import Container from "react-bootstrap/Container";
 // import ReactHtmlParser from "react-html-parser";
@@ -31,170 +32,155 @@ import "handsontable/dist/handsontable.full.css";
 import { HotTable } from "@handsontable/react";
 import Handsontable from "handsontable";
 
-// import "katex/dist/katex.min.css";
-// import { BlockMath } from "react-katex";
-// import { InlineMath } from "react-katex";
+
 
 export function invest() {
 
 
-  // const numInputs = document.querySelectorAll("input[type=number]");
-
-  // numInputs.forEach(function (input) {
-  //   input.addEventListener("change", function (e) {
-  //     if (e.target.value === "") {
-  //       e.target.value = 1;
-  //     }
-  //   });
-  // });
 
 
-  const [hovedstol, sethovedstol] = useState(+(20000.0).toFixed(2));
-  var [rente, setrente] = useState(+(1.25).toFixed(2));
-  var [ydelseinput, setydelseinput] = useState(+(2200).toFixed(2));
+
+  var [investering, setinvestering] = useState(+(20000.0).toFixed(2));
+  var [rente, setrente] = useState(+(8.25).toFixed(2));
+  var [nettobetalinger, setnettobetalinger] = useState(+(2200).toFixed(2));
+  var [netto1, setnetto1] = useState(+(5000).toFixed(2));
+  var [netto2, setnetto2] = useState(+(4000).toFixed(2));
+  var [netto3, setnetto3] = useState(+(3000).toFixed(2));
+  var [netto4, setnetto4] = useState(+(6000).toFixed(2));
+  var [netto5, setnetto5] = useState(+(3000).toFixed(2));
+  var [netto6, setnetto6] = useState(+(5000).toFixed(2));
+  var [netto7, setnetto7] = useState(+(4000).toFixed(2));
+  var [netto8, setnetto8] = useState(+(3000).toFixed(2));
+  var [netto9, setnetto9] = useState(+(6000).toFixed(2));
+  var [netto10, setnetto10] = useState(+(3000).toFixed(2));
   var rentedecimal = rente / 100;
-  const [terminer, setterminer] = useState(+(10.0).toFixed(2));
-  const [skat, setskat] = useState(+(22.0).toFixed(2));
+  var [år, setår] = useState(+(10.0).toFixed(2));
+  var [scrap, setscrap] = useState(+(500.0).toFixed(2));
+  var [nettotype, setnettotype] = useState("Konstante nettobetalinger");
 
-  const [stiftelse, setstiftelse] = useState(+(0.0).toFixed(2));
-  const [kurs, setkurs] = useState(+(100.0).toFixed(2));
-
-  const [anntype, setanntype] = useState("Kendt rente");
-  const annSelect = (e) => {
+  var annSelect = (e) => {
     console.log(e);
-    setanntype(e);
+    setnettotype(e);
   };
 
-  const [prår, setprår] = useState("1 helårlig termin");
-  const handleSelect = (e) => {
-    console.log(e);
-    setprår(e);
-  };
-  var terminerår = prår.slice(0, 2);
-  var fv = hovedstol * (1 + rente / 100) ** terminer;
+  var fv = investering * (1 + rente / 100) ** år;
 
-  const cf = [...Array(terminer + 1).keys()];
+  const cf = [...Array(år + 1).keys()];
   const cfnamed = cf.map((n) => "Tid: " + n);
 
-  var cf2 = Array.apply(null, Array(terminer)).map((_) => "0");
-  cf2.splice(0, 0, hovedstol);
+  var cf2 = Array.apply(null, Array(år)).map((_) => "0");
+  cf2.splice(0, 0, investering);
 
-  const fvbarchart = Array.apply(null, Array(terminer + 1)).map((_) => "0");
-  fvbarchart.splice(terminer, 0, fv.toFixed(2));
+  const fvbarchart = Array.apply(null, Array(år + 1)).map((_) => "0");
+  fvbarchart.splice(år, 0, fv.toFixed(2));
 
   const rentecf = cf.map(
     (cf) =>
       -1 *
       (
-        hovedstol * (1 + rente / 100) ** cf -
-        hovedstol -
-        (hovedstol * (1 + rente / 100) ** (cf - 1) - hovedstol)
+        investering * (1 + rente / 100) ** cf -
+        investering -
+        (investering * (1 + rente / 100) ** (cf - 1) - investering)
       ).toFixed(2)
   );
   rentecf.splice(0, 1, 0);
   var rentespreadsheet = cf.map(
     (cf) =>
       -1 *
-      (hovedstol * (1 + rente / 100) ** cf -
-        hovedstol -
-        (hovedstol * (1 + rente / 100) ** (cf - 1) - hovedstol))
+      (investering * (1 + rente / 100) ** cf -
+        investering -
+        (investering * (1 + rente / 100) ** (cf - 1) - investering))
   );
   rentespreadsheet.splice(0, 1, 0);
-  var provenue = (hovedstol * kurs) / 100 - stiftelse;
 
-  var ydelse, bsss, bs;
 
-  if (anntype === "Kendt rente") {
-    ydelse =
-      (hovedstol * rentedecimal) / (1 - Math.pow(1 + rentedecimal, -terminer));
-    bs = new Array(terminer).fill(null).map(() => ydelse);
-    bs.splice(0, 0, -provenue);
-  }
+
+
+
+  // var netto =
+  //   (investering * rentedecimal) / (1 - Math.pow(1 + rentedecimal, -år));
+  // // bs = new Array(år).fill(null).map(() => netto);
+
+
 
   // ###################################################################################################################
+  var varnetto = [0, netto1, netto2, netto3, netto4, netto5, netto6, netto7, netto8, netto9, netto10];
+  varnetto = varnetto.slice(0, år)
+  var renterbc = cf.map((cf) =>
+    (nettobetalinger - nettobetalinger * (1 + rentedecimal) ** (-cf)).toFixed(2));
 
-  if (anntype === "Kendt ydelse") {
-    ydelse = ydelseinput;
-    bs = new Array(terminer).fill(null).map(() => ydelse);
-    bs.splice(0, 0, -provenue);
-
-    rente = IRR(bs)
-    rentedecimal = rente / 100;
-  };
-
-  bsss = bs.map((bs) => numberFormat3(-bs));
-  var ydelse1 = bs.map((bs) => bs);
-  ydelse1.splice(0, 1, 0);
-
-  const restgæld = cf.map((cf) =>
-    Math.abs(
-      hovedstol * Math.pow(1 + rentedecimal, cf) -
-      (ydelse * (Math.pow(1 + rentedecimal, cf) - 1)) / rentedecimal
-    )
-  );
-
-  const restgældss = restgæld.map((restgæld) => numberFormat3(restgæld));
-  const restgældbc = restgæld.map((restgæld) => restgæld.toFixed(2));
-
-  var renterss = restgæld.map((restgæld) => restgæld * rentedecimal);
-
-  renterss.pop();
-  renterss.splice(0, 0, 0);
-
-  var skatss = restgæld.map((restgæld) => restgæld * rentedecimal * (skat / 100));
-  skatss.pop();
-  skatss.splice(0, 0, 0);
+  var faktor = cf.map((cf) =>
+    numberFormat7((1 + rentedecimal) ** -cf));
 
 
-  //const afdragss = ydelsess + renterss;
-  //ydelseparsefloat =parseFloatydelsess.splice(0, 1, numberFormat3(0));
-  //var afdragss = afdragss.map((ydelsess, renterss) => ydelsess - renterss); 
+  var nettobc = cf.map((cf) =>
+    ((nettobetalinger * (1 + rentedecimal) ** -cf)).toFixed(2));
+  nettobc.splice(0, 1, 0);
+  nettobc.splice(år, 1, ((nettobetalinger + scrap) * (1 + rentedecimal) ** -cf[år]).toFixed(2))
 
-  //varable til ss spreadsheet
-  var afdragss = ydelse1.map((e, i) => e - renterss[i]);
-  var ydelsess = ydelse1.map((ydelse1) => numberFormat3(ydelse1));
-  renterss = renterss.map((renterss) => numberFormat3(renterss));
-  afdragss = afdragss.map((afdragss) => numberFormat3(afdragss));
-  // variable til bc barchart
-  var renterbc = restgæld.map((restgæld) =>
-    (-restgæld * rentedecimal).toFixed(2)
-  );
-  renterbc.pop();
-  renterbc.splice(0, 0, Number(0));
-  var ydelsebc = ydelse1.map((ydelse1) => -ydelse1);
-  var afdragbc = ydelsebc.map((e, i) =>
-    parseFloat(e * 1 - renterbc[i]).toFixed(2)
-  );
-  let provenuebc = new Array(terminer).fill(null).map(() => 0);
-  provenuebc.splice(0, 0, provenue);
+  var nettobet = new Array(år).fill(null).map(() => numberFormat3(nettobetalinger))
+  nettobet.splice(0, 0, numberFormat3(0));
 
 
+  var investbc = new Array(år).fill(null).map(() => (0));
+  investbc.splice(0, 0, (-investering));
+  // investbc.splice(år, 1, (scrap));
 
-  // const sumfunktion = (arr) => arr.reduce((a, b) => a + b, 0);
-  // var sumrestgæld = (sumfunktion(restgæld) * rentedecimal).toFixed(2);
-
-  var formatskatss = skatss.map((skatss) => numberFormat3(skatss));
-  // var bssss = bs.map((bs, skatss) => numberFormat3(bs - skatss));
-  // var bssss = new Array(restgæld).fill(null).map(() => restgæld);
-  var bssss = restgæld.map((restgæld) => (restgæld * rentedecimal * (skat / 100) - ydelse));
-  // restgæld * rentedecimal * (skat / 100)
-  bssss.splice(0, 0, provenue);
-  bssss.pop();
-  var renteeffektivskat = IRR(bssss);
-  var formatbssss = bssss.map((bssss) => numberFormat3(bssss));
+  var formatinvestbc = new Array(år).fill(null).map(() => numberFormat3(0));
+  formatinvestbc.splice(0, 0, numberFormat3(-investering));
+  formatinvestbc.splice(år, 1, numberFormat3(scrap));
 
 
-  var data1 = [cf, ydelsess, renterss, formatskatss, afdragss, restgældss, bsss, formatbssss];
+  var bs = cf.map((cf) =>
+    (nettobetalinger));
+  bs.splice(0, 1, (-investering));
+  bs.splice(år, 1, (nettobetalinger + scrap))
+
+  var formatbs = cf.map((cf) =>
+    numberFormat3(nettobetalinger));
+  formatbs.splice(0, 1, numberFormat3(-investering));
+  formatbs.splice(år, 1, numberFormat3(nettobetalinger + scrap))
+
+  var diskonteredebs = cf.map((cf) =>
+    ((nettobetalinger * (1 + rentedecimal) ** -cf)));
+  diskonteredebs.splice(0, 1, -investering);
+  diskonteredebs.splice(år, 1, (nettobetalinger + scrap) * (1 + rentedecimal) ** -år)
+
+  var formatdiskonteredebs = diskonteredebs.map((diskonteredebs) =>
+    numberFormat3(diskonteredebs));
+
+  var akkbs = [];
+  bs.reduce(function (a, b, i) { return akkbs[i] = a + b; }, 0);
+  var formatakkbs = akkbs.map((akkbs) =>
+    numberFormat3(akkbs));
+
+  var akkdiskonteredebs = [];
+  diskonteredebs.reduce(function (a, b, i) { return akkdiskonteredebs[i] = a + b; }, 0);
+  var formatakkdiskonteredebs = akkdiskonteredebs.map((akkdiskonteredebs) =>
+    numberFormat3(akkdiskonteredebs));
+
+
+
+  const add = (a, b) =>
+    +a + +b
+  // use reduce to sum our array
+  const kapitalværdi = diskonteredebs.reduce(add)
+
+
+
+
+  var data1 = [cf, formatinvestbc, nettobet, formatbs, formatakkbs, faktor, formatdiskonteredebs, formatakkdiskonteredebs];
   var colhead = [
     "Tid",
+    "Investering\nScrap",
+    "Nettobetalinger",
+    "Betalingsstrømme",
+    "Akkumulerede\nBetalingsstrømme",
+    "Diskonteringsfaktor",
 
-    "Ydelse\nDKK",
-    "Renter\nDKK",
-    "Skat\nDKK",
-    "Afdrag\nDKK",
-    "Restgæld\nDKK",
-    "Betalingsstrømme\nDKK",
-    "Betalingsstrømme\nefter skat i DKK",
+    "Tilbagediskonterede\nBetalingsstrømme",
+
+    "Tilbagediskonterede\nAkkumulerede\nBetalingsstrømme",
   ];
 
   // const datadoug = {
@@ -216,22 +202,22 @@ export function invest() {
     labels: cfnamed,
     datasets: [
       {
-        label: "Provenue",
-        backgroundColor: "green",
-        stack: "Stack 0",
-        hoverBackgroundColor: "darkgreen",
-        data: provenuebc,
-      },
-      {
-        label: "Afdrag",
+        label: "Investering",
         backgroundColor: "red",
         stack: "Stack 0",
         hoverBackgroundColor: "darkred",
-        data: afdragbc,
+        data: investbc,
+      },
+      {
+        label: "Nettobetaling diskonteret værdi",
+        backgroundColor: "green",
+        stack: "Stack 0",
+        hoverBackgroundColor: "darkgreen",
+        data: nettobc,
       },
 
       {
-        label: "Rente",
+        label: "Diskonteringstab",
         backgroundColor: "orange",
         stack: "Stack 0",
         hoverBackgroundColor: "darkorange",
@@ -240,18 +226,21 @@ export function invest() {
     ],
   };
 
-  const databar2 = {
-    labels: cfnamed,
-    datasets: [
-      {
-        label: "Restgæld",
-        backgroundColor: "green",
-        stack: "Stack 0",
-        hoverBackgroundColor: "darkgreen",
-        data: restgældbc,
-      },
-    ],
-  };
+
+
+
+  // const databar2 = {
+  //   labels: cfnamed,
+  //   datasets: [
+  //     {
+  //       label: "Restgæld",
+  //       backgroundColor: "green",
+  //       stack: "Stack 0",
+  //       hoverBackgroundColor: "darkgreen",
+  //       data: restgældbc,
+  //     },
+  //   ],
+  // };
 
   //VIGTIG til investering ###########################
   // const NPV = (cashflow, discountRate) =>
@@ -294,7 +283,7 @@ export function invest() {
     }
 
     // Return error if values does not contain at least one positive value and one negative value
-    if (!positive || !negative) return "#NUM!";
+    if (!positive || !negative) return "Der skal være både positive og negative betalingsstrømme, for at beregne den interne rente";
 
     // Initialize guess and resultRate
     guess = typeof guess === "undefined" ? 0.1 : guess;
@@ -324,51 +313,44 @@ export function invest() {
     // Return internal rate of return
     return resultRate * 100;
   }
-  var renteeffektiv = IRR(bs);
-  var åop = (Math.pow(1 + renteeffektiv / 100, terminerår) - 1) * 100;
+  var internrente = IRR(bs);
+  var kapitaltjenesten = ((investering - scrap * (1 + rentedecimal) ** -år) * rentedecimal) / (1 - (1 + rentedecimal) ** -år)
+  var tilbagebetalingstiden = ((-Math.log(1 - (investering * rentedecimal) / nettobetalinger)) / Math.log(1 + rentedecimal)).toFixed(2)
+  var tilbagebetalingstidenukorr = (investering / nettobetalinger).toFixed(2)
+  var kritiskscrap = (scrap - kapitalværdi * (1 + rentedecimal) ** år).toFixed(2);
 
-  if (terminerår < 2) {
-    var prårtekst = "Der er ".concat(
-      prår,
-      ", den nominelle rente pr. termin er ",
-      numberFormat3(rente),
-      "%. Helårlig rentetilskrivning betyder den nominelle rente pr. år (nominel rente pr. termin gange 1) bliver det samme altså: ",
-      numberFormat3(rente),
-      "% p.a."
-    );
-  } else {
-    prårtekst = "Der er ".concat(
-      prår,
-      ", den nominelle rente pr. termin er ",
-      rente,
-      "%, det betyder den nominelle rente pr. år (nominel rente pr. termin gange ",
-      terminerår,
-      ") bliver: ",
-      rente * terminerår,
-      "%"
-    );
-  }
-  var stiftelsetekst;
-  if (stiftelse !== 0) {
-    stiftelsetekst = "Der er stiftelsesomkostninger på ".concat(
-      numberFormat1(stiftelse),
-      ", stiftelsesomkostningerne er omkostninger banken tager for låneadministration. Stiftelsesomkostningerne betyder at den effektive rente pr termin og ÅOP bliver højere end den nominelle rente."
-    );
-  } else {
-    stiftelsetekst =
-      "Der er ingen stiftelsesomkostninger, derfor belastes ÅOP ikke af et lavere provenue, stiftelsesomkostningerne er omkostninger banken tager for låneadministration. Stiftelsesomkostningerne betyder at den effektive rente pr termin og ÅOP bliver højere end den nominelle rente.";
-  }
+
 
   return (
     <div>
       <Container>
         <div class="p-3 mb-2 bg-secondary text-white">
-
-          <h4>Annuitet.</h4>
-          <h5>Hvad bliver ydelse, afdrag og rente?</h5>
+          <h4>Investering.</h4>
+          {/* <h5>Investering.</h5> */}
+          <br></br>
+          kapitalværdi={kapitalværdi}
+          {/* <br></br>
           
+          diskonteredebs ={diskonteredebs} */}
+          <br></br>
+          varnetto = {varnetto}
+          <br></br>
+          rentedecimal = {rentedecimal}
+          <br></br>
+          kapitaltjenesten = {kapitaltjenesten}
+          <br></br>
+          tilbagebetalingstiden = {tilbagebetalingstiden}
+          <br></br>
+          tilbagebetalingstidenukorr = {tilbagebetalingstidenukorr}
+          <br></br>
+          kritiskscrap = {kritiskscrap}
+          <br></br>
+          faktor = {faktor}
+          <br></br>
+          akkdiskonteredebs = {akkdiskonteredebs}
+          <br></br>
+          formatakkdiskonteredebs = {formatakkdiskonteredebs}
         </div>
-
       </Container>
 
 
@@ -381,86 +363,271 @@ export function invest() {
                 <Container className="p-3">
                   <div class="p-3 mb-2 bg-white">
 
+
+                    <InputGroup>
+                      <Form.Control
+                        type="number"
+                        value={investering}
+                        onChange={(e) => setinvestering(+e.target.value)}
+                        aria-describedby="inputGroupAppend"
+                        placeholder="0"
+                      />
+                      <InputGroup.Append>
+                        <InputGroup.Text id="inputGroupAppend">
+                          Investering
+                          </InputGroup.Text>
+                      </InputGroup.Append>
+                    </InputGroup>
+
+
                     <Form.Group>
-                      {anntype === "Kendt ydelse" &&
+                      {nettotype === "Konstante nettobetalinger" &&
                         <InputGroup>
                           <Form.Control
                             // size="sm"
                             type="number"
-                            value={ydelseinput}
-                            onChange={(e) => setydelseinput(+e.target.value)}
+                            value={nettobetalinger}
+                            onChange={(e) => setnettobetalinger(+e.target.value)}
                             aria-describedby="inputGroupAppend"
                             placeholder="0"
                           />
                           <InputGroup.Append>
                             <InputGroup.Text id="inputGroupAppend">
-                              Ydelse pr. termin i DKK.
+                              Nettobetaling
                       </InputGroup.Text>
                           </InputGroup.Append>
                         </InputGroup>
 
                       }
-                      {anntype === "Kendt rente" &&
+                      {nettotype === "Variable nettobetalinger" &&
                         <InputGroup>
                           <Form.Control
                             // size="sm"
                             type="number"
-                            value={rente}
-                            onChange={(e) => setrente(+e.target.value)}
+                            value={netto1}
+                            onChange={(e) => setnetto1(+e.target.value)}
                             aria-describedby="inputGroupAppend"
                             placeholder="0"
                           />
                           <InputGroup.Append>
                             <InputGroup.Text id="inputGroupAppend">
-                              Rente pr. termin i %
+                              Nettobetaling tid 1
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+
+                      }
+                      {nettotype === "Variable nettobetalinger" && år > 1 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto2}
+                            onChange={(e) => setnetto2(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 2
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+
+                      }
+                      {nettotype === "Variable nettobetalinger" && år > 2 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto3}
+                            onChange={(e) => setnetto3(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 3
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 3 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto4}
+                            onChange={(e) => setnetto4(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 4
                       </InputGroup.Text>
                           </InputGroup.Append>
                         </InputGroup>
                       }
+
+                      {nettotype === "Variable nettobetalinger" && år > 4 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto5}
+                            onChange={(e) => setnetto5(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 5
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 5 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto6}
+                            onChange={(e) => setnetto6(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 6
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+
+                      {nettotype === "Variable nettobetalinger" && år > 6 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto7}
+                            onChange={(e) => setnetto7(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 7
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 7 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto8}
+                            onChange={(e) => setnetto8(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 8
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 8 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto9}
+                            onChange={(e) => setnetto9(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 9
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 9 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto10}
+                            onChange={(e) => setnetto10(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 10
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      <InputGroup>
+                        <Form.Control
+                          // size="sm"
+                          type="number"
+                          value={scrap}
+                          onChange={(e) => setscrap(+e.target.value)}
+                          aria-describedby="inputGroupAppend"
+                          placeholder="0"
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text id="inputGroupAppend">
+                            Scrapværdi
+                      </InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+
+
+                      <InputGroup>
+                        <Form.Control
+                          // size="sm"
+                          type="number"
+                          value={rente}
+                          onChange={(e) => setrente(+e.target.value)}
+                          aria-describedby="inputGroupAppend"
+                          placeholder="0"
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text id="inputGroupAppend">
+                            Kalkulationsrente
+                      </InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+
                       <InputGroup input-group-sm>
                         <Form.Control
                           type="number"
                           min="1"
-                          value={terminer}
+                          value={år}
                           onChange={(e) =>
-                            setterminer(+e.target.value.replace(/\D/, ""))
+                            setår(+e.target.value.replace(/\D/, ""))
                           }
                           aria-describedby="inputGroupAppend"
                           placeholder="0"
                         />
                         <InputGroup.Append >
                           <InputGroup.Text id="inputGroupAppend">
-                            Terminer totalt
-                          </InputGroup.Text>
-                        </InputGroup.Append>
-                      </InputGroup>
-
-                      <InputGroup>
-                        <Form.Control
-                          type="number"
-                          value={hovedstol}
-                          onChange={(e) => sethovedstol(+e.target.value)}
-                          aria-describedby="inputGroupAppend"
-                          placeholder="0"
-                        />
-                        <InputGroup.Append>
-                          <InputGroup.Text id="inputGroupAppend">
-                            Hovedstol DKK.
-                          </InputGroup.Text>
-                        </InputGroup.Append>
-                      </InputGroup>
-
-                      <InputGroup>
-                        <Form.Control
-                          type="number"
-                          value={+stiftelse}
-                          onChange={(e) => setstiftelse(+e.target.value)}
-                          aria-describedby="inputGroupAppend"
-                          placeholder="0"
-                        />
-                        <InputGroup.Append>
-                          <InputGroup.Text id="inputGroupAppend">
-                            Stiftelsesomkostninger i DKK.
+                            Antal År
                           </InputGroup.Text>
                         </InputGroup.Append>
                       </InputGroup>
@@ -468,68 +635,13 @@ export function invest() {
 
 
 
-                      <InputGroup>
-                        <Form.Control
-                          type="number"
-                          min="1"
-                          max="100"
-                          step={1}
-                          precision={0}
-                          mobile={true}
-                          value={kurs}
-                          onChange={(e) =>
-                            setkurs(+e.target.value.replace(/\D/, ""))
-                          }
-                          aria-describedby="inputGroupAppend"
-                          placeholder="0"
-                        />
-                        <InputGroup.Append>
-                          <InputGroup.Text id="inputGroupAppend">
-                            Kurs på lånet
-                          </InputGroup.Text>
-                        </InputGroup.Append>
-                      </InputGroup>
-                      <InputGroup>
-                        <Form.Control
-                          type="number"
-                          value={+skat}
-                          onChange={(e) => setskat(+e.target.value)}
-                          aria-describedby="inputGroupAppend"
-                          placeholder="0"
-                        />
-                        <InputGroup.Append>
-                          <InputGroup.Text id="inputGroupAppend">
-                            Skat i %
-                          </InputGroup.Text>
-                        </InputGroup.Append>
-                      </InputGroup>
+
+
+
+
 
                       <br />
-                      <Form.Group>
-                        <DropdownButton
-                          // size="sm"
-                          alignleft
-                          variant="warning"
-                          title={prår}
-                          id="dropdown-align-left"
-                          // id="dropdown-split-basic"
-                          onSelect={handleSelect}
-                        >
-                          <Dropdown.Item eventKey="1 helårlig termin">
-                            Vælg 1 helårlig termin
-                          </Dropdown.Item>
-                          <Dropdown.Item eventKey="2 halvårlige terminer">
-                            Vælg 2 halvårlige terminer
-                          </Dropdown.Item>
-                          <Dropdown.Item eventKey="4 kvartalsvise terminer">
-                            Vælg 4 kvartalsvise terminer
-                          </Dropdown.Item>
-                          {/* <Dropdown.Divider /> */}
-                          <Dropdown.Item eventKey="12 månedlige terminer">
-                            Vælg 12 månedlige terminer
-                          </Dropdown.Item>
-                        </DropdownButton>
-                      </Form.Group>
+
 
 
 
@@ -539,23 +651,20 @@ export function invest() {
                       <DropdownButton
                         alignleft
                         variant="warning"
-                        title={anntype}
-                        id="anntype"
+                        title={nettotype}
+                        id="nettotype"
                         // id="dropdown-split-basic"
                         onSelect={annSelect}
                       >
-                        <Dropdown.Item eventKey="Kendt rente">
-                          Vælg kendt rente
-                          </Dropdown.Item>
-                        <Dropdown.Item eventKey="Kendt ydelse">
-                          Vælg kendt ydelse
-                          </Dropdown.Item>
 
+                        <Dropdown.Item eventKey="Konstante nettobetalinger">
+                          Vælg konstante nettobetalinger
+                          </Dropdown.Item>
+                        <Dropdown.Item eventKey="Variable nettobetalinger">
+                          Vælg variable nettobetalinger
+                          </Dropdown.Item>
                       </DropdownButton>
                     </Form.Group>
-
-
-
                   </div>
                 </Container>
               </div>
@@ -565,20 +674,12 @@ export function invest() {
         </div>
       </Container >
 
-
-
-
-
-
-
-
-
       <Container className="p-0">
         <div class="p-3 mb-2 bg-white text-black">
           <div class="card">
             <div class="card-body">
-              {anntype === "Kendt rente" && <h3>Ydelsen er {numberFormat1(ydelse)} over de {terminer} terminer</h3>}
-              {anntype === "Kendt ydelse" && <h3>Terminsrenten er {numberFormat3(rente)}%, med {prår} bliver ÅOP {numberFormat3(åop)}%</h3>}
+              {nettotype === "Variable nettobetalinger" && <h4>Variable nettobetalinger Kapitalværdi = {numberFormat1(kapitalværdi)} Intern Rente = {numberFormat3(internrente)}%</h4>}
+              {nettotype === "Konstante nettobetalinger" && <h4>Konstante nettobetalinger Kapitalværdi = {numberFormat1(kapitalværdi)} Intern Rente = {numberFormat3(internrente)}%</h4>}
               <div>
                 <Bar
                   data={databar}
@@ -611,11 +712,11 @@ export function invest() {
         </div>
       </Container>
 
-      <Container className="p-0">
+      {/* <Container className="p-0">
         <div class="p-3 mb-2 bg-white text-black">
           <div class="card">
             <div class="card-body">
-              <h3>Restgælden over de {terminer} terminer</h3>
+              <h3>Restgælden over de {år} år</h3>
               <div>
                 <Bar
                   data={databar2}
@@ -646,7 +747,7 @@ export function invest() {
             </div>
           </div>
         </div>
-      </Container>
+      </Container> */}
 
       <Container className="p-0">
         <div class="container">
@@ -656,9 +757,7 @@ export function invest() {
                 <span class="align-middle">
                   <tr>
                     <br />
-
                     <h3>&nbsp;&nbsp;&nbsp;Forklaring på variable</h3>
-
                     <br />
                   </tr>
                 </span>
@@ -668,139 +767,15 @@ export function invest() {
                   <tr>
                     <th>Variabel</th>
                     <th>Værdi</th>
-                    <th>DK Excel kode</th>
-                    <th>US Excel kode</th>
                     <th>Forklaring</th>
                   </tr>
                   <tr>
-                    <th scope="row">Ydelse i DKK</th>
-                    <td>{numberFormat1(ydelse)}</td>
-                    <td>YDELSE</td>
-                    <td>PMT</td>
-                    <td>
-                      Den faste ydelse {numberFormat1(ydelse)}, der skal betales
-                      ved hver af de {terminer} terminer, består af renter og
-                      afdrag. Rentedelen beregnes af restgælden og er derfor
-                      faldende, afdragsdelen er voksende.<br />
-                      {anntype === "Kendt rente" &&
-                        "Nedenfor ses formlen og udregningen for ydelsen:\n" +
-                        "Ydelse = (NV*Rente)/(1-(1+Rente)^NPER) =\n" +
-                        "(" + numberFormat6(hovedstol) + "*" +
-                        numberFormat6(rentedecimal) +
-                        ") / (1 - (1 + " + numberFormat6(rentedecimal) + ")^(-" + terminer + ")) =\n" + numberFormat3(
-                          ydelse) +
-                        "\nMan kan udregne ydelsen " + numberFormat1(- ydelse) +
-                        " i Excel ved følgende formel:\n=YDELSE("
-                        + numberFormat2(rente) + "%;" + terminer + ";" + hovedstol + ";0)\nYdelsen kan på en lommeregner udregnes som:\n"
-                        + "(" + numberFormat5(hovedstol) + "*" +
-                        numberFormat5(rentedecimal) +
-                        ") / (1 - (1 + " + numberFormat5(rentedecimal) + ")^(-" + terminer + "))"
-                      }
-                    </td>
-                  </tr>
+                    <th scope="row">Investering DKK</th>
+                    <td>{numberFormat1(investering)}</td>
 
-                  
-
-                  <tr>
-                    <th scope="row">
-                      Restgæld i DKK
-                      
-                      
-                    </th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
                     <td>
-                      Restgælden kan beregnes ud fra formlen er beløbet man låner på papiret på tidspunkt:<br></br>
-                      Restgæld ultimo termin 1 =NV*(1 + RENTE)^1 - (PMT (1 + RENTE)^1 -1 )/RENTE =<br></br> 
-                      {numberFormat5(hovedstol)}*(1+{numberFormat5(rentedecimal)})^1- {numberFormat5(ydelse)}*(1+{numberFormat5(rentedecimal)})^1-1)/{numberFormat5(rentedecimal)} =<br></br>
-                       {numberFormat1(restgæld[1])}
-                       {<hr />}
-                       Restgæld ultimo termin 2 =NV*(1 + RENTE)^2 - (PMT (1 + RENTE)^2 -1 )/RENTE =<br></br> 
-                      {numberFormat5(hovedstol)}*(1+{numberFormat5(rentedecimal)})^2- {numberFormat5(ydelse)}*(1+{numberFormat5(rentedecimal)})^2-1)/{numberFormat5(rentedecimal)} =<br></br>
-                       {numberFormat1(restgæld[2])}
-                       {<hr />}
-                       Restgæld ultimo termin 3 =NV*(1 + RENTE)^3 - (PMT (1 + RENTE)^3 -1 )/RENTE =<br></br> 
-                      {numberFormat5(hovedstol)}*(1+{numberFormat5(rentedecimal)})^3- {numberFormat5(ydelse)}*(1+{numberFormat5(rentedecimal)})^3-1)/{numberFormat5(rentedecimal)} =<br></br>
-                       {numberFormat1(restgæld[3])}
-                       <br></br> 
-                       ...
-                      
-                    </td>
-                  </tr>
+                      Investeringen på tidspunkt 0 nu er på {numberFormat1(investering)}. Dette er en negativ betalingsstrøm.<br />
 
-                  <tr>
-                    <th scope="row">
-                    Rente i DKK
-                      
-                      
-                    </th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      Renten i DKK er forskellig for hver termin, denne beregnes som renten af restgælden :<br></br>
-                      Rente termin 1 = Restgæld primo termin 1 * RENTE =<br></br> 
-                      {numberFormat5(restgæld[0])}*{numberFormat5(rentedecimal)} = {numberFormat1(restgæld[0]*rentedecimal)}
-                      {<hr />}
-                      Rente termin 2 = Restgæld primo termin 2 * RENTE =<br></br> 
-                      {numberFormat5(restgæld[1])}*{numberFormat5(rentedecimal)} = {numberFormat1(restgæld[1]*rentedecimal)}
-                       {<hr />}
-                       Rente termin 3  = Restgæld primo termin 3 * RENTE =<br></br> 
-                       {numberFormat5(restgæld[2])}*{numberFormat5(rentedecimal)} = {numberFormat1(restgæld[2]*rentedecimal)}
-                       <br></br> 
-                       ...
-                      
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">
-                    Skat i DKK
-                      
-                      
-                    </th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      Skat af renteudgifter refunderes af skattemyndighederne, skatten beregnes som rente gange skatteprocenten:<br></br>
-                      Skattebesparelse termin 1 = RENTE termin 1 * skatteprocent =<br></br> 
-                      {numberFormat5(restgæld[0]*rentedecimal)}*{numberFormat5(skat)}% = {numberFormat1(restgæld[0]*rentedecimal*skat/100)}
-                      {<hr />}
-                      Skattebesparelse termin 1 = RENTE termin 1 * skatteprocent =<br></br> 
-                      {numberFormat5(restgæld[1]*rentedecimal)}*{numberFormat5(skat)}% = {numberFormat1(restgæld[1]*rentedecimal*skat/100)}
-                       {<hr />}
-                       Skattebesparelse termin 1 = RENTE termin 1 * skatteprocent =<br></br> 
-                      {numberFormat5(restgæld[2]*rentedecimal)}*{numberFormat5(skat)}% = {numberFormat1(restgæld[2]*rentedecimal*skat/100)}
-                       <br></br> 
-                       ...
-                      
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">
-                    Afdrag i DKK
-                      
-                      
-                    </th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      Afdraget bestemmes som Ydelse minus renter:<br></br>
-                      Afdrag termin 1 = Ydelse - RENTE<br></br> 
-                      {numberFormat5(ydelse)} - {numberFormat5(restgæld[0]*rentedecimal)}% = {numberFormat1(ydelse-restgæld[0]*rentedecimal)}
-                      {<hr />}
-                      Afdrag termin 2 = Ydelse - RENTE<br></br> 
-                      {numberFormat5(ydelse)} - {numberFormat5(restgæld[1]*rentedecimal)}% = {numberFormat1(ydelse-restgæld[1]*rentedecimal)}
-                       {<hr />}
-                       Afdrag termin 3 = Ydelse - RENTE<br></br> 
-                      {numberFormat5(ydelse)} - {numberFormat5(restgæld[2]*rentedecimal)}% = {numberFormat1(ydelse-restgæld[2]*rentedecimal)}
-                       <br></br> 
-                       ...
-                      
                     </td>
                   </tr>
 
@@ -808,155 +783,111 @@ export function invest() {
 
                   <tr>
                     <th scope="row">
-                      Hovedstol
-                      <br />
-                      Nutidsværdi
+                      Nettobetaling DKK
+
+
                     </th>
-                    <td>{numberFormat1(hovedstol)}</td>
-                    <td>NV</td>
-                    <td>PV</td>
+
+                    <td>{numberFormat1(nettobetalinger)}</td>
                     <td>
-                      Nutidsværdien er beløbet man låner på papiret på tidspunkt
-                      0 (dvs. nu)
+                      Nettobetalingen er de som regel positive betalingsstrømme investeringen genererer over tid.
+                      Her er der konstante betalingsstrømme.<br></br>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Scrapværdi DKK
+                    </th>
+                    <td>
+                      {numberFormat1(scrap)}
+                    </td>
+                    <td>
+                      Scrapværdien her {numberFormat1(scrap)} angiver værdien af investeringsobjektet ved investeringshorisontens
+                      udløb efter {år} år. Scrapværdien kan være både positiv eller negativ, er der fx. bortanskaffelsesomkostninger kan scrapværdien være negativ.
+
+                    </td>
+                  </tr>
+
+
+
+                  <tr>
+                    <th scope="row">
+                      Kalkulationsrente i %.
+                    </th>
+                    <td>
+                      {numberFormat3(rente)}%
+                    </td>
+                    <td>
+                      Kalkulationsrenten er her sat til {numberFormat3(rente)}%.
+                      <hr></hr>
+                      Kalkulationsrenten der fastsættes subjektivt af virksomheden, angiver virksomhedens
+                      krav til forrentning af investeringen. Der er mange faktorer der spiller ind i fastsættelsen af Kalkulationsrenten:
+                      Hvad koster det for virksomheden af låne, findes alternative investeringsmuligheder,
+                      hvor lang er tidshorisonten, hvor risikabel er investeringen, hvor høj er inflationen.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Investeringshorisonten i år
+                    </th>
+                    <td>{numberFormat3(år)} år</td>
+
+                    <td>
+                      Investeringens løbetid er her {numberFormat3(år)} år, det betyder investeringen afvikles
+                      og investeringen afhændes til scrapværdien.
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Betalingsstrømme
+                    </th>
+                    <td> </td>
+
+                    <td>
+                      Betalingsstrømmene angiver negative udbetalinger og positive indbetalinger for hvert tidspunkt.
+                      <hr></hr>
+
+                      Betalingsstrøm tid 0 er ubetalingen til investeringen = {numberFormat1(-investering)}<br></br>
+                      Betalingsstrøm tid 1 er nettobetalingen = {numberFormat1(nettobetalinger)}<br></br>
+                      {år > 1 && "Betalingsstrøm tid 2 er nettobetalingen = " + numberFormat1(nettobetalinger)}<br></br>
+                      {år > 2 && "..."}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Diskonteringsfaktor
+                    </th>
+                    <td> </td>
+
+                    <td>
+                      Diskonteringsfaktoren angiver det tal man skal gange betalingsstrømmen med for at tilbagediskontere denne til tidspunkt 0 (tidspunktet hvor man foretager investeringen).
+                      <hr></hr>
+                      Man kan finde diskonteringsfaktoren fx på tidspunkt n ved formlen (1+r)^-n, vi får følgende diskonteringsfaktorer:<br></br>
+                      Diskonteringsfaktoren tid 0 = (1+{numberFormat5(rentedecimal)})^-0 = {(faktor[0])}<br></br>
+                      Diskonteringsfaktoren tid 1 = (1+{numberFormat5(rentedecimal)})^-1 = {(faktor[1])}<br></br>
+                      {år > 1 && "Diskonteringsfaktoren tid 2 = (1 + " + numberFormat5(rentedecimal) + ")^(-2) = " + faktor[2]}<br></br>
+                      {år > 2 && "Diskonteringsfaktoren tid 3 = (1 + " + numberFormat5(rentedecimal) + ")^(-3) = " + faktor[3]}<br></br>
+                      {år > 3 && "..."}
                     </td>
                   </tr>
 
 
                   <tr>
-                    <th scope="row">Rente pr. termin nominel</th>
-                    <td>{numberFormat3(rente)}%</td>
-                    <td>RENTE</td>
-                    <td>RATE</td>
+                    <th scope="row">
+                      Tilbagediskonterede betalingsstrømme
+                    </th>
+                    <td> </td>
+
                     <td>
-
-
-                      Nominel pålydende, rente, her angivet i procent. Hvis den
-                      nominelle rente er angivet pr år (pro anno), kan den
-                      nominelle terminsrente findes ved at dividere pro anno
-                      renten med antal terminer pr. år.
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">Terminer pr. år</th>
-                    <td>{terminerår}</td>
-                    <td></td>
-                    <td></td>
-                    <td>{prårtekst}</td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">Terminer</th>
-                    <td>{terminer}</td>
-                    <td>NPER</td>
-                    <td>NPER</td>
-                    <td>
-                      Det totale antal af perioder (her {terminer}), hvor der
-                      tilskrives rente kaldes for antallet af terminer.
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">Stiftelse</th>
-                    <td>{numberFormat1(stiftelse)}</td>
-                    <td></td>
-                    <td></td>
-                    <td>{stiftelsetekst}</td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">Kurs</th>
-                    <td>{kurs}</td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      Kursen angiver hvor meget lånet er værd, er kursen under
-                      100 vil der være et kurstab. Er der kurstab, betyder dette
-                      at den effektive rente pr termin og ÅOP bliver højere end
-                      den nominelle rente. Kursen fastsættes ud fra markedets
-                      prissætning af lånet, hvilket fx. afhænger af debitors
-                      kreditværdighed, renten på alternative investeringer samt
-                      øvrige makroøkonomiske faktorer.
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">Provenue</th>
-                    <td>{numberFormat1(provenue)}</td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      Provenuet er det beløb man får udbetalt, dvs. hovedstolen
-                      efter kurstab og stiftelsesomkostninger. Provenuet kan
-                      findes som:
-
-                      {"\nProvenue = PV*Kurs/100-Stiftelsesomkostninger =\n" +
-                        numberFormat3(hovedstol) + "*" + numberFormat2(kurs) + "/100 - " + numberFormat3(
-                          stiftelse
-                        ) + " = " + numberFormat3(provenue)
-                      }
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">Rente pr. termin effektiv</th>
-                    <td>{numberFormat3(renteeffektiv)}%</td>
-                    <td>RENTE</td>
-                    <td>RATE</td>
-                    <td>
-                      Renten pr. termin korrigeret for eventuelt kurstab og
-                      stiftelsesomkostninger. Renten kan ikke udregnes eksplicit
-                      for et annuitetslån, så man skal bruge en finansfunktion
-                      på sin computer eller i fx. Excel hvor formlen er:
-                      <br></br>
-                      =RENTE({terminer};{numberFormat6(-ydelse)};{" "}
-                      {numberFormat6(provenue)})
-                      <br />
-                    </td>
-                  </tr>
-
-
-                  <tr>
-                    <th scope="row">Rente pr. termin effektiv efter skat</th>
-                    <td>{numberFormat3(renteeffektivskat)}%</td>
-                    <td></td><td></td>
-                    <td>
-                      Renten pr. termin korrigeret for eventuelt kurstab og
-                      stiftelsesomkostninger samt skat. Renten kan ikke udregnes eksplicit
-                      for et serielån, så man skal bruge en finansfunktion
-                      på sin computer eller i fx. Excel hvor formlen er:
-                      <br></br>
-                      =IA(betalingsstrømme minus skat)
-
-                      <br />
-                    </td>
-                  </tr>
-
-
-                  <tr>
-                    <th scope="row">ÅOP</th>
-                    <td>{numberFormat3(åop)}%</td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      Renten pr. år korrigeret for eventuelt kurstab,
-                      stiftelsesomkostninger og antal rentetilskrivninger pr.
-                      år. ÅOP bestemmes ud fra den effektive rente pr. termin,
-                      korrigeret for renters rente, ud fra antallet af
-                      rentetilskrivninger pr. år. Formlen er:
-                      {"\nÅOP = ((1 + RENTE)^Terminer pr år - 1)*100 = \n" +
-                        "((1 + " + numberFormat5(renteeffektiv / 100) + ")^" +
-                        numberFormat5(terminerår) + " - 1)*100 = " + numberFormat5(åop) + "%"
-                      }
-
-
-                      <br></br>ÅOP kan derfor på en lommeregner udregnes som:
-                      <br />
-                      <i>
-                        ((1+
-                        {numberFormat5(renteeffektiv / 100)})^
-                        {numberFormat6(terminerår)}-1)*100
-                      </i>
+                      De tilbagediskonterede betalingsstrømme angiver nutidsværdien af de fremtidige betalingsstrømme, man bestemmer disse ved at gange betalingsstrømmene med diskonteringsfaktoren.
+                      <hr></hr>
+                      Tilbagediskonteret betalingsstrøm tid 0 = {numberFormat2(-investering)}*1 = {formatdiskonteredebs[0]} DKK<br></br>
+                      Tilbagediskonteret betalingsstrøm tid 1 = {numberFormat2(nettobetalinger)}*{faktor[1]} = {formatdiskonteredebs[1]} DKK<br></br>
+                      {år > 1 && "Tilbagediskonteret betalingsstrøm tid 2 = " + numberFormat2(nettobetalinger) + "*" + faktor[2] + " = " + formatdiskonteredebs[2] + " DKK"}<br></br>
+                      {år > 2 && "..."}
                     </td>
                   </tr>
 
@@ -964,31 +895,177 @@ export function invest() {
 
 
                   <tr>
-                    <th scope="row">ÅOP efter skat</th>
-                    <td>{numberFormat3((((1 + renteeffektivskat / 100) ** terminerår - 1)) * 100)}%</td>
-                    <td></td><td></td>
+                    <th scope="row">
+                      Kapitalværdi DKK
+                    </th>
+                    <td>{numberFormat1(kapitalværdi)} </td>
+
                     <td>
-
-                      Renten pr. år korrigeret for skat, kurstab,
-                      stiftelsesomkostninger og antal rentetilskrivninger pr.
-                      år. ÅOP minus skat bestemmes ud fra den effektive rente minus skat pr. termin,
-                      korrigeret for renters rente, ud fra antallet af
-                      rentetilskrivninger pr. år. Formlen er:
-                      {"\nÅOP = ((1 + RENTE-skat)^Terminer pr år - 1)*100 = \n" +
-                        "((1 + " + numberFormat5(renteeffektivskat / 100) + ")^" +
-                        numberFormat5(terminerår) + " - 1)*100 = " + numberFormat3((((1 + renteeffektivskat / 100) ** terminerår - 1)) * 100) + "%"
-                      }
+                      Her er kapitalværdien {numberFormat1(kapitalværdi)}
+                      {kapitalværdi >= 0 && " ikke negativ, investeringen er derfor lønsom, og bør derfor gennemføres."}{kapitalværdi < 0 && " negativ,  investeringen er således ikke lønsom, og bør derfor ikke gennemføres."}
+                      <hr></hr>
+                      Kapitalværdien findes som den negative investering plus summen af de tilbagediskonterede betalingsstrømme :<br></br>
+                      {(formatdiskonteredebs[0])} + {(formatdiskonteredebs[1])}{år === 2 && " + " + (formatdiskonteredebs[2])}{år > 2 && " + ... + " + formatdiskonteredebs[år]}  = {numberFormat1(kapitalværdi)}
 
 
-                      <br></br>ÅOP efter skat kan derfor på en lommeregner udregnes som:
-                      <br />
-                      <i>
-                        ((1+
-                        {numberFormat5(renteeffektivskat / 100)})^
-                        {numberFormat6(terminerår)}-1)*100
-                      </i>
                     </td>
                   </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Den interne rente
+                    </th>
+                    <td>{numberFormat3(internrente)}%</td>
+
+                    <td>
+                      Hvis de fremtidige betalingsstrømme tilbagediskonteres med den interne rente {numberFormat3(internrente)}%,
+                      er summen netop lig med investeringen på {numberFormat1(investering)}.<br></br>
+                      Den interne rente er altså den kritiske værdi for kalkulationsrenten. Den interne rente er den rente r der præcis løser ligningen:<br></br>
+                      {numberFormat3(investering)} = {nettobet[1] + "*(1+r)^-1"} {år > 1 && " + " + nettobet[2] + "*(1+r)^-2"} {år === 3 && " + " + nettobet[3] + "*(1+r)^-3"}
+                      {år > 3 && "... + " + nettobet[år] + "*(1+r)^-" + år}<br></br>
+                      Vi kan ikke ved hjælp af algebra løse ligningen explicit når investeringen løber længere end 1 år.
+                      Den interne rente kan findes med algoritmer i computerprogrammer, der prøver sig frem med forskellige værdier af den interne rente til de er tæt på den korrekte værdi.
+                      I Excel bruge =IA(betalingsstrømme) formlen, der ligeledes er en algoritme.<hr></hr>
+                      Vi benytter den interne rentefods metode, når vi sammenligner den interne rente {numberFormat3(internrente)}% med kalkulationsrenten {numberFormat3(rente)}%.
+                      Her er den interne rente {numberFormat3(internrente)}%{internrente > rente && " større "}{internrente < rente && " mindre "}end kalkulationsrenten {numberFormat3(rente)}%,
+                      derfor er investeringen {internrente < rente && "ikke "}lønsom.
+
+
+
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Kapitaltjenesten
+                    </th>
+                    <td>{numberFormat1(kapitaltjenesten)} </td>
+
+                    <td>
+                      Kapitaltjenesten {numberFormat1(kapitaltjenesten)} er de nettobetalinger, man mindst skal tjene hvert år, i investeringens levetid for at investeringen, lige præcis bliver lønsom, så kapitalværdien bliver 0.
+                    Med andre ord er kapitaltjenesten den kritiske værdi for nettobetalingerne.<hr></hr>
+                    Vi kan finde kapitaltjenesten ved hjælp af formlen for ydelsen for et annuitetslån, hvor vi i stedet for hovedstolen,
+                    benytter - investeringen + tilbagediskonteret scrapværdi.<br></br>
+                    (({(-investering)} + {(scrap)}*(1 + {numberFormat5(rentedecimal)})^(-{år})) *
+                    {numberFormat5(rentedecimal)}) / (1 - (1 + {numberFormat5(rentedecimal)})^(-{år})) = {numberFormat1(kapitaltjenesten)}<hr></hr>
+                    I Excel kan man benytte formlen for ydelse til at beregne kapitaltjenesten, her sættes nutidværdien NV til -investeringen og fremtidsværdien FV til scrapværdien:<br></br>
+                    =YDELSE({numberFormat5(rentedecimal)};{år};{(-investering).toFixed(2).replace(".", ",")};{scrap.toFixed(2).replace(".", ",")})
+
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Tilbagebetalingstiden med rentekorrektion
+                    </th>
+                    <td>{numberFormat3(tilbagebetalingstiden)} år</td>
+
+                    <td>
+                      Tilbagebetalingstiden på {numberFormat3(tilbagebetalingstiden)} år,
+                    angiver hvor lang tid der går før investeringen har tjent sig hjem, når vi tager højde for kalkulationsrenten.
+                    For investor er kort tilbagebetalingstid bedst. Her er scrapværdien ikke medregnet.<br></br>
+                    Når vi som her har konstante nettobetalinger kan tilbagebetalingstiden udregnes vha. formlen for antal terminer
+                    i annuitetsformlen:<br></br>
+                    LOG(1-Investering*rente/nettobetalinger)/LOG(1+rente) =
+                    <br></br>
+                    LOG(1 - ({investering.toFixed(2).replace(".", ",")} * {numberFormat5(rentedecimal)}) / {(nettobetalinger.toFixed(2).replace(".", ","))}) / LOG(1 + {numberFormat5(rentedecimal)}) = {numberFormat3(tilbagebetalingstiden)} år<br></br>
+                    I Excel kan man benytte NPER formlen:<br></br>
+                    =NPER({numberFormat5(rentedecimal)};{nettobetalinger.toFixed(2).replace(".", ",")};{investering.toFixed(2).replace(".", ",")})
+
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Tilbagebetalingstiden uden rentekorrektion
+                    </th>
+                    <td>{numberFormat3(investering / nettobetalinger)} år</td>
+
+                    <td>
+                      Tilbagebetalingstiden uden rentekorrektion på {numberFormat3(investering / nettobetalinger)} år,
+                    angiver hvor lang tid der går før investeringen har tjent sig hjem, når vi ikke tager højde for kalkulationsrenten.
+                    Tilbagebetalingstid uden rentekorrektion er ikke så retvisende, da der ikke tages højde for at penge i fremtiden er mindre værd, denne metode benyttes når man nemt og hurtigt skal have et overblik over en investering.
+                    Scrapværdien ikke medregnet.<br></br>
+                    Tilbagebetalingstiden kan udregnes nemt:<br></br>
+                    Investering/nettobetaling = {numberFormat3(investering)}/{numberFormat3(nettobetalinger)} = {numberFormat3(investering / nettobetalinger)} år
+
+
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Kritisk værdi af investeringen
+                    </th>
+                    <td>{numberFormat1(investering + kapitalværdi)}</td>
+
+                    <td>
+                      Kritisk værdi af investeringen er præcis det investeringen skal være, for at vi gennemfører denne.
+                    Dvs. investeringen har præcis den størrelse hvor kapitalværdien bliver 0.<br></br>
+                    Kritisk værdi af investeringen findes nemt,
+                    da både kapitalværdien og investeringen er opgjort på tidspunkt 0,
+                    kan man bare lægge investeringen sammen med kapitalværdien:<br></br>
+                      {numberFormat3(investering)}{kapitalværdi >= 0 && " + "}{numberFormat3(kapitalværdi)} = {numberFormat1(investering + kapitalværdi)}
+                      {kapitalværdi >= 0 && "\nDa investeringen er lønsom må udgiften til investeringen højst være " + numberFormat1(kapitalværdi) + " højere end den nuværende investering på " + numberFormat1(investering)}
+                      {kapitalværdi < 0 && "\nDa investeringen er ikke er lønsom skal udgiften til investeringen mindst være " + numberFormat1(kapitalværdi) + " lavere end den nuværende investering på " + numberFormat1(investering)}
+                    </td>
+                  </tr>
+
+
+
+                  <tr>
+                    <th scope="row">
+                      Kritisk værdi for scrapværdien
+                    </th>
+                    <td>{numberFormat1(kritiskscrap)}</td>
+
+                    <td>
+                      Kritisk værdi for scrapværdien er netop den scrapværdi hvor kapitalværdien bliver 0.<br></br>
+                      Man fremskriver først kapitalværdien til år {år} dvs. udløbet af investeringen,
+                      hvor investeringsobjektet afhændes. Scrapværdien minus den fremskrevne kapitalværdi giver den kritiske scrapværdi:<br></br>
+                      {numberFormat3(scrap)}-{numberFormat3(kapitalværdi)} * (1 + {numberFormat5(rentedecimal)})^{år} = {numberFormat1(kritiskscrap)}<br></br>
+                      {kapitalværdi.toFixed(2) < 0 && "Bemærk når vi fratrækker den negative kapitalværdi fra scrapværdien, får man minus og minus, hvilket giver plus."}<br></br>
+                      Med Excels formler kan man finde fremtidsværdien af kapitalværdien, og trække denne fra scrapværdien for at få den kritiske scrapværdi.<br></br>
+                      = Scrapværdi - FV(Rente;NPER;0;-Kapitalværdi)<br></br>
+                      ={scrap.toFixed(2).replace(".", ",")}-FV({rentedecimal.toFixed(6).replace(".", ",")};{år};0;{(-kapitalværdi).toFixed(2).replace(".", ",")})
+                      {kapitalværdi.toFixed(2) > 0 && "\nInvesteringen er lønsom, scrapværdien kan højst falde med " + numberFormat1(kapitalværdi * (1 + rentedecimal) ** år) + " fra den nuværende værdi på " + numberFormat1(scrap)}
+                      {kapitalværdi.toFixed(2) < 0 && "\nDa investeringen er ikke er lønsom skal scrapværdien mindst være " + numberFormat1((-kapitalværdi) * (1 + rentedecimal) ** år) + " højere end den nuværende scrapværdi på " + numberFormat1(scrap)}
+
+                    </td>
+                  </tr>
+
+
+
+                  <tr>
+                    <th scope="row">
+                      Nutidsværdien af uendelige nettobetalinger
+                    </th>
+                    <td>{numberFormat1(nettobetalinger / rentedecimal)}</td>
+
+                    <td>
+                      Hvis man har en investering med uendelig tidshorisont, vil de konstante nettobetalinger udgøre en uendelig betalingsstrøm. Man kan let beregne nutidsværdien af uendelige nettobetalinger som:<br></br>
+                      Nettobetaling/rente = {nettobetalinger.toFixed(2).replace(".", ",")}/{numberFormat5(rentedecimal)} = {numberFormat1(nettobetalinger / rentedecimal)}<br></br>
+                      Bemærk i denne sum er investering og scrapværdi ikke medregnet.
+                    </td>
+                  </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1035,11 +1112,11 @@ export function invest() {
                   />
                 </div>
                 {/* </ResponsiveContainer> */}
-              {/* </div>
+      {/* </div>
             </div>
           </div>
         </div>
-      </Container > */} 
+      </Container > */}
     </div >
   );
 }

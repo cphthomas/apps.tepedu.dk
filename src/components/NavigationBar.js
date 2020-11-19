@@ -40,7 +40,6 @@ export const NavigationBar = () => (
           className="d-inline-block align-top"
         />
       </Navbar.Brand>
-
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -112,7 +111,6 @@ export const NavigationBar = () => (
             </Nav.Link>
           </Nav.Item>
 
-
           <Nav.Item>
             <Nav.Link>
               <Link to="/serie">
@@ -125,9 +123,6 @@ export const NavigationBar = () => (
               </Link>
             </Nav.Link>
           </Nav.Item>
-
-
-
 
           <Nav.Item>
             <Nav.Link>
@@ -145,11 +140,6 @@ export const NavigationBar = () => (
               </Link>
             </Nav.Link>
           </Nav.Item>
-
-
-
-
-
 
           {/* <Nav.Item>
             <Nav.Link>

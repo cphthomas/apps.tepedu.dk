@@ -460,7 +460,7 @@ export function ann() {
                         />
                         <InputGroup.Append>
                           <InputGroup.Text id="inputGroupAppend">
-                            Stiftelsesomkostninger i DKK.
+                            Stiftelse i DKK.
                           </InputGroup.Text>
                         </InputGroup.Append>
                       </InputGroup>
