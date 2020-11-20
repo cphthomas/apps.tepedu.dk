@@ -1,13 +1,10 @@
 import React from "react";
 import { useState } from "react";
-// import Toggle from "./ToggleRenderProps";
-// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-// import Container from "react-bootstrap/Container";
-// import ReactHtmlParser from "react-html-parser";
+
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import { Button } from "react-bootstrap";
+
 import "./styles.css";
 import {
   numberFormat1,
@@ -68,12 +65,7 @@ export function invest() {
   var [scrap, setscrap] = useState(+(500.0).toFixed(2));
   var [nettotype, setnettotype] = useState("Konstante nettobetalinger");
 
-  // var år, setår
-  // if (nettotype === "Konstante nettobetalinger") {
-  //   [år, setår] = useState(+(10));
-  // } else {
-  //   [år, setår] = useState(+(6));
-  // }
+
 
   var annSelect = (e) => {
     console.log(e);
@@ -110,13 +102,6 @@ export function invest() {
   );
   rentespreadsheet.splice(0, 1, 0);
 
-
-
-
-
-  // var netto =
-  //   (investering * rentedecimal) / (1 - Math.pow(1 + rentedecimal, -år));
-  // // bs = new Array(år).fill(null).map(() => netto);
 
 
 
@@ -209,13 +194,17 @@ export function invest() {
 
   var akkbs = [];
   bs.reduce(function (a, b, i) { return akkbs[i] = a + b; }, 0);
-  var indeks = akkbs.indexOf(5000);
+
+
+
 
   var formatakkbs = akkbs.map((akkbs) =>
     numberFormat3(akkbs));
 
   var akkdiskonteredebs = [];
   diskonteredebs.reduce(function (a, b, i) { return akkdiskonteredebs[i] = a + b; }, 0);
+  var tilbagebetalingmkorr = akkdiskonteredebs.reduce((acc, value, i) => value >= 0 ? [...acc, i] : acc, [])[0]
+  var tilbagebetalingukorr = akkbs.reduce((acc, value, i) => value >= 0 ? [...acc, i] : acc, [])[0]
   var formatakkdiskonteredebs = akkdiskonteredebs.map((akkdiskonteredebs) =>
     numberFormat3(akkdiskonteredebs));
 
@@ -243,20 +232,7 @@ export function invest() {
     "Tilbagediskonterede\nAkkumulerede\nBetalingsstrømme",
   ];
 
-  // const datadoug = {
-  //   labels: [
-  //     "Provenue ".concat(numberFormat1(provenue.toFixed(2))),
-  //     "Rente ".concat(numberFormat1(sumrestgæld)),
-  //   ],
-  //   datasets: [
-  //     {
-  //       label: "Provenue og renter",
-  //       backgroundColor: ["orange", "green"],
-  //       hoverBackgroundColor: ["darkorange", "darkgreen"],
-  //       data: [+provenue.toFixed(2), sumrestgæld],
-  //     },
-  //   ],
-  // };
+
 
   const databar = {
     labels: cfnamed,
@@ -289,28 +265,10 @@ export function invest() {
 
 
 
-  // const databar2 = {
-  //   labels: cfnamed,
-  //   datasets: [
-  //     {
-  //       label: "Restgæld",
-  //       backgroundColor: "green",
-  //       stack: "Stack 0",
-  //       hoverBackgroundColor: "darkgreen",
-  //       data: restgældbc,
-  //     },
-  //   ],
-  // };
 
-  //VIGTIG til investering ###########################
-  // const NPV = (cashflow, discountRate) =>
-  //   cashflow.reduce(
-  //     (acc, val, i) => acc + val / Math.pow(1 + discountRate, i),
-  //     0
-  //   );
 
   function IRR(values, guess) {
-    // Credits: algorithm inspired by Apache OpenOffice
+
     // Calculates the resulting amount
     var irrResult = function (values, dates, rate) {
       var r = rate + 1;
@@ -386,12 +344,6 @@ export function invest() {
       <Container>
         <div class="p-3 mb-2 bg-secondary text-white">
           <h4>Investering.</h4>
-
-          kapitalværdi={numberFormat1(kapitalværdi)}
-          <br></br>
-          indeks = {indeks}
-
-
         </div>
       </Container>
 
@@ -828,7 +780,7 @@ export function invest() {
                         />
                         <InputGroup.Append>
                           <InputGroup.Text id="inputGroupAppend">
-                            Kalkulationsrente
+                            Kalkulationsrente i %
                       </InputGroup.Text>
                         </InputGroup.Append>
                       </InputGroup>
@@ -860,7 +812,7 @@ export function invest() {
 
 
 
-                      <br />
+
 
 
 
@@ -1181,19 +1133,28 @@ export function invest() {
                     <th scope="row">
                       Tilbagebetalingstiden med rentekorrektion
                     </th>
-                    <td>{numberFormat3(tilbagebetalingstiden)} år</td>
+                    <td>{nettotype === "Konstante nettobetalinger" && numberFormat3(tilbagebetalingstiden) + " år"}
+                      {nettotype === "Variable nettobetalinger" && tilbagebetalingmkorr <= år && numberFormat3(tilbagebetalingmkorr - akkdiskonteredebs[tilbagebetalingmkorr] / (-akkdiskonteredebs[+tilbagebetalingmkorr - 1] + akkdiskonteredebs[tilbagebetalingmkorr])) + " år."}
+                    </td>
 
                     <td>
-                      Tilbagebetalingstiden på {numberFormat3(tilbagebetalingstiden)} år,
-                    angiver hvor lang tid der går før investeringen har tjent sig hjem, når vi tager højde for kalkulationsrenten.
-                    For investor er kort tilbagebetalingstid bedst. Her er scrapværdien ikke medregnet.<br></br>
-                    Når vi som her har konstante nettobetalinger kan tilbagebetalingstiden udregnes vha. formlen for antal terminer
-                    i annuitetsformlen:<br></br>
-                    LOG(1-Investering*rente/nettobetalinger)/LOG(1+rente) =
-                    <br></br>
-                    LOG(1 - ({investering.toFixed(2).replace(".", ",")} * {numberFormat5(rentedecimal)}) / {(nettobetalinger.toFixed(2).replace(".", ","))}) / LOG(1 + {numberFormat5(rentedecimal)}) = {numberFormat3(tilbagebetalingstiden)} år<br></br>
-                    I Excel kan man benytte NPER formlen:<br></br>
-                    =NPER({numberFormat5(rentedecimal)};{nettobetalinger.toFixed(2).replace(".", ",")};{investering.toFixed(2).replace(".", ",")})
+                      {nettotype === "Konstante nettobetalinger" && "Tilbagebetalingstiden på " + numberFormat3(tilbagebetalingstiden) +
+                        " år, angiver hvor lang tid der går før investeringen har tjent sig hjem, når vi tager højde for kalkulationsrenten. For investor er kort tilbagebetalingstid bedst. Her er scrapværdien ikke medregnet.\nNår vi som her har konstante nettobetalinger kan tilbagebetalingstiden udregnes vha. formlen for antal terminer i annuitetsformlen:\n"
+                        + "LOG(1-Investering*rente/nettobetalinger)/LOG(1+rente) =\n" +
+                        "LOG(1 - (" + investering.toFixed(2).replace(".", ",") + " * " + numberFormat5(rentedecimal) + ") / " + (nettobetalinger.toFixed(2).replace(".", ",")) + ") / LOG(1 + " + numberFormat5(rentedecimal) + ") = " + numberFormat3(tilbagebetalingstiden) +
+                        "år\nI Excel kan man benytte NPER formlen:\n" +
+                        "=NPER(" + numberFormat5(rentedecimal) + ";" + nettobetalinger.toFixed(2).replace(".", ",") + ";" + investering.toFixed(2).replace(".", ",") + ")"}
+                      {nettotype === "Variable nettobetalinger" && tilbagebetalingmkorr <= år &&
+                        "Når vi har variable nettobetalinger, kan vi bestemme tilbagebetalingstiden ved at se på hvornår de tilbagediskonterede akkumulerede betalingstrømme bliver positive. Her ligger tilbagebetalingstiden mellem " +
+                        (tilbagebetalingmkorr - 1) + " og " +
+                        tilbagebetalingmkorr + " år, hvor de akkumulerede tilbagediskonterede betalingsstrømme går fra " + numberFormat1(akkdiskonteredebs[tilbagebetalingmkorr - 1]) + " til " + numberFormat1(akkdiskonteredebs[tilbagebetalingmkorr]) +
+                        "\nVi kan udregne at tilbagebetalingstiden mere præcist til " + numberFormat3(tilbagebetalingmkorr - akkdiskonteredebs[tilbagebetalingmkorr] / (-akkdiskonteredebs[+tilbagebetalingmkorr - 1] + akkdiskonteredebs[tilbagebetalingmkorr])) + " år."
+                      }
+                      {nettotype === "Variable nettobetalinger" && tilbagebetalingmkorr === undefined &&
+                        "Når vi har variable nettobetalinger, kan vi bestemme tilbagebetalingstiden ved at se på hvornår de tilbagediskonterede akkumulerede betalingstrømme bliver positive. Her når de tilbagediskonterede akkumulerede betalingstrømme ikke at blive positive i investeringens løbetid, da de tilbagediskonterede akkumulerede betalingstrømme ved det " +
+                        (år) + ". år er " +
+                        numberFormat1(kapitalværdi)
+                      }
 
                     </td>
                   </tr>
@@ -1202,15 +1163,28 @@ export function invest() {
                     <th scope="row">
                       Tilbagebetalingstiden uden rentekorrektion
                     </th>
-                    <td>{numberFormat3(investering / nettobetalinger)} år</td>
+                    <td>
+                      {nettotype === "Konstante nettobetalinger" && numberFormat3(investering / nettobetalinger) + " år"}
+                      {nettotype === "Variable nettobetalinger" && tilbagebetalingukorr <= år && numberFormat3(tilbagebetalingukorr - akkbs[tilbagebetalingukorr] / (-akkbs[+tilbagebetalingukorr - 1] + akkbs[tilbagebetalingukorr])) + " år."}
+                    </td>
 
                     <td>
-                      Tilbagebetalingstiden uden rentekorrektion på {numberFormat3(investering / nettobetalinger)} år,
-                    angiver hvor lang tid der går før investeringen har tjent sig hjem, når vi ikke tager højde for kalkulationsrenten.
-                    Tilbagebetalingstid uden rentekorrektion er ikke så retvisende, da der ikke tages højde for at penge i fremtiden er mindre værd, denne metode benyttes når man nemt og hurtigt skal have et overblik over en investering.
-                    Scrapværdien ikke medregnet.<br></br>
-                    Tilbagebetalingstiden kan udregnes nemt:<br></br>
-                    Investering/nettobetaling = {numberFormat3(investering)}/{numberFormat3(nettobetalinger)} = {numberFormat3(investering / nettobetalinger)} år
+                      {nettotype === "Konstante nettobetalinger" && "Tilbagebetalingstiden uden rentekorrektion på " + numberFormat3(investering / nettobetalinger) +
+                        " år, angiver hvor lang tid der går før investeringen har tjent sig hjem, når vi ikke tager højde for kalkulationsrenten. Tilbagebetalingstid uden rentekorrektion er ikke så retvisende, da der ikke tages højde for at penge i fremtiden er mindre værd, denne metode benyttes når man nemt og hurtigt skal have et overblik over en investering." +
+                        "\nScrapværdien ikke medregnet.\nTilbagebetalingstiden kan udregnes nemt:\nInvestering/nettobetaling = " +
+                        numberFormat3(investering) + "/" + numberFormat3(nettobetalinger) + " = " + numberFormat3(investering / nettobetalinger) + " år"}
+
+                      {nettotype === "Variable nettobetalinger" && tilbagebetalingukorr <= år &&
+                        "Når vi har variable nettobetalinger, kan vi bestemme tilbagebetalingstiden ved at se på hvornår de tilbagediskonterede akkumulerede betalingstrømme bliver positive. Her ligger tilbagebetalingstiden mellem " +
+                        (tilbagebetalingukorr - 1) + " og " +
+                        tilbagebetalingukorr + " år, hvor de akkumulerede betalingsstrømme går fra " + numberFormat1(akkbs[tilbagebetalingukorr - 1]) + " til " + numberFormat1(akkbs[tilbagebetalingukorr]) +
+                        "\nVi kan udregne at tilbagebetalingstiden mere præcist til " + numberFormat3(tilbagebetalingukorr - akkbs[tilbagebetalingukorr] / (-akkbs[+tilbagebetalingukorr - 1] + akkbs[tilbagebetalingukorr])) + " år."
+                      }
+                      {nettotype === "Variable nettobetalinger" && tilbagebetalingukorr === undefined &&
+                        "Når vi har variable nettobetalinger, kan vi bestemme tilbagebetalingstiden ved at se på hvornår de akkumulerede betalingstrømme bliver positive. Her når de akkumulerede betalingstrømme ikke at blive positive i investeringens løbetid, da de akkumulerede betalingstrømme ved det " +
+                        (år) + ". år er " +
+                        numberFormat1(akkbs[år])
+                      }
 
 
                     </td>
@@ -1263,36 +1237,18 @@ export function invest() {
                     <th scope="row">
                       Nutidsværdien af uendelige nettobetalinger
                     </th>
-                    <td>{numberFormat1(nettobetalinger / rentedecimal)}</td>
+                    <td>
+                      {nettotype === "Konstante nettobetalinger" && numberFormat1(nettobetalinger / rentedecimal)}
+
+                    </td>
 
                     <td>
-                      Hvis man har en investering med uendelig tidshorisont, vil de konstante nettobetalinger udgøre en uendelig betalingsstrøm. Man kan let beregne nutidsværdien af uendelige nettobetalinger som:<br></br>
-                      Nettobetaling/rente = {nettobetalinger.toFixed(2).replace(".", ",")}/{numberFormat5(rentedecimal)} = {numberFormat1(nettobetalinger / rentedecimal)}<br></br>
-                      Bemærk i denne sum er investering og scrapværdi ikke medregnet.
+                      {nettotype === "Konstante nettobetalinger" && "Hvis man har en investering med uendelig tidshorisont, vil de konstante nettobetalinger udgøre en uendelig betalingsstrøm. Man kan let beregne nutidsværdien af uendelige nettobetalinger som:\nNettobetaling/rente = " +
+                        nettobetalinger.toFixed(2).replace(".", ",") + "/" + numberFormat5(rentedecimal) + " = " + numberFormat1(nettobetalinger / rentedecimal) +
+                        "\nBemærk i denne sum er investering og scrapværdi ikke medregnet."}
+                      {nettotype === "Variable nettobetalinger" && "Da vi har variable nettobetalinger, kan vi ikke beregne nutidsværdien af uendelige nettobetalinger."}
                     </td>
                   </tr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </span>
               </tbody>
             </small>
