@@ -47,10 +47,10 @@ export const NavigationBar = () => (
             <Nav.Link>
               <Link to="/">
                 <OverlayTrigger
-                  overlay={<Tooltip>Forside</Tooltip>}
+                  overlay={<Tooltip>Rentesregning</Tooltip>}
                   placement="bottom"
                 >
-                  <Button size="sm">Home</Button>
+                  <Button size="sm">Rente</Button>
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
@@ -58,7 +58,7 @@ export const NavigationBar = () => (
 
 
 
-          <Nav.Item>
+          {/* <Nav.Item>
             <Nav.Link>
               <Link to="/fremskrivning">
                 {" "}
@@ -75,7 +75,7 @@ export const NavigationBar = () => (
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
-          </Nav.Item>
+          </Nav.Item> */}
 
           <Nav.Item>
             <Nav.Link>
@@ -83,7 +83,7 @@ export const NavigationBar = () => (
                 <OverlayTrigger
                   overlay={
                     <Tooltip>
-                      Finansregning
+                      Annuitetslån Hvad bliver ÅOP, ydelse, afdrag og renter?
                     </Tooltip>
                   }
                   placement="bottom"
@@ -100,7 +100,7 @@ export const NavigationBar = () => (
                 <OverlayTrigger
                   overlay={
                     <Tooltip>
-                      Stående lån Hvad bliver ydelse, afdrag og renter?
+                      Stående lån Hvad bliver ÅOP, ydelse, afdrag og renter?
                     </Tooltip>
                   }
                   placement="bottom"
@@ -115,10 +115,10 @@ export const NavigationBar = () => (
             <Nav.Link>
               <Link to="/serie">
                 <OverlayTrigger
-                  overlay={<Tooltip>Serielån</Tooltip>}
+                  overlay={<Tooltip>Serielån Hvad bliver ÅOP, ydelse, afdrag og renter?</Tooltip>}
                   placement="bottom"
                 >
-                  <Button size="sm">Serielån</Button>
+                  <Button size="sm">Serie</Button>
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
@@ -186,18 +186,18 @@ export const NavigationBar = () => (
               </Link>
             </Nav.Link>
           </Nav.Item> */}
-          {/* <Nav.Item>
+          <Nav.Item>
             <Nav.Link>
-              <Link to="/f4">
+              <Link to="/kredit">
                 <OverlayTrigger
-                  overlay={<Tooltip>Investering</Tooltip>}
+                  overlay={<Tooltip>Leverandørkredit Kassekredit</Tooltip>}
                   placement="bottom"
                 >
-                  <Button size="sm">f4</Button>
+                  <Button size="sm">Kredit</Button>
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
-          </Nav.Item> */}
+          </Nav.Item>
 
           {/* <NavDropdown title="Investering" id="basic-nav-dropdown">
             <Link href="/about">About</Link>

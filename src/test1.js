@@ -63,7 +63,7 @@ class App23 extends React.Component {
   }
 }
 
-export function f4() {
+export function test1() {
   const numInputs = document.querySelectorAll("input[type=number]");
 
   numInputs.forEach(function (input) {
@@ -130,7 +130,7 @@ export function f4() {
   const restgæld = cf.map((cf) =>
     Math.abs(
       hovedstol * Math.pow(1 + rentedecimal, cf) -
-        (ydelse * (Math.pow(1 + rentedecimal, cf) - 1)) / rentedecimal
+      (ydelse * (Math.pow(1 + rentedecimal, cf) - 1)) / rentedecimal
     )
   ); //?
 

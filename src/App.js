@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 // import { browserHistory } from "react-router";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Home } from "./Home";
-import { Fremskrivning } from "./Fremskrivning";
+import { rente } from "./rente";
+import { test1 } from "./test1";
 import { staaende } from "./staaende";
 import { invest } from "./invest";
 import { Optimering } from "./Optimering";
 import { fin2020 } from "./fin2020";
 import { Finans } from "./Finans";
 import { ann } from "./ann";
-import { f4 } from "./f4";
+import { kredit } from "./kredit";
 import { serie } from "./serie";
 import { NoMatch } from "./NoMatch";
 import { Layout } from "./components/Layout";
@@ -25,17 +25,17 @@ class App extends Component {
           <Jumbotron />
           <Layout>
             <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/fremskrivning" component={Fremskrivning} />
+              <Route exact path="/" component={rente} />
+              <Route path="/test1" component={test1} />
               <Route path="/staaende" component={staaende} />
               <Route path="/finans" component={Finans} />
               <Route path="/invest" component={invest} />
               <Route path="/optimering" component={Optimering} />
               <Route path="/fin2020" component={fin2020} />
               <Route path="/ann" component={ann} />
-              <Route path="/f4" component={f4} />
+              <Route path="/kredit" component={kredit} />
               <Route path="/serie" component={serie} />
-              <Route path="/*" component={Home} />
+              <Route path="/*" component={rente} />
               <Route component={NoMatch} />
             </Switch>
           </Layout>
