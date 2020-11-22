@@ -9,6 +9,7 @@ import { Optimering } from "./Optimering";
 import { fin2020 } from "./fin2020";
 import { Finans } from "./Finans";
 import { ann } from "./ann";
+import { kassekredit } from "./kassekredit";
 import { kredit } from "./kredit";
 import { serie } from "./serie";
 import { NoMatch } from "./NoMatch";
@@ -33,6 +34,7 @@ class App extends Component {
               <Route path="/optimering" component={Optimering} />
               <Route path="/fin2020" component={fin2020} />
               <Route path="/ann" component={ann} />
+              <Route path="/kassekredit" component={kassekredit} />
               <Route path="/kredit" component={kredit} />
               <Route path="/serie" component={serie} />
               <Route path="/*" component={rente} />

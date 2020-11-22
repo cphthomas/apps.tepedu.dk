@@ -5,14 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            // "console": "integratedTerminal",
-            "type": "node",
+            "type": "chrome",
             "request": "launch",
-            "name": "Launch Program",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}/start"
+            "name": "Debugger",
+            "url": "http://localhost:3000/kredit",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }

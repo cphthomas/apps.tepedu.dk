@@ -188,12 +188,24 @@ export const NavigationBar = () => (
           </Nav.Item> */}
           <Nav.Item>
             <Nav.Link>
-              <Link to="/kredit">
+              <Link to="/kassekredit">
                 <OverlayTrigger
-                  overlay={<Tooltip>Leverandørkredit Kassekredit</Tooltip>}
+                  overlay={<Tooltip>Kassekredit bestem ÅOP</Tooltip>}
                   placement="bottom"
                 >
-                  <Button size="sm">Kredit</Button>
+                  <Button size="sm">Kassekredit</Button>
+                </OverlayTrigger>
+              </Link>
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link>
+              <Link to="/kredit">
+                <OverlayTrigger
+                  overlay={<Tooltip>Leverandørkredit bestem ÅOP</Tooltip>}
+                  placement="bottom"
+                >
+                  <Button size="sm">Leverandørkredit</Button>
                 </OverlayTrigger>
               </Link>
             </Nav.Link>
