@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // import { Button } from "react-bootstrap";
 import "./styles.css";
 import {
-  numberFormat1,
+  // numberFormat1,
   // numberFormat2,
   numberFormat3,
   // numberFormat4,
@@ -21,9 +21,9 @@ import Container from "react-bootstrap/Container";
 // import ReactHtmlParser from "react-html-parser";
 import { Bar } from "react-chartjs-2";
 // import { Doughnut } from "react-chartjs-2";
-import DropdownButton from "react-bootstrap/DropdownButton";
+// import DropdownButton from "react-bootstrap/DropdownButton";
 
-import Dropdown from "react-bootstrap/Dropdown";
+// import Dropdown from "react-bootstrap/Dropdown";
 
 // import MathJax from "react-mathjax2";
 
