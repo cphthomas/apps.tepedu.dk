@@ -1,3 +1,9 @@
+export const numberFormat0 = (value) =>
+  new Intl.NumberFormat([], {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(value);
+
 export const numberFormat1 = (value) =>
   new Intl.NumberFormat("de-DE", {
     style: "currency",

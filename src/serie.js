@@ -363,15 +363,9 @@ export function serie() {
     <div>
       <Container>
         <div class="p-3 mb-2 bg-secondary text-white">
-
           <h4>Serielån.</h4>
-          <h5>Hvad bliver ydelse, afdrag og rente?</h5>
-
         </div>
-
       </Container>
-
-
 
       <Container className="p-0">
         <div class="row p-3">
@@ -380,11 +374,7 @@ export function serie() {
               <div class="card-body">
                 <Container className="p-3">
                   <div class="p-3 mb-2 bg-white">
-
                     <Form.Group>
-
-
-
                       <InputGroup>
                         <Form.Control
                           // size="sm"
@@ -449,9 +439,6 @@ export function serie() {
                         </InputGroup.Append>
                       </InputGroup>
 
-
-
-
                       <InputGroup>
                         <Form.Control
                           type="number"
@@ -473,7 +460,6 @@ export function serie() {
                           </InputGroup.Text>
                         </InputGroup.Append>
                       </InputGroup>
-
 
                       <InputGroup>
                         <Form.Control
@@ -516,15 +502,7 @@ export function serie() {
                           </Dropdown.Item>
                         </DropdownButton>
                       </Form.Group>
-
-
-
-
                     </Form.Group>
-
-
-
-
                   </div>
                 </Container>
               </div>
@@ -534,20 +512,11 @@ export function serie() {
         </div>
       </Container >
 
-
-
-
-
-
-
-
-
       <Container className="p-0">
         <div class="p-3 mb-2 bg-white text-black">
           <div class="card">
             <div class="card-body">
               <h3>Afdraget er {numberFormat1(hovedstol / terminer)} over de {terminer} terminer</h3>
-
               <div>
                 <Bar
                   data={databar}
@@ -639,7 +608,6 @@ export function serie() {
                     <th>Værdi</th>
                     <th>Forklaring</th>
                   </tr>
-
                   <tr>
                     <th scope="row">Afdrag</th>
                     <td>{numberFormat1(hovedstol / terminer)}</td>
@@ -666,7 +634,6 @@ export function serie() {
                     </td>
                   </tr>
 
-
                   <tr>
                     <th scope="row">Ydelse</th>
                     <td></td>
@@ -684,7 +651,6 @@ export function serie() {
                     </td>
                   </tr>
 
-
                   <tr>
                     <th scope="row">Rente DKK</th>
                     <td></td>
@@ -701,7 +667,6 @@ export function serie() {
                       ...
                     </td>
                   </tr>
-
 
                   <tr>
                     <th scope="row">Skat DKK</th>

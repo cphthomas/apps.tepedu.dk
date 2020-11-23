@@ -336,7 +336,7 @@ export function staaende() {
         <div class="p-3 mb-2 bg-secondary text-white">
 
           <h4>Stående lån.</h4>
-          <h5>Hvad bliver ydelse, afdrag og rente?</h5>
+          
           
         </div>
 

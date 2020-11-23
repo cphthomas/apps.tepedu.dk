@@ -34,12 +34,8 @@ import Handsontable from "handsontable";
 // import "katex/dist/katex.min.css";
 // import { BlockMath } from "react-katex";
 // import { InlineMath } from "react-katex";
-
 export function ann() {
-
-
   // const numInputs = document.querySelectorAll("input[type=number]");
-
   // numInputs.forEach(function (input) {
   //   input.addEventListener("change", function (e) {
   //     if (e.target.value === "") {
@@ -47,8 +43,6 @@ export function ann() {
   //     }
   //   });
   // });
-
-
   const [hovedstol, sethovedstol] = useState(+(20000.0).toFixed(2));
   var [rente, setrente] = useState(+(1.25).toFixed(2));
   var [ydelseinput, setydelseinput] = useState(+(2200).toFixed(2));
@@ -183,11 +177,9 @@ export function ann() {
   var renteeffektivskat = IRR(bssss);
   var formatbssss = bssss.map((bssss) => numberFormat3(bssss));
 
-
   var data1 = [cf, ydelsess, renterss, formatskatss, afdragss, restgældss, bsss, formatbssss];
   var colhead = [
     "Tid",
-
     "Ydelse\nDKK",
     "Renter\nDKK",
     "Skat\nDKK",
@@ -365,7 +357,7 @@ export function ann() {
         <div class="p-3 mb-2 bg-secondary text-white">
 
           <h4>Annuitet.</h4>
-          <h5>Hvad bliver ydelse, afdrag og rente?</h5>
+          
           
         </div>
 
