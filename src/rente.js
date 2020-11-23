@@ -583,7 +583,7 @@ export function rente() {
                       {terminerår === "1 " && "Da der kun er 1 rentetilskrivning pr. år er en termin 1 år, derfor bliver ÅOP " + numberFormat3(åop) + "%, dvs. det samme som terminsrenten."
                       }
                       {terminerår !== "1 " && "Da der er  " + terminerår + " terminer pr. tilskrives terminsrenten " + numberFormat3(rentecalc) + "% " + terminerår +
-                        " gange om året. Vi skal bestemme hvad renten pr. år bliver når der tages højde for renters rente. Dette kan vi gøre ved at finde ud af hvad 1 kr. vokser til på et år og så trække kronen fra igen så ved vi hvad ÅOP er:\n" +
+                        " gange om året. Vi skal bestemme hvad renten pr. år bliver, når der tages højde for renters rente. Dette kan vi gøre ved at finde ud af hvad 1 kr. vokser til på et år og så trække kronen fra igen så ved vi hvad ÅOP er:\n" +
                         "(1 + terminsrente)^(terminer pr. år) -1 = (1 + " + numberFormat3(rentecalc) + "%)^" + terminerår + " - 1 = " + numberFormat5(åop / 100) + " = " + numberFormat3(åop) + "%\n" +
                         "Den engelske betegnelse APRC betyder annual percentage rate of charge."
                       }
