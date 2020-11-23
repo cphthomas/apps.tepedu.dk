@@ -26,15 +26,15 @@ import "handsontable/dist/handsontable.full.css";
 import { HotTable } from "@handsontable/react";
 import Handsontable from "handsontable";
 
-import "katex/dist/katex.min.css";
-import { BlockMath } from "react-katex";
+// import "katex/dist/katex.min.css";
+// import { BlockMath } from "react-katex";
 // import { InlineMath } from "react-katex";
 import DropdownButton from "react-bootstrap/DropdownButton";
 
 import Dropdown from "react-bootstrap/Dropdown";
 
 export function rente() {
-  var Nutidsværdi, Fremtidsværdi
+
   var [type, settype] = useState("Fremtidsværdi");
   var handleSelect = (e) => {
     console.log(e);
