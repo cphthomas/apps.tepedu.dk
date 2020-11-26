@@ -322,8 +322,8 @@ export function serie() {
     // Return internal rate of return
     return resultRate * 100;
   }
-  var renteeffektiv = IRR(bs);
-  var renteeffektivskat = IRR(bss);
+  var renteeffektiv = IRR(bs,rente/100);
+  var renteeffektivskat = IRR(bss,rente/100);
 
   var åop = (Math.pow(1 + renteeffektiv / 100, terminerår) - 1) * 100;
 

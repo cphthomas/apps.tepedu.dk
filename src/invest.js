@@ -331,7 +331,7 @@ export function invest() {
     // Return internal rate of return
     return resultRate * 100;
   }
-  var internrente = IRR(bs);
+  var internrente = IRR(bs, rente / 100);
   var kapitaltjenesten = ((investering - scrap * (1 + rentedecimal) ** -år) * rentedecimal) / (1 - (1 + rentedecimal) ** -år)
   var tilbagebetalingstiden = ((-Math.log(1 - (investering * rentedecimal) / nettobetalinger)) / Math.log(1 + rentedecimal)).toFixed(2)
   // var tilbagebetalingstidenukorr = (investering / nettobetalinger).toFixed(2)

@@ -134,7 +134,7 @@ export function rente() {
     var cf3 = Array.apply(null, Array(nper)).map((_) => 0);
     cf3.splice(0, 0, -1 * nv);
     cf3.splice(nper, 1, fv);
-    rentecalc = IRR(cf3);
+    rentecalc = IRR(cf3, rente / 100);
   }
 
   var åop = ((1 + rentecalc / 100) ** terminerår - 1) * 100

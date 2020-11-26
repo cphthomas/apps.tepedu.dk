@@ -112,7 +112,7 @@ export function ann() {
     bs = new Array(terminer).fill(null).map(() => ydelse);
     bs.splice(0, 0, -provenue);
 
-    rente = IRR(bs)
+    rente = IRR(bs,rente/100)
     rentedecimal = rente / 100;
   };
 
@@ -174,7 +174,7 @@ export function ann() {
   // restgæld * rentedecimal * (skat / 100)
   bssss.splice(0, 0, provenue);
   bssss.pop();
-  var renteeffektivskat = IRR(bssss);
+  var renteeffektivskat = IRR(bssss,.78*rente/100);
   var formatbssss = bssss.map((bssss) => numberFormat3(bssss));
 
   var data1 = [cf, ydelsess, renterss, formatskatss, afdragss, restgældss, bsss, formatbssss];
@@ -316,7 +316,7 @@ export function ann() {
     // Return internal rate of return
     return resultRate * 100;
   }
-  var renteeffektiv = IRR(bs);
+  var renteeffektiv = IRR(bs,rente/100);
   var åop = (Math.pow(1 + renteeffektiv / 100, terminerår) - 1) * 100;
 
   if (terminerår < 2) {
@@ -357,6 +357,7 @@ export function ann() {
         <div class="p-3 mb-2 bg-secondary text-white">
 
           <h4>Annuitet.</h4>
+                  
           
           
         </div>

@@ -67,7 +67,12 @@ export function kassekredit() {
   };
   var terminerår = prår.slice(0, 2);
   var udnyttelsesgrad = udnyttelse/maksimum;
-  var effektiv = rente+provision/udnyttelsesgrad
+  var effektiv 
+  if (provision > 0) {
+    effektiv = rente+provision/udnyttelsesgrad
+  }else{
+    effektiv = rente
+  }
   var åop = ((1+effektiv/100)**terminerår-1)*100
  
   return (
