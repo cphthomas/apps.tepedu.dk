@@ -60,6 +60,27 @@ export function invest() {
   var [netto18, setnetto18] = useState(+(3000).toFixed(2));
   var [netto19, setnetto19] = useState(+(6000).toFixed(2));
   var [netto20, setnetto20] = useState(+(3000).toFixed(2));
+  var [netto21, setnetto21] = useState(+(3000).toFixed(2));
+  var [netto22, setnetto22] = useState(+(5000).toFixed(2));
+  var [netto23, setnetto23] = useState(+(4000).toFixed(2));
+  var [netto24, setnetto24] = useState(+(3000).toFixed(2));
+  var [netto25, setnetto25] = useState(+(6000).toFixed(2));
+  var [netto26, setnetto26] = useState(+(3000).toFixed(2));
+  var [netto27, setnetto27] = useState(+(5000).toFixed(2));
+  var [netto28, setnetto28] = useState(+(4000).toFixed(2));
+  var [netto29, setnetto29] = useState(+(3000).toFixed(2));
+  var [netto30, setnetto30] = useState(+(6000).toFixed(2));
+  var [netto31, setnetto31] = useState(+(3000).toFixed(2));
+  var [netto32, setnetto32] = useState(+(5000).toFixed(2));
+  var [netto33, setnetto33] = useState(+(4000).toFixed(2));
+  var [netto34, setnetto34] = useState(+(3000).toFixed(2));
+  var [netto35, setnetto35] = useState(+(6000).toFixed(2));
+  var [netto36, setnetto36] = useState(+(3000).toFixed(2));
+  var [netto37, setnetto37] = useState(+(5000).toFixed(2));
+  var [netto38, setnetto38] = useState(+(4000).toFixed(2));
+  var [netto39, setnetto39] = useState(+(3000).toFixed(2));
+  var [netto40, setnetto40] = useState(+(6000).toFixed(2));
+
   var rentedecimal = rente / 100;
   var [år, setår] = useState(+(6));
   var [scrap, setscrap] = useState(+(500.0).toFixed(2));
@@ -137,7 +158,8 @@ export function invest() {
     varnetto = [nettobetalinger, nettobetalinger, nettobetalinger, nettobetalinger,];
 
   } else {
-    varnetto = [0, netto1, netto2, netto3, netto4, netto5, netto6, netto7, netto8, netto9, netto10, netto11, netto12, netto13, netto14, netto15, netto16, netto17, netto18, netto19, netto20];
+    varnetto = [0, netto1, netto2, netto3, netto4, netto5, netto6, netto7, netto8, netto9, netto10, netto11, netto12, netto13, netto14, netto15, netto16, netto17, netto18, netto19, netto20,
+      netto21, netto22, netto23, netto24, netto25, netto26, netto27, netto28, netto29, netto30, netto31, netto32, netto33, netto34, netto35, netto36, netto37, netto38, netto39, netto40];
     varnetto = varnetto.slice(0, år + 1)
     renterbc = cf.map((cf) =>
       (varnetto[cf] - varnetto[cf] * (1 + rentedecimal) ** (-cf)).toFixed(2));
@@ -752,6 +774,370 @@ export function invest() {
                         </InputGroup>
                       }
 
+                      {nettotype === "Variable nettobetalinger" && år > 20 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto21}
+                            onChange={(e) => setnetto21(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 21
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 21 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto22}
+                            onChange={(e) => setnetto22(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 22
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+
+                      {nettotype === "Variable nettobetalinger" && år > 22 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto23}
+                            onChange={(e) => setnetto23(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 23
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 23 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto24}
+                            onChange={(e) => setnetto24(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 24
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 24 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto25}
+                            onChange={(e) => setnetto25(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 25
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 25 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto26}
+                            onChange={(e) => setnetto26(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 26
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 26 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto27}
+                            onChange={(e) => setnetto27(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 27
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 27 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto28}
+                            onChange={(e) => setnetto28(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 28
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 28 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto29}
+                            onChange={(e) => setnetto29(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 29
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+
+                      {nettotype === "Variable nettobetalinger" && år > 29 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto30}
+                            onChange={(e) => setnetto30(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 30
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 30 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto31}
+                            onChange={(e) => setnetto31(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 31
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 31 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto32}
+                            onChange={(e) => setnetto32(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 32
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 32 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto33}
+                            onChange={(e) => setnetto33(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 33
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 33 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto34}
+                            onChange={(e) => setnetto34(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 34
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 34 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto35}
+                            onChange={(e) => setnetto35(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 35
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 35 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto36}
+                            onChange={(e) => setnetto36(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 36
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 36 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto37}
+                            onChange={(e) => setnetto37(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 37
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 37 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto38}
+                            onChange={(e) => setnetto38(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 38
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+                      {nettotype === "Variable nettobetalinger" && år > 38 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto39}
+                            onChange={(e) => setnetto39(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 39
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+                      {nettotype === "Variable nettobetalinger" && år > 39 &&
+                        <InputGroup>
+                          <Form.Control
+                            // size="sm"
+                            type="number"
+                            value={netto40}
+                            onChange={(e) => setnetto40(+e.target.value)}
+                            aria-describedby="inputGroupAppend"
+                            placeholder="0"
+                          />
+                          <InputGroup.Append>
+                            <InputGroup.Text id="inputGroupAppend">
+                              Nettobetaling tid 40
+                      </InputGroup.Text>
+                          </InputGroup.Append>
+                        </InputGroup>
+                      }
+
+
+
+
                       <InputGroup>
                         <Form.Control
                           // size="sm"
@@ -789,7 +1175,7 @@ export function invest() {
                         <Form.Control
                           type="number"
                           min="1"
-                          max={nettotype === "Variable nettobetalinger" ? "20" : "1000"}
+                          max={nettotype === "Variable nettobetalinger" ? "40" : "1000"}
                           value={år}
                           onChange={(e) =>
                             setår(+e.target.value.replace(/\D/, ""))
