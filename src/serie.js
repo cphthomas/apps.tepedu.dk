@@ -13,7 +13,7 @@ import {
   numberFormat1,
   numberFormat2,
   numberFormat3,
-  // numberFormat4,
+  numberFormat4,
   numberFormat5,
   numberFormat6,
 } from "./lib"; //ændrer til komma og pct + DKK
@@ -516,7 +516,7 @@ export function serie() {
         <div class="p-3 mb-2 bg-white text-black">
           <div class="card">
             <div class="card-body">
-              <h3>Afdraget er {numberFormat1(hovedstol / terminer)} over de {terminer} terminer</h3>
+              <h3>Afdraget er {numberFormat1(hovedstol / terminer)} over de {terminer} terminer. ÅOP er {numberFormat4(åop)}%.</h3>
               <div>
                 <Bar
                   data={databar}

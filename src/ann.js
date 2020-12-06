@@ -13,7 +13,7 @@ import {
   numberFormat1,
   numberFormat2,
   numberFormat3,
-  // numberFormat4,
+  numberFormat4,
   numberFormat5,
   numberFormat6,
 } from "./lib"; //ændrer til komma og pct + DKK
@@ -570,7 +570,7 @@ export function ann() {
         <div class="p-3 mb-2 bg-white text-black">
           <div class="card">
             <div class="card-body">
-              {anntype === "Kendt rente" && <h3>Ydelsen er {numberFormat1(ydelse)} over de {terminer} terminer</h3>}
+              {anntype === "Kendt rente" && <h3>Ydelsen er {numberFormat1(ydelse)} over de {terminer} terminer. ÅOP er {numberFormat4(åop)}%.</h3>}
               {anntype === "Kendt ydelse" && <h3>Terminsrenten er {numberFormat3(rente)}%, med {prår} bliver ÅOP {numberFormat3(åop)}%</h3>}
               <div>
                 <Bar

@@ -5,6 +5,9 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// import HighchartsReact from 'highcharts-react-official';
+// import Highcharts from 'highcharts';
+
 import "./styles.css";
 import {
   numberFormat1,
@@ -361,11 +364,64 @@ export function invest() {
 
 
 
+
+
+
+
+
+
+  // var optionshighcharts = {
+  //   xAxis: {
+  //     categories: cf,
+  //   },
+
+  //   series: [
+  //     {
+  //       name: "BS",
+  //       data: diskonteredebs
+  //     }
+  //   ],
+  //   chart: {
+  //     type: "column",
+
+  //   },
+  // };
+
+
+
+
+
+
   return (
     <div>
       <Container>
         <div class="p-3 mb-2 bg-secondary text-white">
           <h4>Investering.</h4>
+
+          {/* <h3>TEST </h3>
+          <Form.Group>
+            <DropdownButton
+              alignleft
+              variant="warning"
+              title={nettotype}
+              id="nettotype"
+        
+              onSelect={annSelect}
+            >
+              <Dropdown.Item eventKey="Konstante nettobetalinger">
+                Vælg konstante nettobetalinger
+                          </Dropdown.Item>
+              <Dropdown.Item eventKey="Variable nettobetalinger">
+                Vælg variable nettobetalinger
+                          </Dropdown.Item>
+            </DropdownButton>
+
+          </Form.Group>
+        
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={optionshighcharts}
+          /> */}
         </div>
       </Container>
 

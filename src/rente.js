@@ -12,7 +12,7 @@ import {
   numberFormat1,
   numberFormat2,
   numberFormat3,
-  // numberFormat4,
+  numberFormat4,
   numberFormat5,
 } from "./lib"; //ændrer til komma og pct + DKK
 import Container from "react-bootstrap/Container";
@@ -440,9 +440,9 @@ export function rente() {
             <div class="card">
               <div class="card-body">
                 <h4>
-                  {type === "Fremtidsværdi" && "Fremtidsværdien bliver " + numberFormat1(fvcalc) + " efter de " + npercalc + " terminer."}
-                  {type === "Nutidsværdi" && "Nutidsværdien bliver " + numberFormat1(nvcalc) + "."}
-                  {type === "Rente" && "Renten pr. termin " + numberFormat1(rentecalc) + "%."}
+                  {type === "Fremtidsværdi" && "Fremtidsværdien bliver " + numberFormat1(fvcalc) + " efter de " + npercalc + " terminer. ÅOP er " + numberFormat4(åop) + "%."}
+                  {type === "Nutidsværdi" && "Nutidsværdien bliver " + numberFormat1(nvcalc) + ". ÅOP er " + numberFormat4(åop) + "%."}
+                  {type === "Rente" && "Renten pr. termin " + numberFormat4(rentecalc) + "%. ÅOP er " + numberFormat4(åop) + "%."}
                 </h4>
                 <div>
                   <Bar
