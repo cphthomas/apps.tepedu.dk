@@ -433,7 +433,7 @@ export function staaende() {
                           mobile={true}
                           value={kurs}
                           onChange={(e) =>
-                            setkurs(+e.target.value.replace(/\D/, ""))
+                            setkurs(+e.target.value)
                           }
                           aria-describedby="inputGroupAppend"
                           placeholder="0"
@@ -717,7 +717,7 @@ export function staaende() {
 
                   <tr>
                     <th scope="row">Kurs</th>
-                    <td>{kurs}</td>
+                    <td>{numberFormat5(kurs)}</td>
 
                     <td>
                       Kursen angiver hvor meget lånet er værd, er kursen under
