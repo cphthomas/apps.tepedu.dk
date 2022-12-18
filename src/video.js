@@ -50,9 +50,9 @@ return (
 
               <div>
 
-                <h2>Videoplaylists 1. Interne Eksamen 2021-2022 CPH Business</h2>
+                <h2>1. Interne Eksamen 2022</h2>
                 <h6>
-                  1. Interne Eksamen 2021-2022 CPH Business Finansøkonom EØ finansierings- og investeringsdelen
+                  1. Interne Eksamen 2021-2022 CPH Business Finansøkonom EØ finansierings- og investeringsdelen.
                 </h6>
               </div>
             </div>
