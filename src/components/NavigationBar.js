@@ -211,6 +211,19 @@ export const NavigationBar = () => (
             </Nav.Link>
           </Nav.Item>
 
+           <Nav.Item>
+            <Nav.Link>
+              <Link to="/video">
+                <OverlayTrigger
+                  overlay={<Tooltip>Videoplaylists</Tooltip>}
+                  placement="bottom"
+                >
+                  <Button size="sm">Videoer</Button>
+                </OverlayTrigger>
+              </Link>
+            </Nav.Link>
+          </Nav.Item>
+
           {/* <NavDropdown title="Investering" id="basic-nav-dropdown">
             <Link href="/about">About</Link>
             <Nav.Link href="/about">navlink</Nav.Link>
